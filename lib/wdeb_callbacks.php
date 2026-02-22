@@ -1,4 +1,7 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
 
 function wdeb_reset_autostart () {
 	setcookie("wdeb_on", "", time()-60000, '/', COOKIE_DOMAIN);

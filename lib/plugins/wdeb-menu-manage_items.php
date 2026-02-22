@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 /*
 Plugin Name: Menüelemente verwalten
 Description: Verwalte ganz einfach Menüelemente in Deinem Easy Blogging-Menü.
@@ -36,7 +40,8 @@ class Wdeb_Menu_ManageMenuItems {
 		add_filter('wdeb_menu_items', array($this, 'filter_menu_builtins'), 0);
 		add_filter('wdeb_menu_items', array($this, 'filter_menu_items'), 999);
 
-		// AJAX handlers
+		// AJAX handlers with nonce for client-side use
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_nonce'));
 		add_action('wp_ajax_wdeb_menu_items_remove_my_item', array($this, 'json_remove_my_item'));
 		add_action('wp_ajax_wdeb_menu_items_reset_order', array($this, 'json_reset_order'));
 		add_action('wp_ajax_wdeb_menu_items_reset_items', array($this, 'json_reset_items'));
@@ -108,8 +113,14 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Removes new menu item.
 	 */
 	function json_remove_my_item () {
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_menu_action', 'nonce');
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
 		$status = false;
-		$id = $_POST['url_id'] ?? null;
+		$id = sanitize_text_field($_POST['url_id'] ?? '');
 		if ($id) {
 			$opts = $this->_data->get_options('wdeb_menu_items');
 			$new_items = isset($opts['new_items']) ? $opts['new_items'] : array();
@@ -122,57 +133,62 @@ class Wdeb_Menu_ManageMenuItems {
 			$status = true;
 		}
 		header('Content-type: application/json');
-		echo json_encode(array(
-			'status' => (int)$status,
-		));
-		exit();
+		wp_send_json_success(array('status' => (int)$status));
 	}
 
-
-/* ---------- JSON handlers ---------- */
+	/* ---------- JSON handlers ---------- */
 
 
 	/**
 	 * Resets items custom order.
 	 */
 	function json_reset_order () {
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_menu_action', 'nonce');
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
 		$opts = $this->_data->get_options('wdeb_menu_items');
 		$opts['order'] = array();
 		$this->_data->set_options($opts, 'wdeb_menu_items');
 
 		header('Content-type: application/json');
-		echo json_encode(array(
-			'status' => 1,
-		));
-		exit();
+		wp_send_json_success(array('status' => 1));
 	}
 
 	/**
 	 * Resets any new items.
 	 */
 	function json_reset_items () {
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_menu_action', 'nonce');
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
 		$opts = $this->_data->get_options('wdeb_menu_items');
 		$opts['new_items'] = array();
 		$this->_data->set_options($opts, 'wdeb_menu_items');
 
 		header('Content-type: application/json');
-		echo json_encode(array(
-			'status' => 1,
-		));
-		exit();
+		wp_send_json_success(array('status' => 1));
 	}
 
 	/**
 	 * Resets everything.
 	 */
 	function json_reset_all () {
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_menu_action', 'nonce');
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
 		$this->_data->set_options(array(), 'wdeb_menu_items');
 
 		header('Content-type: application/json');
-		echo json_encode(array(
-			'status' => 1,
-		));
-		exit();
+		wp_send_json_success(array('status' => 1));
 	}
 
 
@@ -413,9 +429,14 @@ class Wdeb_Menu_ManageMenuItems {
 		wp_enqueue_style('thickbox');
 	}
 
+	function enqueue_nonce () {
+		// Enqueue nonce for AJAX calls
+		wp_localize_script('jquery', 'wdebMenuSettings', array(
+			'menuNonce' => wp_create_nonce('wdeb_menu_action'),
+		));
+	}
 
-/* ---------- Private API ---------- */
-
+	/* ---------- Private API ---------- */
 
 	/**
 	 * Generates items unique ID used in most checks.

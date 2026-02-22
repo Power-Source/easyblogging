@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 /**
  * Handles all Admin access functionality.
  */
@@ -32,32 +36,63 @@ class Wdeb_AdminPages {
 	}
 
 	function _handle_logo_upload () {
+		// Security checks
 		if (!isset($_FILES['wdeb_logo'])) { 
 			return false; 
 		}
+		
+		// Verify nonce
+		if (!isset($_POST['wdeb_logo_nonce']) || !wp_verify_nonce($_POST['wdeb_logo_nonce'], 'wdeb_logo_upload')) {
+			wp_die(__('Security check failed', 'wdeb'));
+		}
+		
+		// Verify capability
+		if (!current_user_can('manage_options')) {
+			wp_die(__('Insufficient permissions', 'wdeb'));
+		}
+		
 		$name = $_FILES['wdeb_logo']['name'];
-		if (!$name)  { return false; }
+		if (!$name) { 
+			return false; 
+		}
 
-		$allowed = array('jpg', 'jpeg', 'png', 'gif');
-		$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-		if (!in_array($ext, $allowed)) { wp_die(__('Dieser Dateityp wird nicht unterstützt', 'wdeb')); }
-
-		$wp_upload_dir = wp_upload_dir();
-		$logo_dir = $wp_upload_dir['basedir'] . '/wdeb';
-		$logo_path = $wp_upload_dir['baseurl'] . '/wdeb';
-
-		if (!file_exists($logo_dir)) { wp_mkdir_p($logo_dir); }
-		while (file_exists("{$logo_dir}/{$name}")) { $name = rand(0,9) . $name; }
-
-		if (move_uploaded_file($_FILES['wdeb_logo']['tmp_name'], "{$logo_dir}/{$name}")) {
+		// Use WordPress file upload handling for better security
+		if (!function_exists('wp_handle_upload')) {
+			require_once(ABSPATH . 'wp-admin/includes/file.php');
+		}
+		
+		// Define allowed MIME types
+		$allowed_types = array('image/jpeg', 'image/png', 'image/gif');
+		
+		// Get the file type
+		$wp_filetype = wp_check_filetype_and_ext($_FILES['wdeb_logo']['tmp_name'], $name);
+		
+		// Validate MIME type
+		if (!in_array($wp_filetype['type'], $allowed_types)) {
+			wp_die(__('Dieser Dateityp wird nicht unterstützt', 'wdeb'));
+		}
+		
+		// Use WordPress's secure upload handler
+		$upload_overrides = array('test_form' => false);
+		$movefile = wp_handle_upload($_FILES['wdeb_logo'], $upload_overrides);
+		
+		if (isset($movefile['error'])) {
+			wp_die($movefile['error']);
+		}
+		
+		if ($movefile && !isset($movefile['error'])) {
+			// Save the logo URL
 			if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) {
 				$opts = $this->data->get_options('wdeb');
-				$opts['wdeb_logo'] = "{$logo_path}/{$name}";
+				$opts['wdeb_logo'] = $movefile['url'];
 				$this->data->set_options($opts, 'wdeb');
 			} else {
-				update_option('wdeb_logo', "{$logo_path}/{$name}");
+				update_option('wdeb_logo', $movefile['url']);
 			}
+			return true;
 		}
+		
+		return false;
 	}
 
 	function get_menu_partial () {
@@ -527,19 +562,35 @@ class Wdeb_AdminPages {
 	}
 
 	function json_activate_plugin () {
-		$status = Wdeb_PluginsHandler::activate_plugin($_POST['plugin']);
-		echo json_encode(array(
-			'status' => $status ? 1 : 0,
-		));
-		exit();
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_plugin_action', 'nonce');
+		if (!current_user_can('activate_plugins')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
+		$plugin = sanitize_text_field($_POST['plugin'] ?? '');
+		if (empty($plugin)) {
+			wp_send_json_error(array('message' => esc_html__('No plugin specified', 'wdeb')));
+		}
+		
+		$status = Wdeb_PluginsHandler::activate_plugin($plugin);
+		wp_send_json_success(array('status' => $status ? 1 : 0));
 	}
 
 	function json_deactivate_plugin () {
-		$status = Wdeb_PluginsHandler::deactivate_plugin($_POST['plugin']);
-		echo json_encode(array(
-			'status' => $status ? 1 : 0,
-		));
-		exit();
+		// Security: Verify nonce and capabilities
+		check_ajax_referer('wdeb_plugin_action', 'nonce');
+		if (!current_user_can('deactivate_plugins')) {
+			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
+		}
+		
+		$plugin = sanitize_text_field($_POST['plugin'] ?? '');
+		if (empty($plugin)) {
+			wp_send_json_error(array('message' => esc_html__('No plugin specified', 'wdeb')));
+		}
+		
+		$status = Wdeb_PluginsHandler::deactivate_plugin($plugin);
+		wp_send_json_success(array('status' => $status ? 1 : 0));
 	}
 
 	function render_hijacking_profile_option ($user) {
@@ -609,7 +660,10 @@ class Wdeb_AdminPages {
 			add_action('edit_user_profile_update', array($this, 'save_hijacking_profile_option'));
 		}
 
-		// AJAX plugin handlers
+		// AJAX plugin handlers - with nonce for client-side use
+		wp_localize_script('jquery', 'wdebSettings', array(
+			'pluginNonce' => wp_create_nonce('wdeb_plugin_action'),
+		));
 		add_action('wp_ajax_wdeb_activate_plugin', array($this, 'json_activate_plugin'));
 		add_action('wp_ajax_wdeb_deactivate_plugin', array($this, 'json_deactivate_plugin'));
 	}

@@ -1,4 +1,8 @@
 <?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+
 class Wdeb_AdminFormRenderer {
 
 	function _get_option ($key = false, $pfx = 'wdeb') {

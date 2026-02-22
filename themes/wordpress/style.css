@@ -610,6 +610,32 @@ tbody tr:hover {
 	}
 }
 
+/* === FIX: TITLE INPUT VISIBILITY === */
+#title {
+	color: #000 !important;
+}
+
+/* === FIX: MEDIA BUTTON STYLING === */
+#insert-media-button,
+.add_media {
+	background: #007cba !important;
+	color: white !important;
+	padding: 8px 16px !important;
+	min-height: 36px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border-radius: 4px !important;
+	font-weight: 600 !important;
+	cursor: pointer !important;
+	border: none !important;
+}
+
+#insert-media-button:hover,
+.add_media:hover {
+	background: #005a87 !important;
+}
+
 /* --- HIDE OLD STYLES & WORDPRESS DEFAULTS --- */
 .wdeb_meta, #wdeb_meta_container {
 	display: none;

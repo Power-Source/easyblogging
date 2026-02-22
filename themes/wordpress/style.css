@@ -712,6 +712,23 @@ tbody tr:hover {
 	background: #005a87 !important;
 }
 
+/* === FIX: FORMAT DROPDOWN === */
+.cleditorToolbar select,
+.cleditorToolbar > select,
+select {
+	background-color: #333 !important;
+	color: white !important;
+	border: 1px solid #555 !important;
+	outline: 1px solid #555 !important;
+	box-shadow: none !important;
+}
+
+select option,
+option {
+	background-color: #333 !important;
+	color: white !important;
+}
+
 /* --- HIDE OLD STYLES & WORDPRESS DEFAULTS --- */
 .wdeb_meta, #wdeb_meta_container {
 	display: none;
@@ -787,52 +804,9 @@ a[href*="wdeb_off"],
 	display: inline-block !important;
 }
 
-/* wdeb_visit_site toolbar styling */
-.wdeb_visit_site {
-	position: fixed;
-	top: 12px;
-	right: 20px;
-	z-index: 1000;
-	display: flex;
-	gap: 15px;
-	align-items: center;
-}
+/* wdeb_visit_site toolbar styling - NOW DEFINED GLOBALLY IN wdeb_global.css */
 
-.wdeb_visit_site a {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 32px;
-	padding: 8px 16px;
-	background: var(--primary-color);
-	color: white;
-	text-decoration: none;
-	border-radius: 4px;
-	font-weight: 600;
-	font-size: 13px;
-	transition: all 0.2s;
-	white-space: nowrap;
-}
-
-.wdeb_visit_site a:hover {
-	background: var(--primary-dark);
-	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
-}
-
-.wdeb_visit_site a[href*="wdeb_off"],
-.wdeb_visit_site a[href*="wdeb_off"]:hover {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 32px;
-	background: #6c757d;
-}
-
-.wdeb_visit_site a[href*="wdeb_off"]:hover {
-	background: #5a6268;
-}
-
+/* === FIX: FORMAT DROPDOWN === */
 
 #admin-menu-toggle {
 display: none;

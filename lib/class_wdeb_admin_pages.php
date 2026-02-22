@@ -41,9 +41,11 @@ class Wdeb_AdminPages {
 			return false; 
 		}
 		
-		// Verify nonce
-		if (!isset($_POST['wdeb_logo_nonce']) || !wp_verify_nonce($_POST['wdeb_logo_nonce'], 'wdeb_logo_upload')) {
-			wp_die(__('Security check failed', 'wdeb'));
+		// Only verify nonce if logo file is actually being uploaded
+		if (!empty($_FILES['wdeb_logo']['name'])) {
+			if (!isset($_POST['wdeb_logo_nonce']) || !wp_verify_nonce($_POST['wdeb_logo_nonce'], 'wdeb_logo_upload')) {
+				wp_die(__('Security check failed', 'wdeb'));
+			}
 		}
 		
 		// Verify capability

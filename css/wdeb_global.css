@@ -1,41 +1,46 @@
 .wdeb_visit_site {
-  position: fixed;
-  right: 3px;
-  top:1px;
-  z-index: 9999999;
-  display: block !important;
+	position: fixed;
+	top: 12px;
+	right: 20px;
+	z-index: 1000;
+	display: flex !important;
+	gap: 15px;
+	align-items: center;
 }
 
 .wdeb_visit_site a {
-  display: block;
-  font-size: 14px;
-  height: 22px;
-  color: #eee;
-  letter-spacing: normal;
-  line-height: 22px;
-  padding: 6px 15px 6px 35px;
-  text-decoration: none;
-  z-index: 1;
-  background: #333 url(../img/home.png) no-repeat 10px 8px;
-  border-bottom: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-right: 1px solid transparent;
-  float:left;
-	-moz-text-shadow: 1px 1px 2px #111;
-	-webkit-text-shadow: 1px 1px 2px #111;
-  text-shadow: 1px 1px 2px #111;
-	-moz-box-shadow: 3px 3px 2px #ccc;
-	-webkit-box-shadow: 3px 3px 2px #ccc;
-  box-shadow: 3px 3px 2px #ccc;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	min-height: 32px !important;
+	padding: 8px 16px !important;
+	background: var(--primary-color, #007cba) !important;
+	color: white !important;
+	text-decoration: none !important;
+	border-radius: 4px !important;
+	font-weight: 600 !important;
+	font-size: 13px !important;
+	transition: all 0.2s !important;
+	white-space: nowrap !important;
+	border: none !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
 }
 
 .wdeb_visit_site a:hover {
-  color: #fff;
-  background: #555 url(../img/home.png) no-repeat 10px 8px;
-  border-bottom: 1px solid #666;
-  border-left: 1px solid #666;
-  border-right: 1px solid #666;
-  float:left;
+	background: var(--primary-dark, #005a87) !important;
+	transform: translateY(-2px) !important;
+	box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3) !important;
+	color: white !important;
+}
+
+.wdeb_visit_site a[href*="wdeb_off"],
+.wdeb_visit_site a[href*="wdeb_off"]:hover {
+	background: #6c757d !important;
+}
+
+.wdeb_visit_site a[href*="wdeb_off"]:hover {
+	background: #5a6268 !important;
 }
 
 /*styled a disabled input element */

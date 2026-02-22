@@ -610,9 +610,85 @@ tbody tr:hover {
 	}
 }
 
+/* === DARK MODE TEXT VISIBILITY FIXES === */
+/* Metabox backgrounds - darker so white text is visible */
+.postbox {
+	background: #2a2a2a !important;
+	color: white !important;
+}
+
+.postbox h2,
+.postbox h3,
+.postbox .hndle {
+	background: #333 !important;
+	color: white !important;
+}
+
+/* Input fields & labels in dark mode */
+#post-body input[type="text"],
+#post-body input[type="email"],
+#post-body textarea,
+#post-body select,
+.postbox input[type="text"],
+.postbox textarea,
+.postbox select {
+	background: #333 !important;
+	color: white !important;
+	border: 1px solid #444 !important;
+}
+
+.postbox label,
+#post-body label {
+	color: white !important;
+}
+
+/* Media button */
+#insert-media-button,
+.add_media {
+	background: #007cba !important;
+	color: white !important;
+	padding: 8px 16px !important;
+	min-height: 36px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	border-radius: 4px !important;
+	font-weight: 600 !important;
+	cursor: pointer !important;
+	border: none !important;
+}
+
+#insert-media-button:hover,
+.add_media:hover {
+	background: #005a87 !important;
+}
+
 /* === FIX: TITLE INPUT VISIBILITY === */
 #title {
-	color: #000 !important;
+	background: #333 !important;
+	color: white !important;
+	border: 1px solid #444 !important;
+}
+
+/* === FIX: CATEGORYDIV & TAXONOMY BOXES === */
+#categorydiv,
+#category-all,
+#tagsdiv-post_tag,
+#tagsdiv-post_category {
+	background: #2a2a2a !important;
+	color: white !important;
+}
+
+#categorydiv .tabs,
+#tagsdiv-post_tag .tabs {
+	border-bottom: 1px solid #444 !important;
+}
+
+#categorydiv input[type="checkbox"],
+#tagsdiv-post_tag input[type="text"] {
+	background: #333 !important;
+	color: white !important;
+	border: 1px solid #444 !important;
 }
 
 /* === FIX: MEDIA BUTTON STYLING === */
@@ -718,12 +794,15 @@ a[href*="wdeb_off"],
 	right: 20px;
 	z-index: 1000;
 	display: flex;
-	gap: 10px;
+	gap: 15px;
 	align-items: center;
 }
 
 .wdeb_visit_site a {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
 	padding: 8px 16px;
 	background: var(--primary-color);
 	color: white;
@@ -743,6 +822,10 @@ a[href*="wdeb_off"],
 
 .wdeb_visit_site a[href*="wdeb_off"],
 .wdeb_visit_site a[href*="wdeb_off"]:hover {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 32px;
 	background: #6c757d;
 }
 

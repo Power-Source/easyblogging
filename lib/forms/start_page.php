@@ -22,16 +22,6 @@
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/easyTooltip.js"></script> <!-- element tooltips -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.tablesorter.min.js"></script> <!-- tablesorter -->
 
-	<!--[if IE 8]>
-		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
-		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
-	<![endif]-->
-
-	<!--[if IE 7]>
-		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
-		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
-	<![endif]-->
-
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js"></script> <!-- visualize plugin for graphs / statistics -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js"></script> <!-- iphone like checkboxes -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.cleditor.min.js"></script> <!-- wysiwyg editor -->

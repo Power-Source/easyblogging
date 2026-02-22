@@ -1,0 +1,1308 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Easy Blogging\n"
+"POT-Creation-Date: 2023-11-01 12:47+0100\n"
+"PO-Revision-Date: 2023-11-01 12:49+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: easyblogging.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: psource/psource-plugin-update/vendor\n"
+
+#: easyblogging.php:57
+#, fuzzy
+msgid ""
+"Es gab ein Problem beim Bestimmen, wo das Easy Blogging-Plugin installiert "
+"ist. Bitte erneut installieren."
+msgstr ""
+"There was a problem determining where the Easy Blogging plugin is installed. "
+"Please install again."
+
+#: lib/class_wdeb_admin_form_renderer.php:16 lib/class_wdeb_admin_pages.php:563
+#: lib/plugins/wdeb-pro-force_free.php:73
+msgid "Ja"
+msgstr "Yes"
+
+#: lib/class_wdeb_admin_form_renderer.php:19 lib/class_wdeb_admin_pages.php:568
+#: lib/plugins/wdeb-pro-force_free.php:76
+msgid "Nein"
+msgstr "No"
+
+#: lib/class_wdeb_admin_form_renderer.php:31
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:57
+#, fuzzy
+msgid "Auszug"
+msgstr "Excerpt"
+
+#: lib/class_wdeb_admin_form_renderer.php:32
+#: lib/class_wdeb_admin_form_renderer.php:57
+#, fuzzy
+msgid "Ausgewähltes Bild"
+msgstr "Selected image"
+
+#: lib/class_wdeb_admin_form_renderer.php:33
+#, fuzzy
+msgid "Trackbacks senden"
+msgstr "Send trackbacks"
+
+#: lib/class_wdeb_admin_form_renderer.php:34
+#: lib/class_wdeb_admin_form_renderer.php:56
+#, fuzzy
+msgid "Benutzerdefinierte Felder"
+msgstr "User defined fields"
+
+#: lib/class_wdeb_admin_form_renderer.php:35
+#: lib/class_wdeb_admin_form_renderer.php:58
+#, fuzzy
+msgid "Diskussion"
+msgstr "Discussion"
+
+#: lib/class_wdeb_admin_form_renderer.php:36
+#: lib/class_wdeb_admin_form_renderer.php:59
+#, fuzzy
+msgid "Slug"
+msgstr "Slug"
+
+#: lib/class_wdeb_admin_form_renderer.php:37
+#: lib/class_wdeb_admin_form_renderer.php:60
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:56
+#, fuzzy
+msgid "Autor"
+msgstr "Author"
+
+#: lib/class_wdeb_admin_form_renderer.php:38
+#, fuzzy
+msgid "Format"
+msgstr "Format"
+
+#: lib/class_wdeb_admin_form_renderer.php:39
+msgid "Kategorien"
+msgstr "Categories"
+
+#: lib/class_wdeb_admin_form_renderer.php:40
+#, fuzzy
+msgid "Beitrag Tags"
+msgstr "Post tags"
+
+#: lib/class_wdeb_admin_form_renderer.php:41
+#, fuzzy
+msgid "Revisionen"
+msgstr "Revisions"
+
+#: lib/class_wdeb_admin_form_renderer.php:51
+#: lib/class_wdeb_admin_form_renderer.php:71
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:69
+#, fuzzy
+msgid ""
+"<p><b>Warnung:</b> Alle anderen Felder werden entsprechend ihren "
+"Bildschirmeinstellungen ein- oder ausgeblendet</p>"
+msgstr ""
+"<p><b>Warning:</b> All other fields are shown or hidden according to their "
+"screen settings</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:61
+#, fuzzy
+msgid "Seitenattribute"
+msgstr "Page attributes"
+
+#: lib/class_wdeb_admin_form_renderer.php:76
+#, fuzzy
+msgid "<p>Zeige die ClassicPress-Admin-Leiste im einfachen Modus an.</p>"
+msgstr "<p>Display the ClassicPress admin bar in simple mode.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:81
+#, fuzzy
+msgid ""
+"<p>Zeige im einfachen Modus kontextbezogene Hilfe- und Bildschirmoptionen an."
+"</p>"
+msgstr "<p>Display contextual help and screen options in easy mode.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:86
+#, fuzzy
+msgid "<p>Zeige die permanente Easy Bar oben rechts im Easy-Modus an.</p>"
+msgstr "<p>Display the permanent Easy Bar at the top right in Easy mode.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:113
+#, fuzzy
+msgid ""
+"<p>Benutzer mit ausgewählten Rollen müssen den einfachen Modus verwenden.</p>"
+msgstr "<p>Users with selected roles must use the simple mode.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:125
+#, fuzzy, php-format
+msgid "Standard %s"
+msgstr "Standard %s"
+
+#: lib/class_wdeb_admin_form_renderer.php:126
+#, fuzzy, php-format
+msgid "Streifen rot %s"
+msgstr "Strip red %s"
+
+#: lib/class_wdeb_admin_form_renderer.php:127
+#, fuzzy, php-format
+msgid "Streifen orange %s"
+msgstr "Stripe orange %s"
+
+#: lib/class_wdeb_admin_form_renderer.php:128
+#, fuzzy, php-format
+msgid "Streifen grün %s"
+msgstr "Strip green %s"
+
+#: lib/class_wdeb_admin_form_renderer.php:149
+#, fuzzy
+msgid ""
+"<p>Wenn diese Option auf \"Ja\" gesetzt ist, können neue Benutzer bei der "
+"ersten Anmeldung zwischen dem einfachen und dem erweiterten Modus wählen.</"
+"p><p>Ihre Auswahl wird ab diesem Zeitpunkt gespeichert und verwendet, "
+"solange diese Option aktiviert ist.</p>"
+msgstr ""
+"<p>If this option is set to \"Yes\", new users can choose between simple and "
+"advanced mode when they log in for the first time.</p><p>Their selection "
+"will be saved and used from that point on as long as this option is enabled."
+"</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:162
+#, fuzzy, php-format
+msgid "Aktuelles Logo:<br /> %s"
+msgstr "Current logo:<br /> %s"
+
+#: lib/class_wdeb_admin_form_renderer.php:163
+#, fuzzy
+msgid "Logo zurücksetzen"
+msgstr "Reset logo"
+
+#: lib/class_wdeb_admin_form_renderer.php:166
+#, fuzzy
+msgid ""
+"Lade Dein eigenes Logo hoch:<br /><em>*geeignete Logo-Abmessung: "
+"Breite=150px Höhe=80px oder mehr</em><br />"
+msgstr ""
+"Upload your own logo:<br /> *suitable<em> logo dimension: width=150px "
+"height=80px or more</em><br />"
+
+#: lib/class_wdeb_admin_form_renderer.php:173
+#, fuzzy
+msgid "Dashboard-Widget anzeigen"
+msgstr "Show Dashboard Widget"
+
+#: lib/class_wdeb_admin_form_renderer.php:177
+#, fuzzy
+msgid "Widget-Titel"
+msgstr "Widget title"
+
+#: lib/class_wdeb_admin_form_renderer.php:182
+#, fuzzy
+msgid "Widget-Inhalt"
+msgstr "Widget content"
+
+#: lib/class_wdeb_admin_form_renderer.php:217
+msgid "Löschen"
+msgstr "Delete"
+
+#: lib/class_wdeb_admin_form_renderer.php:219
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: lib/class_wdeb_admin_form_renderer.php:229
+#, fuzzy
+msgid ""
+"<p>Ziehe die Schritte per Drag&Drop, um sie in der gewünschten Reihenfolge "
+"zu sortieren.</p>"
+msgstr "<p>Drag and drop the steps to sort them in the desired order.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:231
+#, fuzzy
+msgid ""
+"<p>Aktiviere den Assistenten und ziehe die Schritte per Drag&Drop, um sie in "
+"der gewünschten Reihenfolge zu sortieren.</p>"
+msgstr ""
+"<p>Activate the wizard and drag and drop the steps to sort them in the "
+"desired order.</p>"
+
+#: lib/class_wdeb_admin_form_renderer.php:237
+#, fuzzy
+msgid "URL:"
+msgstr "URL:"
+
+#: lib/class_wdeb_admin_form_renderer.php:239
+#, fuzzy
+msgid "Verwaltungsseite (z.B. \"/post-new.php\" oder \"/themes.php\")"
+msgstr "Administration page (e.g. \"/post-new.php\" or \"/themes.php\")"
+
+#: lib/class_wdeb_admin_form_renderer.php:240
+#, fuzzy
+msgid "Webseiten-Seite (z.B. \"/\" oder \"/2007-06-05/ein-alter-beitrag\")"
+msgstr "Website page (e.g. \"/\" or \"/2007-06-05/a-age-post\")"
+
+#: lib/class_wdeb_admin_form_renderer.php:245
+#, fuzzy
+msgid "Titel:"
+msgstr "Title:"
+
+#: lib/class_wdeb_admin_form_renderer.php:249
+#, fuzzy
+msgid "Hilfe:"
+msgstr "Help:"
+
+#: lib/class_wdeb_admin_form_renderer.php:252
+msgid "Hinzufügen"
+msgstr "Add"
+
+#: lib/class_wdeb_admin_pages.php:43
+#, fuzzy
+msgid "Dieser Dateityp wird nicht unterstützt"
+msgstr "This file type is not supported"
+
+#. Plugin Name of the plugin/theme
+#: lib/class_wdeb_admin_pages.php:108 lib/class_wdeb_admin_pages.php:109
+#: lib/class_wdeb_admin_pages.php:268
+#, fuzzy
+msgid "Easy Blogging"
+msgstr "Easy Blogging"
+
+#: lib/class_wdeb_admin_pages.php:110
+#, fuzzy
+msgid "Easy Blogging Assistent"
+msgstr "Easy Blogging Assistant"
+
+#: lib/class_wdeb_admin_pages.php:111
+#, fuzzy
+msgid "Easy Blogging Tooltips"
+msgstr "Easy Blogging Tooltips"
+
+#: lib/class_wdeb_admin_pages.php:112
+#, fuzzy
+msgid "Erweiterungen"
+msgstr "Extensions"
+
+#: lib/class_wdeb_admin_pages.php:122
+#, fuzzy
+msgid "Editor Settings"
+msgstr "Editor Settings"
+
+#: lib/class_wdeb_admin_pages.php:123
+#, fuzzy
+msgid "Blende diese Meta-Felder auf den Seiten \"Beitrag bearbeiten\" aus"
+msgstr "Hide these meta fields on the \"Edit post\" pages"
+
+#: lib/class_wdeb_admin_pages.php:124
+#, fuzzy
+msgid "Blende diese Meta-Felder auf den Seiten \"Seite bearbeiten\" aus"
+msgstr "Hide these meta fields on the \"Edit page\" pages"
+
+#: lib/class_wdeb_admin_pages.php:125
+#, fuzzy
+msgid "Admin-Leiste anzeigen"
+msgstr "Show admin bar"
+
+#: lib/class_wdeb_admin_pages.php:126
+#, fuzzy
+msgid "Hilfe und Bildschirmoptionen anzeigen"
+msgstr "Show help and screen options"
+
+#: lib/class_wdeb_admin_pages.php:127
+#, fuzzy
+msgid "Easy Bar anzeigen"
+msgstr "Show Easy Bar"
+
+#: lib/class_wdeb_admin_pages.php:128
+#, fuzzy
+msgid "Erzwinge den \"Easy\"-Modus für Benutzer mit dieser Rolle"
+msgstr "Force \"Easy\" mode for users with this role"
+
+#: lib/class_wdeb_admin_pages.php:129
+#, fuzzy
+msgid "Erzwinge Startseite für neue Benutzer"
+msgstr "Force start page for new users"
+
+#: lib/class_wdeb_admin_pages.php:130
+#, fuzzy
+msgid "Logout-Link immer anzeigen"
+msgstr "Always show logout link"
+
+#: lib/class_wdeb_admin_pages.php:131
+#, fuzzy
+msgid "Verwende dieses Thema"
+msgstr "Use this theme"
+
+#: lib/class_wdeb_admin_pages.php:132
+#, fuzzy
+msgid "Verwende dieses Logo"
+msgstr "Use this logo"
+
+#: lib/class_wdeb_admin_pages.php:133
+#, fuzzy
+msgid "Dashboard-Widget"
+msgstr "Dashboard widget"
+
+#: lib/class_wdeb_admin_pages.php:134
+#, fuzzy
+msgid "Zeige &quot;Jetzt gerade&quot; in Dashboard"
+msgstr "Show &quot;Right now&quot; in Dashboard"
+
+#: lib/class_wdeb_admin_pages.php:140
+#, fuzzy
+msgid "Wizard Settings"
+msgstr "Wizard Settings"
+
+#: lib/class_wdeb_admin_pages.php:141
+#, fuzzy
+msgid "Assistent aktivieren"
+msgstr "Activate wizard"
+
+#: lib/class_wdeb_admin_pages.php:142
+#, fuzzy
+msgid "Konfiguriere die Assistentenschritte"
+msgstr "Configure the wizard steps"
+
+#: lib/class_wdeb_admin_pages.php:143
+#, fuzzy
+msgid "Neuen Assistentenschritt hinzufügen"
+msgstr "Add a new wizard step"
+
+#: lib/class_wdeb_admin_pages.php:149
+#, fuzzy
+msgid "Tooltips Settings"
+msgstr "Tooltips Settings"
+
+#: lib/class_wdeb_admin_pages.php:150
+#, fuzzy
+msgid "Zeige Tooltips"
+msgstr "Show tooltips"
+
+#: lib/class_wdeb_admin_pages.php:173
+#, fuzzy
+msgid "Aktiviere Easy Modus"
+msgstr "Activate Easy Mode"
+
+#: lib/class_wdeb_admin_pages.php:409
+#, fuzzy
+msgid "Unterstützer"
+msgstr "Supporters"
+
+#: lib/class_wdeb_admin_pages.php:417
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: lib/class_wdeb_admin_pages.php:418
+#, fuzzy
+msgid "Deine Startseite"
+msgstr "Your home page"
+
+#: lib/class_wdeb_admin_pages.php:425
+#, fuzzy
+msgid "Neuer Beitrag"
+msgstr "New contribution"
+
+#: lib/class_wdeb_admin_pages.php:426
+#, fuzzy
+msgid "Erstelle einen neuen Beitrag"
+msgstr "Create a new post"
+
+#: lib/class_wdeb_admin_pages.php:433
+#, fuzzy
+msgid "Meine Beiträge"
+msgstr "My contributions"
+
+#: lib/class_wdeb_admin_pages.php:434
+#, fuzzy
+msgid "Bearbeite Deine Beiträge"
+msgstr "Edit your contributions"
+
+#: lib/class_wdeb_admin_pages.php:441
+#, fuzzy
+msgid "Neue Seite"
+msgstr "New page"
+
+#: lib/class_wdeb_admin_pages.php:442
+#, fuzzy
+msgid "Erstelle eine neue Seite"
+msgstr "Create a new page"
+
+#: lib/class_wdeb_admin_pages.php:449
+#, fuzzy
+msgid "Meine Seiten"
+msgstr "My pages"
+
+#: lib/class_wdeb_admin_pages.php:450
+#, fuzzy
+msgid "Bearbeite Deine Seiten"
+msgstr "Edit your pages"
+
+#: lib/class_wdeb_admin_pages.php:457
+#, fuzzy
+msgid "Kommentare"
+msgstr "Comments"
+
+#: lib/class_wdeb_admin_pages.php:458
+#, fuzzy
+msgid "Moderiere Deine Kommentare"
+msgstr "Moderate your comments"
+
+#: lib/class_wdeb_admin_pages.php:465
+#, fuzzy
+msgid "Free Themes"
+msgstr "Free Themes"
+
+#: lib/class_wdeb_admin_pages.php:466 lib/class_wdeb_admin_pages.php:474
+#: lib/class_wdeb_admin_pages.php:482
+#, fuzzy
+msgid "Ändere das Erscheinungsbild Deiner Webseite"
+msgstr "Change the look and feel of your website"
+
+#: lib/class_wdeb_admin_pages.php:473
+#, fuzzy
+msgid "Premium Themes"
+msgstr "Premium Themes"
+
+#: lib/class_wdeb_admin_pages.php:481
+#, fuzzy
+msgid "Themes verwalten"
+msgstr "Manage Themes"
+
+#: lib/class_wdeb_admin_pages.php:489
+#, fuzzy
+msgid "Design anpassen"
+msgstr "Customise design"
+
+#: lib/class_wdeb_admin_pages.php:490
+#, fuzzy
+msgid "Personalisiere Deine Webseite"
+msgstr "Personalise your website"
+
+#: lib/class_wdeb_admin_pages.php:498
+#, fuzzy
+msgid "Unterstütze uns!"
+msgstr "Support us!"
+
+#: lib/class_wdeb_admin_pages.php:505
+msgid "Profil"
+msgstr "Profile"
+
+#: lib/class_wdeb_admin_pages.php:506
+#, fuzzy
+msgid "Bearbeite Deine Profilinformationen"
+msgstr "Edit your profile information"
+
+#: lib/class_wdeb_admin_pages.php:556
+#, fuzzy
+msgid "Einfacher Startmodus für das Bloggen"
+msgstr "Easy start mode for blogging"
+
+#: lib/class_wdeb_admin_pages.php:559
+#, fuzzy
+msgid "Starte im Easy Modus"
+msgstr "Start in Easy Mode"
+
+#: lib/class_wdeb_admin_pages.php:573
+#, fuzzy
+msgid "Frage mich, wenn ich mich das nächste Mal anmelde"
+msgstr "Ask me the next time I sign up"
+
+#: lib/class_wdeb_tooltips.php:44 lib/forms/wizard_settings.php:29
+#: lib/plugins/wdeb-menu-manage_items.php:330
+msgid "Hilfe"
+msgstr "Help"
+
+#: lib/forms/blogging_settings.php:13 lib/forms/tooltips_settings.php:13
+#: lib/forms/wizard_settings.php:13
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:74
+#: lib/plugins/wdeb-menu-manage_items.php:195
+#: lib/plugins/wdeb-theme-admin_footer.php:91
+#, fuzzy
+msgid "Änderungen speichern"
+msgstr "Save changes"
+
+#: lib/forms/partials/header.php:252
+#, fuzzy
+msgid "Beende Easy Modus"
+msgstr "Exit Easy Mode"
+
+#: lib/forms/partials/header.php:278
+#, fuzzy
+msgid "Webseite besuchen"
+msgstr "Visit website"
+
+#: lib/forms/partials/menu-default.php:46
+#: lib/forms/partials/menu-default.php:49 lib/forms/start_page.php:210
+#: lib/forms/start_page.php:213 lib/forms/start_page.php:262
+#, fuzzy
+msgid "Assistentmodus"
+msgstr "Assistant mode"
+
+#: lib/forms/partials/menu-default.php:50
+#, fuzzy
+msgid "Rufe den geführten Schritt-für-Schritt-Modus auf"
+msgstr "Enter the guided step-by-step mode"
+
+#: lib/forms/partials/menu-default.php:60
+#: lib/forms/partials/menu-default.php:63 lib/forms/partials/menu-wizard.php:61
+#: lib/forms/partials/menu-wizard.php:64
+#: lib/plugins/wdeb-theme-toolbar_switch_button.php:38
+#, fuzzy
+msgid "Beende Easy-Modus"
+msgstr "Exit Easy Mode"
+
+#: lib/forms/partials/menu-default.php:64
+#, fuzzy
+msgid "Kehre zum erweiterten Modus zurück"
+msgstr "Return to Advanced Mode"
+
+#: lib/forms/partials/menu-default.php:74
+#: lib/forms/partials/menu-default.php:77 lib/forms/partials/menu-wizard.php:74
+#: lib/forms/partials/menu-wizard.php:77
+msgid "Abmelden"
+msgstr "Logout"
+
+#: lib/forms/partials/menu-default.php:78 lib/forms/partials/menu-wizard.php:78
+#, fuzzy
+msgid "Melde Dich von Deiner Webseite ab"
+msgstr "Log out of your website"
+
+#: lib/forms/partials/menu-wizard.php:16
+#, fuzzy, php-format
+msgid "Schritt %d"
+msgstr "Step %d"
+
+#: lib/forms/partials/menu-wizard.php:33
+#, fuzzy
+msgid "Nächster Schritt"
+msgstr "Next step"
+
+#: lib/forms/partials/menu-wizard.php:36
+#, fuzzy
+msgid "Fahre mit dem nächsten Schritt fort"
+msgstr "Proceed to the next step"
+
+#: lib/forms/partials/menu-wizard.php:47 lib/forms/partials/menu-wizard.php:50
+#, fuzzy
+msgid "Beende den Assistentenmodus"
+msgstr "Exit the wizard mode"
+
+#: lib/forms/partials/menu-wizard.php:51
+#, fuzzy
+msgid "Verlasse den geführten Schritt-für-Schritt-Modus"
+msgstr "Exit guided step-by-step mode"
+
+#: lib/forms/partials/menu-wizard.php:65
+#, fuzzy
+msgid "Kehre zum Standardmodus zurück"
+msgstr "Return to standard mode"
+
+#: lib/forms/plugins_settings.php:2
+#, fuzzy
+msgid "Easy Blogging Erweiterungen"
+msgstr "Easy Blogging Extensions"
+
+#: lib/forms/plugins_settings.php:12
+#, fuzzy
+msgid "Erweiterung-Name"
+msgstr "Extension name"
+
+#: lib/forms/plugins_settings.php:13
+#, fuzzy
+msgid "Erweiterung-Beschreibung"
+msgstr "Extension description"
+
+#: lib/forms/plugins_settings.php:28
+#, fuzzy
+msgid "Deaktivieren"
+msgstr "Deactivate"
+
+#: lib/forms/plugins_settings.php:30 lib/forms/start_page.php:257
+#: lib/forms/start_page.php:262 lib/forms/start_page.php:266
+#, fuzzy
+msgid "Aktivieren"
+msgstr "Activate"
+
+#: lib/forms/plugins_settings.php:36
+#, fuzzy, php-format
+msgid "Version %s"
+msgstr "Version %s"
+
+#: lib/forms/plugins_settings.php:38
+#, fuzzy, php-format
+msgid "von %s"
+msgstr "from %s"
+
+#: lib/forms/start_page.php:11
+#, fuzzy
+msgid "Fang hier an"
+msgstr "Start here"
+
+#: lib/forms/start_page.php:199 lib/forms/start_page.php:202
+#: lib/forms/start_page.php:257
+#, fuzzy
+msgid "Easy Modus"
+msgstr "Easy Mode"
+
+#: lib/forms/start_page.php:199
+#, fuzzy
+msgid "Ich möchte im einfachen Modus starten"
+msgstr "I would like to start in simple mode"
+
+#: lib/forms/start_page.php:210
+#, fuzzy
+msgid "Ich möchte in einem geführten, schrittweisen Modus beginnen"
+msgstr "I would like to start in a guided, step-by-step mode"
+
+#: lib/forms/start_page.php:218 lib/forms/start_page.php:221
+#: lib/forms/start_page.php:266
+#, fuzzy
+msgid "Standart Modus"
+msgstr "Standard mode"
+
+#: lib/forms/start_page.php:218
+#, fuzzy
+msgid "Ich möchte im Standardmodus starten"
+msgstr "I would like to start in standard mode"
+
+#: lib/forms/start_page.php:239 lib/forms/start_page.php:243
+#, fuzzy, php-format
+msgid "Willkommen bei %s"
+msgstr "Welcome to %s"
+
+#: lib/forms/start_page.php:247
+#, fuzzy, php-format
+msgid ""
+"Wähle aus, wie Du Deine Webseite verwenden möchtest - %s (Du kannst "
+"jederzeit ändern)"
+msgstr ""
+"Choose how you want to use your website - %s (you can change at any time)"
+
+#: lib/forms/start_page.php:258
+#, fuzzy
+msgid "Ideal für Anfänger, einfach und schnell den Blog verwalten"
+msgstr "Ideal for beginners, manage your blog quickly and easily"
+
+#: lib/forms/start_page.php:263
+#, fuzzy
+msgid ""
+"Noch besser für Anfänger, bietet eine geführte Schritt-für-Schritt-Tour "
+"durch den Blog"
+msgstr ""
+"Even better for beginners, offers a guided step-by-step tour of the blog"
+
+#: lib/forms/start_page.php:267
+#, fuzzy
+msgid "Ermöglicht die Feinabstimmung Deines Blogs"
+msgstr "Allows you to fine tune your blog"
+
+#: lib/forms/start_page.php:270
+#, fuzzy
+msgid ""
+"Denke daran, egal welchen Modus Du jetzt auswählst, Du kannst jederzeit "
+"zurückschalten"
+msgstr ""
+"Remember, no matter which mode you choose now, you can always switch back"
+
+#: lib/forms/tooltips_settings.php:2
+#, fuzzy
+msgid "Easy Blogging-Einstellungen"
+msgstr "Easy Blogging Settings"
+
+#: lib/forms/wizard_settings.php:2
+#, fuzzy
+msgid "Einfache Assistenteneinstellungen"
+msgstr "Simple assistant settings"
+
+#: lib/forms/wizard_settings.php:21 lib/plugins/wdeb-menu-manage_items.php:316
+msgid "Titel"
+msgstr "Academic title"
+
+#: lib/forms/wizard_settings.php:25 lib/plugins/wdeb-menu-manage_items.php:258
+#: lib/plugins/wdeb-menu-manage_items.php:320
+msgid "URL"
+msgstr "URL"
+
+#: lib/help/edit-comments.php:4
+#, fuzzy
+msgid ""
+"Hier kannst Du Kommentare zu Deinen Blogbeiträgen bearbeiten, genehmigen, "
+"löschen oder darauf antworten. Klicke auf Registerkarten oder wähle "
+"\"Filter\", um nur bestimmte Kommentare anzuzeigen."
+msgstr ""
+"Here you can edit, approve, delete or reply to comments on your blog posts. "
+"Click on tabs or select \"Filter\" to view only certain comments."
+
+#: lib/help/edit-comments.php:6
+#, fuzzy
+msgid ""
+"Hier kannst Du die Kommentare verwalten, die sich in Deinem Blog befinden"
+msgstr "Here you can manage the comments that are in your blog"
+
+#: lib/help/edit-page.php:4
+#, fuzzy
+msgid ""
+"Nachfolgend findest Du eine Liste Deiner Seiten. Du kannst schnell wichtige "
+"Informationen zu ihnen anzeigen und diese bearbeiten, löschen oder anzeigen."
+msgstr ""
+"Below you will find a list of your pages. You can quickly view important "
+"information about them and edit, delete or view them."
+
+#: lib/help/edit-page.php:6
+#, fuzzy
+msgid "Hier kannst Du die Seiten verwalten, die sich in Deinem Blog befinden"
+msgstr "Here you can manage the pages that are in your blog"
+
+#: lib/help/edit-post.php:4
+#, fuzzy
+msgid ""
+"Nachfolgend findest Du eine Liste Deiner Beiträge. Du kannst schnell "
+"wichtige Informationen zu ihnen anzeigen und diese bearbeiten, löschen oder "
+"anzeigen."
+msgstr ""
+"Below you will find a list of your posts. You can quickly view important "
+"information about them and edit, delete or view them."
+
+#: lib/help/edit-post.php:6
+#, fuzzy
+msgid "Hier kannst Du die Beiträge verwalten, die sich in Deinem Blog befinden"
+msgstr "Here you can manage the posts that are in your blog"
+
+#: lib/help/page.php:4
+#, fuzzy
+msgid ""
+"Erstelle unten eine neue \"statische\" Seite – diese wird nicht oben in "
+"Deinen neuesten Beiträgen angezeigt."
+msgstr ""
+"Create a new \"static\" page at the bottom - this will not show at the top "
+"of your latest posts."
+
+#: lib/help/page.php:5
+#, fuzzy
+msgid "Gib Deiner Seite hier einen Titel."
+msgstr "Give your page a title here."
+
+#: lib/help/page.php:6
+#, fuzzy
+msgid ""
+"Schreibe den Inhalt Deiner Seite, lade Bilder oder Audio hoch und wähle, ob "
+"Du HTML (Code) oder Visual (wie Word) verwenden möchtest. Unter der "
+"Registerkarte „HTML“ kannst Du Einbettungscode für Videos und Widgets "
+"einfügen."
+msgstr ""
+"Write the content of your page, upload images or audio and choose whether "
+"you want to use HTML (code) or Visual (like Word). Under the HTML tab, you "
+"can insert embed code for videos and widgets."
+
+#: lib/help/page.php:7
+#, fuzzy
+msgid ""
+"Veröffentliche Deine Seite oder speichere sie unten als Entwurf. Du kannst "
+"es auch privat machen oder die Veröffentlichung für die Zukunft planen, "
+"indem Du auf den Link \"Bearbeiten\" klickst."
+msgstr ""
+"Publish your page or save it as a draft below. You can also make it private "
+"or schedule it to be published in the future by clicking on the \"Edit\" "
+"link."
+
+#: lib/help/page.php:9
+#, fuzzy
+msgid ""
+"Eine Seite ist ein <em>eigenständiges</em> Element, das nicht oben in Deinem "
+"Blog erscheint – z.B. eine <em>Über Mich-Seite</em> oder eine Seite mit "
+"Kontaktdaten, einer Kursübersicht oder sogar einer LEBENSLAUF. Deaktiviere "
+"Kommentare für ein professionelles Erscheinungsbild."
+msgstr ""
+"A page is a <em>standalone</em> element that does not appear at the top of "
+"your blog - e.g. an <em>About Me page</em> or a page with contact details, a "
+"course overview or even a LIFE page. Disable comments for a professional "
+"look."
+
+#: lib/help/post.php:4
+#, fuzzy
+msgid "Schreibe einen neuen Beitrag, der oben in Deinem Blog erscheint."
+msgstr "Write a new post that will appear at the top of your blog."
+
+#: lib/help/post.php:5
+#, fuzzy
+msgid "Die besten Beitragstitel sind normalerweise sehr beschreibend."
+msgstr "The best post titles are usually very descriptive."
+
+#: lib/help/post.php:6
+#, fuzzy
+msgid ""
+"Schreibe den Inhalt Deines Beitrags, lade Bilder oder Audio hoch und wähle, "
+"ob Du HTML (Code) oder Visual (wie Word) verwenden möchtest. Unter der "
+"Registerkarte „HTML“ kannst Du Einbettungscode für Videos und Widgets "
+"einfügen."
+msgstr ""
+"Write the content of your post, upload images or audio and choose whether "
+"you want to use HTML (code) or Visual (like Word). Under the HTML tab, you "
+"can insert embed code for videos and widgets."
+
+#: lib/help/post.php:7
+#, fuzzy
+msgid ""
+"Du kannst Deinen Beitrag als Entwurf speichern oder ihn privat machen, indem "
+"Du unten neben „Sichtbarkeit“ auf „Bearbeiten“ klickst. Du kannst auch die "
+"zukünftige Veröffentlichung von Beiträgen planen, indem Du neben \"Sofort\" "
+"auf \"Bearbeiten\" klickst. "
+msgstr ""
+"You can save your post as a draft or make it private by clicking \"Edit\" "
+"next to \"Visibility\" at the bottom. You can also schedule the future "
+"publication of posts by clicking on \"Edit\" next to \"Immediate\"."
+
+#: lib/help/post.php:8
+#, fuzzy
+msgid ""
+"Tags sind eine großartige Möglichkeit, Suchmaschinen dabei zu helfen, Deine "
+"Beiträge zu finden oder Dir bei der Organisation Deiner Inhalte zu helfen. "
+"Füge so viele hinzu, wie Du kannst!"
+msgstr ""
+"Tags are a great way to help search engines find your posts or help you "
+"organise your content. Add as many as you can!"
+
+#: lib/help/post.php:9
+#, fuzzy
+msgid ""
+"Kategorien sind ernster als Tags. Sie sind die Hauptthemen Deines Blogs."
+msgstr ""
+"Categories are more serious than tags. They are the main topics of your blog."
+
+#: lib/help/post.php:11
+#, fuzzy
+msgid "Eine lange Reihe von Hilfe hier"
+msgstr "A long line of help here"
+
+#: lib/help/themes.php:4
+#, fuzzy
+msgid ""
+"Ändere das Design Deines Blogs, zeige eine Vorschau an und aktiviere neue "
+"Themes."
+msgstr "Change the design of your blog, preview and activate new themes."
+
+#: lib/help/themes.php:5
+#, fuzzy
+msgid ""
+"Dies ist das Design, das Du derzeit für Deinen Blog verwendest. Wenn Du es "
+"ändern möchtest, kannst Du unten aus den verfügbaren Designs auswählen"
+msgstr ""
+"This is the theme you are currently using for your blog. If you want to "
+"change it, you can choose from the available themes below"
+
+#: lib/help/themes.php:6
+#, fuzzy
+msgid ""
+"Du kannst eines dieser Designs auswählen und Dein Blog wird automatisch so "
+"aktualisiert, dass er wie folgt aussieht. Klicke einfach auf eines der "
+"Bilder, um eine Vorschau zu erhalten, wie Dein Blog mit diesem Design "
+"aussehen wird."
+msgstr ""
+"You can choose one of these designs and your blog will automatically be "
+"updated to look like this. Just click on one of the images to get a preview "
+"of how your blog will look with this design."
+
+#: lib/help/themes.php:8
+#, fuzzy
+msgid "Hier kannst Du das Theme Deines Blogs ändern"
+msgstr "Here you can change the theme of your blog"
+
+#: lib/help/widgets.php:4
+#, fuzzy
+msgid ""
+"Um Elemente zur Seitenleiste Deines Blogs hinzuzufügen, ziehe sie per Drag & "
+"Drop nach unten."
+msgstr "To add elements to the sidebar of your blog, drag and drop them down."
+
+#: lib/help/widgets.php:6
+#, fuzzy
+msgid "Hier kannst Du anpassen, was in Deiner Seitenleiste angezeigt wird"
+msgstr "Here you can customise what is displayed in your sidebar"
+
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:63
+#, fuzzy
+msgid "Dashboard-Elemente"
+msgstr "Dashboard elements"
+
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:81
+#, fuzzy
+msgid "Widgets"
+msgstr "Widgets"
+
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:82
+#, fuzzy
+msgid "Zuvor ausgeblendete Dashboard-Elemente"
+msgstr "Previously hidden dashboard elements"
+
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:96
+#, fuzzy
+msgid ""
+"Kein aufgezeichneter Verlauf. Möglicherweise möchtest Du zuerst das "
+"Dashboard Deines Blogs besuchen."
+msgstr ""
+"No recorded history. You may want to visit your blog's dashboard first."
+
+#: lib/plugins/wdeb-dashboard-widgets_setup.php:109
+#, fuzzy
+msgid ""
+"Wenn Du Dein Dashboard-Widget hier nicht siehst, besuche zuerst das "
+"Dashboard Deiner Webseite im einfachen Modus."
+msgstr ""
+"If you don't see your dashboard widget here, first visit your website's "
+"dashboard in simple mode."
+
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:45
+#, fuzzy
+msgid "Blende diese Produktmetaboxen aus"
+msgstr "Hide these product metaboxes"
+
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:58
+#, fuzzy
+msgid "Produktkategorien"
+msgstr "Product categories"
+
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:59
+#, fuzzy
+msgid "Produkt Tags"
+msgstr "Product Tags"
+
+#: lib/plugins/wdeb-editor-control_product_metaboxes.php:60
+#, fuzzy
+msgid "Produkt Download"
+msgstr "Product Download"
+
+#: lib/plugins/wdeb-menu-manage_items.php:184
+#, fuzzy
+msgid "Menüpunkte"
+msgstr "Menu items"
+
+#: lib/plugins/wdeb-menu-manage_items.php:202
+#, fuzzy
+msgid "Assistenteneinstellungen"
+msgstr "Assistant settings"
+
+#: lib/plugins/wdeb-menu-manage_items.php:203
+#, fuzzy
+msgid ""
+"Menüelemente ein- oder ausblenden<br/><small>(Zum Neuordnen per Drag & Drop "
+"verschieben)</small>"
+msgstr ""
+"Show or hide menu items<br/><small>(Drag and drop to rearrange)</small>"
+
+#: lib/plugins/wdeb-menu-manage_items.php:204
+#, fuzzy
+msgid "Menüpunkt hinzufügen"
+msgstr "Add menu item"
+
+#: lib/plugins/wdeb-menu-manage_items.php:205
+msgid "Zurücksetzen"
+msgstr "Reset"
+
+#: lib/plugins/wdeb-menu-manage_items.php:249
+#: lib/plugins/wdeb-menu-manage_items.php:299
+#, fuzzy
+msgid "Alle auswählen"
+msgstr "Select all"
+
+#: lib/plugins/wdeb-menu-manage_items.php:251
+#: lib/plugins/wdeb-menu-manage_items.php:301
+#, fuzzy
+msgid "Alle abwählen"
+msgstr "Deselect all"
+
+#: lib/plugins/wdeb-menu-manage_items.php:256
+#, fuzzy
+msgid "Zeige"
+msgstr "Show"
+
+#: lib/plugins/wdeb-menu-manage_items.php:257
+#, fuzzy
+msgid "Element"
+msgstr "Element"
+
+#: lib/plugins/wdeb-menu-manage_items.php:259
+#, fuzzy
+msgid "Berechtigung"
+msgstr "Authorisation"
+
+#: lib/plugins/wdeb-menu-manage_items.php:260
+msgid "Typ"
+msgstr "Type"
+
+#: lib/plugins/wdeb-menu-manage_items.php:261
+#: lib/plugins/wdeb-menu-manage_items.php:291
+msgid "Entfernen"
+msgstr "Remove"
+
+#: lib/plugins/wdeb-menu-manage_items.php:285
+#, fuzzy
+msgid "Built-in"
+msgstr "Built-in"
+
+#: lib/plugins/wdeb-menu-manage_items.php:286
+#, fuzzy
+msgid "Mein Element"
+msgstr "My element"
+
+#: lib/plugins/wdeb-menu-manage_items.php:286
+#, fuzzy
+msgid "Plugin hinzugefügt"
+msgstr "Plugin added"
+
+#: lib/plugins/wdeb-menu-manage_items.php:324
+#, fuzzy
+msgid "Symbol"
+msgstr "Symbol"
+
+#: lib/plugins/wdeb-menu-manage_items.php:326
+#, fuzzy
+msgid "Symbol auswählen"
+msgstr "Select symbol"
+
+#: lib/plugins/wdeb-menu-manage_items.php:347
+#, fuzzy
+msgid "Diesen Menüeintrag anzeigen für:"
+msgstr "Show this menu item for:"
+
+#: lib/plugins/wdeb-menu-manage_items.php:350
+#, fuzzy, php-format
+msgid "Nur %s"
+msgstr "Only %s"
+
+#: lib/plugins/wdeb-menu-manage_items.php:353
+#, fuzzy, php-format
+msgid "%s und höher"
+msgstr "%s and higher"
+
+#: lib/plugins/wdeb-menu-manage_items.php:359
+#, fuzzy
+msgid "... oder gib die Funktion manuell ein"
+msgstr "... or enter the function manually"
+
+#: lib/plugins/wdeb-menu-manage_items.php:362
+#, fuzzy
+msgid "Neues Element hinzufügen"
+msgstr "Add new element"
+
+#: lib/plugins/wdeb-menu-manage_items.php:365
+#, fuzzy
+msgid "Du kannst diese Makros in Deinen URLs verwenden:"
+msgstr "You can use these macros in your URLs:"
+
+#: lib/plugins/wdeb-menu-manage_items.php:368
+#, fuzzy
+msgid "Dein aktueller Blog-Pfad"
+msgstr "Your current blog path"
+
+#: lib/plugins/wdeb-menu-manage_items.php:370
+#, fuzzy
+msgid "Eine saubere Abmelde-URL"
+msgstr "A clean unsubscribe URL"
+
+#: lib/plugins/wdeb-menu-manage_items.php:372
+#, fuzzy
+msgid "Beispiele für \"Mediathek\":"
+msgstr "Examples of \"media library"
+
+#: lib/plugins/wdeb-menu-manage_items.php:375
+#, fuzzy
+msgid "Pfad zur Mediathek bei Subdomains"
+msgstr "Path to the media library for subdomains"
+
+#: lib/plugins/wdeb-menu-manage_items.php:377
+#, fuzzy
+msgid "Pfad zur Mediathek bei Subverzeichnis"
+msgstr "Path to the media library for subdirectory"
+
+#: lib/plugins/wdeb-menu-manage_items.php:383
+#, fuzzy
+msgid ""
+"Verwende die folgenden Schaltflächen, um einige Aspekte Deiner Anpassung auf "
+"ihre Standardeinstellungen zurückzusetzen"
+msgstr ""
+"Use the following buttons to reset some aspects of your customisation to "
+"their default settings"
+
+#: lib/plugins/wdeb-menu-manage_items.php:384
+#, fuzzy
+msgid "Menüreihenfolge zurücksetzen"
+msgstr "Reset menu sequence"
+
+#: lib/plugins/wdeb-menu-manage_items.php:386
+#, fuzzy
+msgid "Neue Menüpunkte zurücksetzen"
+msgstr "Reset new menu items"
+
+#: lib/plugins/wdeb-menu-manage_items.php:388
+#, fuzzy
+msgid "Alles zurücksetzen"
+msgstr "Reset everything"
+
+#: lib/plugins/wdeb-menu-manage_items.php:398
+#, fuzzy
+msgid ""
+"Warnung: Dadurch werden alle Deine benutzerdefinierten Bestellungen entfernt "
+"und auf die Standardeinstellungen zurückgesetzt. Fortsetzen?"
+msgstr ""
+"Warning: This will remove all your custom orders and reset them to the "
+"default settings. Continue?"
+
+#: lib/plugins/wdeb-menu-manage_items.php:399
+#, fuzzy
+msgid ""
+"Warnung: Dadurch werden alle neuen Menüelemente entfernt, die Du hinzugefügt "
+"hast. Fortsetzen?"
+msgstr "Warning: This will remove any new menu items you have added. Continue?"
+
+#: lib/plugins/wdeb-menu-manage_items.php:400
+#, fuzzy
+msgid "Warnung: Dadurch werden alle Anpassungen entfernt. Fortsetzen?"
+msgstr "Warning: This will remove all customisations. Continue?"
+
+#: lib/plugins/wdeb-menu-wizard_toolbar_redirection.php:24
+#, fuzzy
+msgid ""
+"Wenn Du diesem Link folgst, wird der Assistentenmodus beendet. Bist Du "
+"sicher, dass Du fortfahren möchtest?"
+msgstr ""
+"If you follow this link, you will exit the wizard mode. Are you sure you "
+"want to continue?"
+
+#: lib/plugins/wdeb-pro-force_free.php:62
+#, fuzzy
+msgid "Erzwinge einfachen Modus auf kostenlosen Webseiten"
+msgstr "Force easy mode on free websites"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:80
+#: lib/plugins/wdeb-theme-admin_footer.php:100
+#, fuzzy
+msgid "Admin Footer"
+msgstr "Admin Footer"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:84
+#, fuzzy
+msgid "Easy Blogging Admin Footer"
+msgstr "Easy Blogging Admin Footer"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:101
+#, fuzzy
+msgid "Verwende vorhandene Admin-Fußzeile"
+msgstr "Use existing admin footer"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:105
+#, fuzzy
+msgid "Benutzerdefinierter Footer"
+msgstr "Custom Footer"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:106
+#, fuzzy
+msgid "Verwende eine benutzerdefinierte Fußzeile"
+msgstr "Use a custom footer"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:107
+#, fuzzy
+msgid "Benutzerdefinierter Footer Inhalt"
+msgstr "Custom Footer Content"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:110
+msgid "Einstellungen"
+msgstr "Settings"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:111
+#, fuzzy
+msgid "Verwende die Fußzeile auch auf den Assistentenseiten"
+msgstr "Use the footer also on the wizard pages"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:142
+#, fuzzy
+msgid "Verwende die Fußzeile wie im Admin-Footer-Plugin definiert"
+msgstr "Use the footer as defined in the admin footer plugin"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:146
+#, fuzzy
+msgid "Verwende die Fußzeile wie im Feld unten definiert"
+msgstr "Use the footer as defined in the field below"
+
+#: lib/plugins/wdeb-theme-admin_footer.php:155
+#, fuzzy
+msgid "Wende die Fußzeile auch auf Assistentenseiten an"
+msgstr "Apply the footer to wizard pages as well"
+
+#: lib/plugins/wdeb-theme-toolbar_switch_button.php:32
+#, fuzzy
+msgid "Aktiviere Easy-Modus"
+msgstr "Activate Easy Mode"
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:56
+#, fuzzy
+msgid "View details"
+msgstr "View details"
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:79
+#, fuzzy, php-format
+msgid "Weitere Informationen zu %s"
+msgstr "Further information on %s"
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:130
+#, fuzzy
+msgid "Auf neuere Version prüfen"
+msgstr "Check for newer version"
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:217
+#, fuzzy, php-format
+msgctxt "the plugin title"
+msgid "Keine neuere Version von %s im PSOURCE REPO gefunden."
+msgstr "No newer version of %s found in PSOURCE REPO."
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:219
+#, fuzzy, php-format
+msgctxt "the plugin title"
+msgid "Im PSOURCE REPO ist eine <b>neuere Version von %s</b> verfügbar!."
+msgstr "A <b>newer version of %s</b> is available in the PSOURCE REPO!"
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:221
+#, fuzzy, php-format
+msgctxt "the plugin title"
+msgid ""
+"Entschuldige, es konnte nicht festgestellt werden, ob Updates für %s "
+"verfügbar sind."
+msgstr "Sorry, it could not be determined if updates are available for %s."
+
+#: psource/psource-plugin-update/Puc/v5p0/Plugin/Ui.php:227
+#, fuzzy, php-format
+msgid "Unbekannter PSOURCE-UPDATTER-Status \"%s\""
+msgstr "Unknown PSOURCE-UPDATTER status \"%s\""
+
+#: psource/psource-plugin-update/Puc/v5p0/Vcs/PluginUpdateChecker.php:98
+#, fuzzy
+msgid "There is no changelog available."
+msgstr "There is no changelog available."
+
+#. Plugin URI of the plugin/theme
+#, fuzzy
+msgid "https://n3rds.work/piestingtal_source/easy-blogging-plugin/"
+msgstr "https://n3rds.work/piestingtal_source/easy-blogging-plugin/"
+
+#. Description of the plugin/theme
+#, fuzzy
+msgid ""
+"Ändert den ClassicPress-Verwaltungsbereich so, dass er standardmäßig einen "
+"\"Anfänger\" -Bereich enthält, mit der Option, zum normalen \"Erweitert\" -"
+"Bereich zu wechseln."
+msgstr ""
+"Changes the ClassicPress administration area to include a \"Beginner\" area "
+"by default, with the option to switch to the normal \"Advanced\" area."
+
+#. Author of the plugin/theme
+#, fuzzy
+msgid "PSOURCE"
+msgstr "PSOURCE"
+
+#. Author URI of the plugin/theme
+#, fuzzy
+msgid "https://n3rds.work"
+msgstr "https://n3rds.work"

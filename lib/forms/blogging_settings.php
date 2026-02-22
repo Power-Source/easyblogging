@@ -1,7 +1,6 @@
 <style>
 /* Essential modern styles - inline with !important to override d defaults */
 .wrap.wdeb-modern { background: #f8f9fa !important; padding: 20px !important; display: block !important; }
-.wrap.wdeb-modern::before { content: "✓ Modern Styles Active" !important; display: block !important; background: #4CAF50 !important; color: white !important; padding: 10px !important; margin: -20px -20px 20px -20px !important; text-align: center !important; font-weight: bold !important; }
 .wrap.wdeb-modern h1, .wrap.wdeb-modern h2 { color: #1a1a1a !important; font-weight: 600 !important; margin: 20px 0 30px 0 !important; border-bottom: 2px solid #007cba !important; padding-bottom: 15px !important; font-size: 24px !important; }
 .wdeb-section { background: white !important; margin: 0 0 20px 0 !important; padding: 30px !important; border-radius: 8px !important; border-left: 4px solid #007cba !important; box-shadow: 0 1px 3px rgba(0,0,0,.08) !important; }
 .wdeb-form-group { margin: 25px 0 !important; display: flex !important; gap: 20px !important; align-items: flex-start !important; }
@@ -16,9 +15,37 @@
 .wdeb-toggle-switch input:checked + .wdeb-toggle-slider { background: #007cba !important; border-color: #007cba !important; }
 .wdeb-toggle-switch input:checked + .wdeb-toggle-slider:before { transform: translateX(24px) !important; }
 .wdeb-checkbox-list { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important; gap: 15px !important; }
-.wdeb-checkbox-item { display: flex !important; align-items: center !important; gap: 10px !important; }
-.wdeb-checkbox-item input[type="checkbox"] { width: 18px !important; height: 18px !important; cursor: pointer !important; accent-color: #007cba !important; }
-.wdeb-checkbox-item label { flex: 1 !important; cursor: pointer !important; margin: 0 !important; color: #1a1a1a !important; font-weight: 500 !important; }
+.wdeb-checkbox-item { display: flex !important; align-items: center !important; gap: 10px !important; position: relative !important; }
+.wdeb-checkbox-item input[type="checkbox"] { 
+    appearance: none !important; 
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    width: 20px !important; 
+    height: 20px !important; 
+    cursor: pointer !important; 
+    border: 2px solid #999 !important; 
+    border-radius: 3px !important; 
+    background: #fff !important; 
+    padding: 0 !important;
+    margin: 0 !important; 
+    transition: all 0.15s ease !important; 
+    flex-shrink: 0 !important; 
+    outline: none !important;
+    position: relative !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+}
+.wdeb-checkbox-item input[type="checkbox"]::before,
+.wdeb-checkbox-item input[type="checkbox"]::after { 
+    display: none !important;
+    content: '' !important;
+}
+.wdeb-checkbox-item input[type="checkbox"]:hover { border-color: #007cba !important; background: #f5fbff !important; }
+.wdeb-checkbox-item input[type="checkbox"]:focus { border-color: #007cba !important; box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1) !important; }
+.wdeb-checkbox-item input[type="checkbox"]:checked { background: #007cba !important; border-color: #007cba !important; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E") !important; background-size: 14px !important; background-position: center !important; background-repeat: no-repeat !important; }
+.wdeb-checkbox-item label { flex: 1 !important; cursor: pointer !important; margin: 0 !important; color: #1a1a1a !important; font-weight: 500 !important; user-select: none !important; -webkit-user-select: none !important; }
 .wdeb-alert { padding: 15px 20px !important; border-radius: 4px !important; border-left: 4px solid !important; margin: 15px 0 !important; }
 .wdeb-alert-info { background: #d6ebf7 !important; border-color: #0071a1 !important; color: #003d5c !important; }
 .wdeb-theme-gallery { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important; gap: 20px !important; }

@@ -13,15 +13,20 @@ class Wdeb_AdminFormRenderer {
 
 	function _create_checkbox ($name, $pfx = 'wdeb') {
 		$opt = $this->_get_option($name, $pfx);
-		//$value = @$opt[$name]; //PhP8 Fix
-		$value = $opt ?? null; // Use the null coalescing operator for PHP 7+
-		return
-			"<input type='radio' name='{$pfx}[{$name}]' id='{$name}-yes' value='1' " . ((int)$value ? 'checked="checked" ' : '') . " /> " .
-			"<label for='{$name}-yes'>" . __('Ja', 'wdeb') . "</label>" .
-			'&nbsp;' .
-			"<input type='radio' name='{$pfx}[{$name}]' id='{$name}-no' value='0' " . (!(int)$value ? 'checked="checked" ' : '') . " /> " .
-			"<label for='{$name}-no'>" . __('Nein', 'wdeb') . "</label>" .
-		"";
+		$value = $opt ?? null;
+		$checked = (int)$value ? 'checked' : '';
+		return sprintf(
+			'<label class="wdeb-toggle-switch">
+				<input type="hidden" name="%s[%s]" value="0" />
+				<input type="checkbox" name="%s[%s]" value="1" %s />
+				<span class="wdeb-toggle-slider"></span>
+			</label>',
+			$pfx,
+			$name,
+			$pfx,
+			$name,
+			$checked
+		);
 	}
 
 	function _create_radiobox ($name, $value) {
@@ -46,13 +51,24 @@ class Wdeb_AdminFormRenderer {
 		);
 		$opt = $this->_get_option('post_boxes');
 		$opt = is_array($opt) ? $opt : array();
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Beitrags-Meta-Felder', 'wdeb') . '</label><small>' . __('Blende diese Felder auf den Seiten "Beitrag bearbeiten" aus', 'wdeb') . '</small></div>';
+		echo '<div class="wdeb-form-control">';
+		echo '<div class="wdeb-checkbox-list">';
 		foreach ($boxes as $bid => $label) {
 			$checked = in_array($bid, $opt) ? 'checked="checked"' : '';
-			echo "<input type='hidden' name='wdeb[post_boxes][{$bid}]' value='0' />" .
-				"<input {$checked} type='checkbox' name='wdeb[post_boxes][{$bid}]' value='{$bid}' id='wdeb_post_boxes_{$bid}' /> " .
-				"<label for='wdeb_post_boxes_{$bid}'>{$label}</label><br />\n";
+			echo '<div class="wdeb-checkbox-item">';
+			echo "<input type='hidden' name='wdeb[post_boxes][{$bid}]' value='0' />";
+			echo "<input {$checked} type='checkbox' name='wdeb[post_boxes][{$bid}]' value='{$bid}' id='wdeb_post_boxes_{$bid}' />";
+			echo "<label for='wdeb_post_boxes_{$bid}'>{$label}</label>";
+			echo '</div>';
 		}
-		_e('<p><b>Warnung:</b> Alle anderen Felder werden entsprechend ihren Bildschirmeinstellungen ein- oder ausgeblendet</p>', 'wdeb');
+		echo '</div>';
+		echo '<div class="wdeb-alert wdeb-alert-info">';
+		echo '<strong>' . __('Info:', 'wdeb') . '</strong> ';
+		echo __('Alle anderen Felder werden entsprechend ihren Bildschirmeinstellungen ein- oder ausgeblendet.', 'wdeb');
+		echo '</div>';
+		echo '</div></div>';
 	}
 
 	function create_metaboxes_pages_box () {
@@ -66,141 +82,211 @@ class Wdeb_AdminFormRenderer {
 		);
 		$opt = $this->_get_option('page_boxes');
 		$opt = is_array($opt) ? $opt : array();
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Seiten-Meta-Felder', 'wdeb') . '</label><small>' . __('Blende diese Felder auf den Seiten "Seite bearbeiten" aus', 'wdeb') . '</small></div>';
+		echo '<div class="wdeb-form-control">';
+		echo '<div class="wdeb-checkbox-list">';
 		foreach ($boxes as $bid => $label) {
 			$checked = in_array($bid, $opt) ? 'checked="checked"' : '';
-			echo "<input type='hidden' name='wdeb[page_boxes][{$bid}]' value='0' />" .
-				"<input type='checkbox' {$checked} name='wdeb[page_boxes][{$bid}]' value='{$bid}' id='wdeb_page_boxes_{$bid}' /> " .
-				"<label for='wdeb_page_boxes_{$bid}'>{$label}</label><br />\n";
+			echo '<div class="wdeb-checkbox-item">';
+			echo "<input type='hidden' name='wdeb[page_boxes][{$bid}]' value='0' />";
+			echo "<input type='checkbox' {$checked} name='wdeb[page_boxes][{$bid}]' value='{$bid}' id='wdeb_page_boxes_{$bid}' />";
+			echo "<label for='wdeb_page_boxes_{$bid}'>{$label}</label>";
+			echo '</div>';
 		}
-		_e('<p><b>Warnung:</b> Alle anderen Felder werden entsprechend ihren Bildschirmeinstellungen ein- oder ausgeblendet</p>', 'wdeb');
+		echo '</div>';
+		echo '<div class="wdeb-alert wdeb-alert-info">';
+		echo '<strong>' . __('Info:', 'wdeb') . '</strong> ';
+		echo __('Alle anderen Felder werden entsprechend ihren Bildschirmeinstellungen ein- oder ausgeblendet.', 'wdeb');
+		echo '</div>';
+		echo '</div></div>';
 	}
 
 	function create_admin_bar_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Admin-Leiste anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('admin_bar');
-		_e('<p>Zeige die ClassicPress-Admin-Leiste im einfachen Modus an.</p>', 'wdeb');
+		echo '<p>' . __('Zeige die ClassicPress-Admin-Leiste im einfachen Modus an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_screen_options_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Bildschirmoptionen anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('screen_options');
-		_e('<p>Zeige im einfachen Modus kontextbezogene Hilfe- und Bildschirmoptionen an.</p>', 'wdeb');
+		echo '<p>' . __('Zeige im einfachen Modus kontextbezogene Hilfe- und Bildschirmoptionen an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_easy_bar_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Easy Bar anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('easy_bar');
-		_e('<p>Zeige die permanente Easy Bar oben rechts im Easy-Modus an.</p>', 'wdeb');
+		echo '<p>' . __('Zeige die permanente Easy Bar oben rechts im Easy-Modus an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_auto_enter_role_box () {
 		global $wp_roles;
-		/*
-		$_roles = array (
-			'administrator' => __('Site Admin'),
-			'editor' => __('Editor'),
-			'author' => __('Author'),
-			'contributor' => __('Contributor'),
-			'subscriber' => __('Subscriber'),
-		);
-		*/
 		if (!isset($wp_roles)) $wp_roles = new WP_Roles();
 		$_roles = $wp_roles->get_names();
 		$roles = $this->_get_option('auto_enter_role');
 		$roles = is_array($roles) ? $roles : array();
 
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Erzwingte Easy Mode Rollen', 'wdeb') . '</label><small>' . __('Benutzer mit ausgewählten Rollen müssen den einfachen Modus verwenden', 'wdeb') . '</small></div>';
+		echo '<div class="wdeb-form-control">';
+		echo '<div class="wdeb-checkbox-list">';
 		foreach ($_roles as $role=>$label) {
 			$checked = in_array($role, $roles) ? 'checked="checked"' : '';
-			echo '' .
-				"<input type='checkbox' name='wdeb[auto_enter_role][{$role}]' id='wdeb-auto_enter_role-{$role}' value='{$role}' {$checked} />" .
-				' ' .
-				"<label for='wdeb-auto_enter_role-{$role}'>{$label}</label>" .
-			"<br />";
+			echo '<div class="wdeb-checkbox-item">';
+			echo "<input type='checkbox' name='wdeb[auto_enter_role][{$role}]' id='wdeb-auto_enter_role-{$role}' value='{$role}' {$checked} />";
+			echo "<label for='wdeb-auto_enter_role-{$role}'>{$label}</label>";
+			echo '</div>';
 		}
-		_e('<p>Benutzer mit ausgewählten Rollen müssen den einfachen Modus verwenden.</p>', 'wdeb');
+		echo '</div>';
+		echo '</div></div>';
 	}
 
 	function create_plugin_theme_box () {
-    $themes_dir = apply_filters('wdeb_plugin_themes_dir', WDEB_PLUGIN_BASE_DIR . '/themes/');
-    $themes_url = apply_filters('wdeb_plugin_themes_url', WDEB_PLUGIN_URL . '/themes/');
+		$themes_dir = apply_filters('wdeb_plugin_themes_dir', WDEB_PLUGIN_BASE_DIR . '/themes/');
+		$themes_url = apply_filters('wdeb_plugin_themes_url', WDEB_PLUGIN_URL . '/themes/');
 
-    if(function_exists( 'scandir' )) {
-    $themes = scandir($themes_dir);
-           } else {
+		if(function_exists('scandir')) {
+			$themes = scandir($themes_dir);
+		} else {
+			$themes = apply_filters('wdeb_plugin_themes_list', array(
+				"default" => __("Standard %s", 'wdeb'),
+				"stripes_red" => __("Streifen rot %s", 'wdeb'),
+				"stripes_orange" => __("Streifen orange %s", 'wdeb'),
+				"stripes_green" => __("Streifen grün %s", 'wdeb')
+			));
+		}
 
-        $themes = apply_filters('wdeb_plugin_themes_list', array(
-			"default" => __("Standard %s", 'wdeb'),
-			"stripes_red" => __("Streifen rot %s", 'wdeb'),
-            "stripes_orange" => __("Streifen orange %s", 'wdeb'),
-            "stripes_green" => __("Streifen grün %s", 'wdeb')
-		));
-            }
+		$current_theme = $this->_get_option('plugin_theme');
+
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Plugin-Theme', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
+		echo '<div class="wdeb-theme-gallery">';
 
 		foreach ($themes as $theme) {
-        if ($theme == '.' || $theme == '..') {
-
-            } else {
+			if (in_array($theme, array('.', '..'))) {
+				continue;
+			}
 
 			$img = $themes_url . $theme . '/screenshot.png';
-            echo "<label style='overflow: hidden; margin-bottom: 20px; float:left; width: 233px; height: 550px;' for='plugin_theme-{$theme}'>";
-			echo $this->_create_radiobox('plugin_theme', $theme) . $theme . '<br />';
-            echo "<img src='" . $img . "' />";
-            echo "</label>";
-            }
+			$is_selected = ($current_theme == $theme) ? 'selected' : '';
+
+			echo '<label class="wdeb-theme-item ' . $is_selected . '" for="plugin_theme-' . esc_attr($theme) . '">';
+			echo '<input type="radio" name="wdeb[plugin_theme]" id="plugin_theme-' . esc_attr($theme) . '" value="' . esc_attr($theme) . '" ' . ($current_theme == $theme ? 'checked' : '') . ' />';
+			echo '<div class="wdeb-theme-screenshot">';
+			echo '<img src="' . esc_url($img) . '" alt="' . esc_attr($theme) . '" />';
+			echo '</div>';
+			echo '<div class="wdeb-theme-name">' . esc_html($theme) . '</div>';
+			echo '</label>';
 		}
+
+		echo '</div>';
+		echo '</div></div>';
 	}
 
 	function create_hijack_start_page_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Startseite nach Login', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('hijack_start_page');
-		_e(
-			'<p>Wenn diese Option auf "Ja" gesetzt ist, können neue Benutzer bei der ersten Anmeldung zwischen dem einfachen und dem erweiterten Modus wählen.</p>' .
-			'<p>Ihre Auswahl wird ab diesem Zeitpunkt gespeichert und verwendet, solange diese Option aktiviert ist.</p>',
-		'wdeb');
+		echo '<p>' . __('Wenn aktiviert, können neue Benutzer bei der ersten Anmeldung zwischen dem einfachen und dem erweiterten Modus wählen.', 'wdeb') . '</p>';
+		echo '<p>' . __('Ihre Auswahl wird ab diesem Zeitpunkt gespeichert und verwendet, solange diese Option aktiviert ist.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_show_logout_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Abmelden-Link anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('show_logout');
+		echo '<p>' . __('Zeige den Abmelden-Link im Easy-Modus an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_logo_box () {
 		$opts = new Wdeb_Options;
 		$logo = $opts->get_logo();
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Plugin-Logo', 'wdeb') . '</label><small>' . __('Empfohlene Größe: 150x80px oder größer', 'wdeb') . '</small></div>';
+		echo '<div class="wdeb-form-control">';
 		if ($logo) {
-			printf (__("Aktuelles Logo:<br /> %s", 'wdeb'), "<img id='wdeb-logo-logo_output' src='{$logo}' /><br />");
-			echo '<a href="#remove-logo" id="wdeb-logo-remove_logo">' . __('Logo zurücksetzen', 'wdeb') . '</a><br />';
+			echo '<div class="wdeb-logo-preview">';
+			printf('<img src="%s" alt="Logo" />', esc_url($logo));
+			echo '</div>';
+			echo '<div class="wdeb-logo-actions">';
+			echo '<a href="#remove-logo" id="wdeb-logo-remove_logo">' . __('Logo zurücksetzen', 'wdeb') . '</a>';
+			echo '</div>';
 		}
-		echo "<input type='hidden' name='wdeb[wdeb_logo]' id='wdeb-logo-custom_logo' value='{$logo}' />";
-		_e('Lade Dein eigenes Logo hoch:<br /><em>*geeignete Logo-Abmessung: Breite=150px Höhe=80px oder mehr</em><br />', 'wdeb');
-		echo " <input type='file' name='wdeb_logo' />";
-
+		echo '<input type="hidden" name="wdeb[wdeb_logo]" id="wdeb-logo-custom_logo" value="' . esc_url($logo) . '" />';
+		echo '<div class="wdeb-file-input-wrapper">';
+		echo '<input type="file" name="wdeb_logo" id="wdeb_logo_file" />';
+		echo '<label for="wdeb_logo_file" class="wdeb-file-input-label">' . __('Logo hochladen', 'wdeb') . '</label>';
+		echo '</div>';
+		echo '</div></div>';
 	}
 
 	function create_dashboard_widget_box () {
-		echo
-			'<labeld for="show_dashboard_widget-yes">' . __('Dashboard-Widget anzeigen', 'wdeb') . '</label> ',
-			$this->_create_checkbox('show_dashboard_widget'),
-		'<br />';
-		echo
-			'<labeld for="widget_title">' . __('Widget-Titel', 'wdeb') . '</label> ',
-			'<input type="text" class="widefat" id="widget_title" name="wdeb[widget_title]" value="' .
-				stripslashes($this->_get_option('widget_title')) .
-			'" />',
-		'<br />';
-		echo '<label for="widget_contents">' . __('Widget-Inhalt', 'wdeb') . '</label><br />';
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Dashboard-Widget', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
+		echo $this->_create_checkbox('show_dashboard_widget');
+		echo '<p>' . __('Zeige ein Dashboard-Widget mit benutzerdefinierten Inhalten an.', 'wdeb') . '</p>';
+		echo '</div></div>';
+
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label for="widget_title">' . __('Widget-Titel', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
+		echo '<input type="text" class="widefat" id="widget_title" name="wdeb[widget_title]" value="' .
+			esc_attr(stripslashes($this->_get_option('widget_title'))) .
+		'" />';
+		echo '</div></div>';
+
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label for="widget_contents">' . __('Widget-Inhalt', 'wdeb') . '</label><small>' . __('HTML wird unterstützt', 'wdeb') . '</small></div>';
+		echo '<div class="wdeb-form-control">';
 		echo '<textarea id="widget_contents" class="widefat" rows="8" name="wdeb[widget_contents]">' .
-			stripslashes($this->_get_option('widget_contents')) .
+			esc_textarea(stripslashes($this->_get_option('widget_contents'))) .
 		'</textarea>';
+		echo '</div></div>';
 	}
 
 	function create_dashboard_right_now_widget_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Dashboard "Right Now" Widget', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('dashboard_right_now');
+		echo '<p>' . __('Zeige das "Right Now" Dashboard-Widget an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 /*** Tooltips ***/
 	function create_show_tooltips_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Tooltips anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('show_tooltips', 'wdeb_help');
+		echo '<p>' . __('Zeige kontextbezogene Tooltips im Easy-Modus an.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 /*** Wizard ***/
 	function create_wizard_enabled_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Assistent aktivieren', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('wizard_enabled', 'wdeb_wizard');
+		echo '<p>' . __('Aktiviere den Einrichtungsassistenten für neue Benutzer.', 'wdeb') . '</p>';
+		echo '</div></div>';
 	}
 
 	function create_wizard_steps_box () {

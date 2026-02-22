@@ -1,0 +1,610 @@
+/* ================================
+   Easy Blogging - Modernes Admin Panel
+   ================================ */
+
+/* ========== Container & Layout ========== */
+
+.wrap.wdeb-modern {
+    background: #f8f9fa;
+    padding: 20px 0;
+}
+
+.wdeb-modern h1,
+.wdeb-modern h2 {
+    color: #1a1a1a;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 20px 30px 20px;
+    padding: 0;
+}
+
+.wdeb-modern h2 {
+    font-size: 20px;
+    margin: 40px 20px 20px 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #007cba;
+    color: #007cba;
+}
+
+/* ========== Form Sections ========== */
+
+.wdeb-section {
+    background: white;
+    margin: 0 20px 20px 20px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid #007cba;
+}
+
+.wdeb-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.wdeb-section p {
+    margin: 0 0 15px 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+.wdeb-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* ========== Form Groups ========== */
+
+.wdeb-form-group {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.wdeb-form-group:last-child {
+    margin-bottom: 0;
+}
+
+.wdeb-form-label {
+    flex: 0 0 300px;
+    padding-top: 8px;
+}
+
+.wdeb-form-label label {
+    display: block;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.wdeb-form-label small {
+    display: block;
+    color: #999;
+    font-weight: 400;
+    margin-top: 5px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.wdeb-form-control {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ========== Toggle Switch Component ========== */
+
+.wdeb-toggle-wrapper {
+    display: inline-flex;
+    gap: 0;
+}
+
+.wdeb-toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 32px;
+}
+
+.wdeb-toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.wdeb-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.3s;
+    border-radius: 32px;
+    border: 2px solid transparent;
+}
+
+.wdeb-toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.wdeb-toggle-switch input:checked + .wdeb-toggle-slider {
+    background-color: #007cba;
+    border-color: #007cba;
+}
+
+.wdeb-toggle-switch input:checked + .wdeb-toggle-slider:before {
+    transform: translateX(24px);
+}
+
+.wdeb-toggle-switch input:focus + .wdeb-toggle-slider {
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+.wdeb-toggle-switch input:disabled + .wdeb-toggle-slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========== Checkbox List ========== */
+
+.wdeb-checkbox-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.wdeb-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wdeb-checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #007cba;
+}
+
+.wdeb-checkbox-item label {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* ========== Radio Button List (modern horizontal) ========== */
+
+.wdeb-radio-group {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.wdeb-radio-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wdeb-radio-item input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #007cba;
+}
+
+.wdeb-radio-item label {
+    cursor: pointer;
+    margin: 0;
+    color: #1a1a1a;
+    font-weight: 500;
+}
+
+/* ========== Text Input ========== */
+
+.wdeb-form-control input[type="text"],
+.wdeb-form-control input[type="email"],
+.wdeb-form-control input[type="password"],
+.wdeb-form-control input[type="url"],
+.wdeb-form-control textarea,
+.wdeb-form-control select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.wdeb-form-control input[type="text"]:focus,
+.wdeb-form-control input[type="email"]:focus,
+.wdeb-form-control input[type="password"]:focus,
+.wdeb-form-control input[type="url"]:focus,
+.wdeb-form-control textarea:focus,
+.wdeb-form-control select:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+.wdeb-form-control textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.wdeb-form-control select {
+    height: auto;
+}
+
+/* ========== File Input ========== */
+
+.wdeb-file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.wdeb-file-input-wrapper input[type="file"] {
+    position: absolute;
+    left: -9999px;
+}
+
+.wdeb-file-input-label {
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #007cba;
+    color: white;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.wdeb-file-input-label:hover {
+    background-color: #005a87;
+}
+
+.wdeb-file-input-wrapper input[type="file"]:focus + .wdeb-file-input-label {
+    outline: 2px solid #007cba;
+    outline-offset: 2px;
+}
+
+/* ========== Button ========== */
+
+.wdeb-form-group .button,
+.wdeb-button {
+    padding: 10px 20px;
+    background-color: #007cba;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.wdeb-form-group .button:hover,
+.wdeb-button:hover {
+    background-color: #005a87;
+}
+
+.wdeb-form-group .button-secondary,
+.wdeb-button-secondary {
+    background-color: #f3f4f6;
+    color: #1a1a1a;
+    border: 1px solid #ddd;
+}
+
+.wdeb-form-group .button-secondary:hover,
+.wdeb-button-secondary:hover {
+    background-color: #e5e7eb;
+    border-color: #ccc;
+}
+
+.submit {
+    margin: 30px 20px 0 20px;
+}
+
+.submit input[type="submit"] {
+    padding: 12px 32px;
+    font-size: 16px;
+    height: auto;
+}
+
+/* ========== Alert Messages ========== */
+
+.wdeb-alert {
+    padding: 15px 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border-left: 4px solid;
+}
+
+.wdeb-alert-info {
+    background-color: #d6ebf7;
+    border-color: #0071a1;
+    color: #003d5c;
+}
+
+.wdeb-alert-warning {
+    background-color: #fcf5e5;
+    border-color: #dba617;
+    color: #7c5823;
+}
+
+.wdeb-alert-success {
+    background-color: #d4f4dd;
+    border-color: #28a745;
+    color: #155724;
+}
+
+.wdeb-alert-error {
+    background-color: #fce4e4;
+    border-color: #dc3545;
+    color: #721c24;
+}
+
+.wdeb-alert strong {
+    font-weight: 600;
+}
+
+.wdeb-alert p {
+    margin: 0;
+}
+
+.wdeb-alert p + p {
+    margin-top: 10px;
+}
+
+/* ========== Tabs ========== */
+
+.wdeb-tabs-nav {
+    display: flex;
+    gap: 10px;
+    border-bottom: 2px solid #e5e7eb;
+    margin: 0 20px 20px 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.wdeb-tabs-nav li {
+    margin: 0;
+    padding: 0;
+}
+
+.wdeb-tabs-nav a {
+    display: block;
+    padding: 15px 20px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: colors 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.wdeb-tabs-nav a:hover,
+.wdeb-tabs-nav a.active {
+    color: #007cba;
+    border-bottom-color: #007cba;
+}
+
+.wdeb-tab-content {
+    display: none;
+}
+
+.wdeb-tab-content.active {
+    display: block;
+}
+
+/* ========== Logo Upload ========== */
+
+.wdeb-logo-preview {
+    margin-bottom: 20px;
+    max-width: 200px;
+}
+
+.wdeb-logo-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.wdeb-logo-actions {
+    margin-bottom: 20px;
+}
+
+.wdeb-logo-actions a {
+    display: inline-block;
+    padding: 8px 12px;
+    color: #dc3545;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.wdeb-logo-actions a:hover {
+    text-decoration: underline;
+}
+
+/* ========== Theme Selection ========== */
+
+.wdeb-theme-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.wdeb-theme-item {
+    position: relative;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid #e5e7eb;
+    transition: all 0.2s;
+}
+
+.wdeb-theme-item:hover {
+    border-color: #007cba;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.wdeb-theme-item input[type="radio"] {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 2;
+    accent-color: #007cba;
+}
+
+.wdeb-theme-item.selected {
+    border-color: #007cba;
+}
+
+.wdeb-theme-item.selected::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background-color: #007cba;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 3;
+}
+
+.wdeb-theme-screenshot {
+    width: 100%;
+    height: 200px;
+    background: #f5f5f5;
+    overflow: hidden;
+}
+
+.wdeb-theme-screenshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.wdeb-theme-name {
+    padding: 12px;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/* ========== Responsive ========== */
+
+@media (max-width: 768px) {
+    .wdeb-form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .wdeb-form-label {
+        flex: 1 1 auto;
+    }
+    
+    .wdeb-checkbox-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .wdeb-radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .wdeb-theme-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .wdeb-section {
+        margin: 0 10px 15px 10px;
+        padding: 20px;
+    }
+    
+    .wdeb-modern h1,
+    .wdeb-modern h2 {
+        margin: 20px 10px;
+    }
+}
+
+/* ========== Accessibility ========== */
+
+@media (prefers-reduced-motion: reduce) {
+    .wdeb-toggle-slider,
+    .wdeb-toggle-slider:before,
+    .wdeb-form-control input,
+    .wdeb-form-control textarea,
+    .wdeb-form-control select,
+    .wdeb-file-input-label,
+    .wdeb-button,
+    .wdeb-theme-item {
+        transition: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .wrap.wdeb-modern {
+        background: #1a1a1a;
+    }
+    
+    .wdeb-section {
+        background: #2a2a2a;
+        border-left-color: #4a9eff;
+    }
+    
+    .wdeb-section h3,
+    .wdeb-form-label label {
+        color: #e5e5e5;
+    }
+    
+    .wdeb-form-control input[type="text"],
+    .wdeb-form-control input[type="email"],
+    .wdeb-form-control input[type="password"],
+    .wdeb-form-control input[type="url"],
+    .wdeb-form-control textarea,
+    .wdeb-form-control select {
+        background-color: #333;
+        color: #e5e5e5;
+        border-color: #444;
+    }
+    
+    .wdeb-form-control input:focus,
+    .wdeb-form-control textarea:focus,
+    .wdeb-form-control select:focus {
+        border-color: #4a9eff;
+        background-color: #333;
+    }
+}

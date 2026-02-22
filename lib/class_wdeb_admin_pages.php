@@ -217,6 +217,13 @@ class Wdeb_AdminPages {
 				'jquery-ui-progressbar', 
 			));
 		}
+		// Enqueue modern admin assets
+		wp_enqueue_script('wdeb_modern_admin', WDEB_PLUGIN_URL . '/js/wdeb_modern_admin.js', array('jquery'), false, true);
+		
+		// Localize nonce for AJAX plugin handlers
+		wp_localize_script('jquery', 'wdebSettings', array(
+			'pluginNonce' => wp_create_nonce('wdeb_plugin_action'),
+		));
 		printf(
 			'<script type="text/javascript">_wdebLandingPage = "%s";</script>',
 			apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_on')
@@ -229,13 +236,14 @@ class Wdeb_AdminPages {
 		$version = preg_replace('/-.*$/', '', $wp_version);
 		
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) return;
-		wp_enqueue_style('wdeb_switch', WDEB_PLUGIN_URL . '/css/wdeb_switch.css');
+		wp_enqueue_style('wdeb_switch', WDEB_PLUGIN_URL . '/css/wdeb_switch.css', array(), time());
+		wp_enqueue_style('wdeb_modern_admin', WDEB_PLUGIN_URL . '/css/wdeb_modern_admin.css', array(), time());
 		if (version_compare($version, '3.3', '<')) {
 			echo '<style type="text/css">.wdeb_switch {height: 13px;}</style>';
 		} else {
 			echo '<style type="text/css">.wdeb_switch {height: 24px !important;}</style>';
 		}
-        wp_enqueue_style('wdeb_global', WDEB_PLUGIN_URL . '/css/wdeb_global.css');
+        wp_enqueue_style('wdeb_global', WDEB_PLUGIN_URL . '/css/wdeb_global.css', array(), time());
 	}
 
 	function apply_text_overrides ($haystack) {
@@ -660,10 +668,7 @@ class Wdeb_AdminPages {
 			add_action('edit_user_profile_update', array($this, 'save_hijacking_profile_option'));
 		}
 
-		// AJAX plugin handlers - with nonce for client-side use
-		wp_localize_script('jquery', 'wdebSettings', array(
-			'pluginNonce' => wp_create_nonce('wdeb_plugin_action'),
-		));
+		// AJAX plugin handlers
 		add_action('wp_ajax_wdeb_activate_plugin', array($this, 'json_activate_plugin'));
 		add_action('wp_ajax_wdeb_deactivate_plugin', array($this, 'json_deactivate_plugin'));
 	}

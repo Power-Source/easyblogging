@@ -1,6 +1,6 @@
 <style>
 /* Essential modern styles - inline with !important to override d defaults */
-.wrap.wdeb-modern { background: #f8f9fa !important; padding: 20px !important; display: block !important; }
+.wrap.wdeb-modern { background: #f8f9fa !important; padding: 20px 20px 80px !important; display: block !important; }
 .wrap.wdeb-modern h1, .wrap.wdeb-modern h2 { color: #1a1a1a !important; font-weight: 600 !important; margin: 20px 0 30px 0 !important; border-bottom: 2px solid #007cba !important; padding-bottom: 15px !important; font-size: 24px !important; }
 .wdeb-section { background: white !important; margin: 0 0 20px 0 !important; padding: 30px !important; border-radius: 8px !important; border-left: 4px solid #007cba !important; box-shadow: 0 1px 3px rgba(0,0,0,.08) !important; }
 .wdeb-form-group { margin: 25px 0 !important; display: flex !important; gap: 20px !important; align-items: flex-start !important; }
@@ -54,7 +54,7 @@
 .wdeb-theme-item input[type="radio"] { position: absolute !important; top: 10px !important; left: 10px !important; cursor: pointer !important; z-index: 2 !important; accent-color: #007cba !important; }
 .wdeb-theme-item.selected { border-color: #007cba !important; }
 .wdeb-theme-item.selected::after { content: "✓" !important; position: absolute !important; top: 10px !important; right: 10px !important; width: 30px !important; height: 30px !important; background: #007cba !important; color: white !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 3 !important; font-weight: bold !important; font-size: 16px !important; }
-.wdeb-theme-screenshot { width: 100% !important; height: 200px !important; background: #f5f5f5 !important; }
+.wdeb-theme-screenshot { width: 100% !important; height: 550px !important; background: #f5f5f5 !important; }
 .wdeb-theme-screenshot img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 .wdeb-theme-name { padding: 12px !important; background: white !important; font-weight: 500 !important; color: #1a1a1a !important; font-size: 14px !important; }
 .wdeb-logo-preview { margin: 15px 0 !important; max-width: 200px !important; }

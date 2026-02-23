@@ -219,6 +219,7 @@ class Wdeb_AdminFormRenderer {
 		echo '<div class="wdeb-form-group">';
 		echo '<div class="wdeb-form-label"><label>' . __('Plugin-Logo', 'wdeb') . '</label><small>' . __('Empfohlene Größe: 150x80px oder größer', 'wdeb') . '</small></div>';
 		echo '<div class="wdeb-form-control">';
+		wp_nonce_field('wdeb_logo_upload', 'wdeb_logo_nonce');
 		if ($logo) {
 			echo '<div class="wdeb-logo-preview">';
 			printf('<img src="%s" alt="Logo" />', esc_url($logo));

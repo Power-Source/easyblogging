@@ -39,7 +39,7 @@
 					var left = (e.pageX + options.xOffset);
 					$me.attr("title", "");
 					if ($("#" + options.tooltipId).length) $("#" + options.tooltipId).remove();
-					$("body").append("<div id='"+ options.tooltipId + "'>" + title + "</div>");		
+					$("<div>").attr("id", options.tooltipId).text(title).appendTo("body");		
 					$("#" + options.tooltipId).css("position", "absolute");
 					
 					var height = $("#" + options.tooltipId).height();

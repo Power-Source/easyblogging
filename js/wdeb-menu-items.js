@@ -80,11 +80,10 @@ $("#wdeb_menu_items-manual_capability").on("click", function () {
 	if (!$select.length) return false;
 	
 	$select.replaceWith(
-		'<input type="text" class="widefat" id="' + 
-			$select.attr("id") + '" name="' + 
-			$select.attr("name") + '" value="' + 
-			$select.val() + 
-		'" />'
+		$('<input type="text" class="widefat" />')
+			.attr("id", $select.attr("id"))
+			.attr("name", $select.attr("name"))
+			.attr("value", $select.val())
 	);
 	$me.remove();
 	

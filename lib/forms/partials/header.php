@@ -21,6 +21,21 @@ if (!$this->data->get_option('admin_bar')) {
 
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js'></script> <!-- visualize plugin for graphs / statistics -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js'></script> <!-- iphone like checkboxes -->
+	<script type='text/javascript'>
+	(function ($) {
+		if (!$ || $.browser) {
+			return;
+		}
+
+		var ua = (window.navigator && window.navigator.userAgent ? window.navigator.userAgent : '').toLowerCase();
+		$.browser = {
+			msie: /msie|trident/.test(ua),
+			mozilla: /firefox/.test(ua),
+			webkit: /webkit/.test(ua),
+			opera: /opera|opr\//.test(ua)
+		};
+	})(window.jQuery);
+	</script>
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.cleditor.min.js'></script> <!-- wysiwyg editor -->
 
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->

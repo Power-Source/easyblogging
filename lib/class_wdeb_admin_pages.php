@@ -233,6 +233,29 @@ class Wdeb_AdminPages {
 
 	}
 
+	/**
+	 * Disable selected core dashboard scripts in Easy Mode.
+	 *
+	 * Easy Mode replaces parts of the default admin markup. Some core scripts
+	 * assume original DOM nodes exist and throw runtime errors when they do not.
+	 */
+	function maybe_disable_incompatible_dashboard_scripts () {
+		if (!$this->is_in_easymode()) {
+			return;
+		}
+
+		$screen = function_exists('get_current_screen') ? get_current_screen() : null;
+		if (!$screen || $screen->base !== 'dashboard') {
+			return;
+		}
+
+		wp_dequeue_script('site-health');
+		wp_deregister_script('site-health');
+
+		wp_dequeue_script('postbox');
+		wp_deregister_script('postbox');
+	}
+
 	function css_print_styles () {
 		global $wp_version;
 		$version = preg_replace('/-.*$/', '', $wp_version);
@@ -654,6 +677,7 @@ class Wdeb_AdminPages {
 			add_action('admin_init', array($this, 'initialize_easy_mode'));
 		}
 		add_action('admin_print_scripts', array($this, 'js_print_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'maybe_disable_incompatible_dashboard_scripts'), 100);
 		add_action('admin_print_styles', array($this, 'css_print_styles'));
 		add_filter('wdeb_initialize_menu', array($this, 'easy_mode_menu'));
 

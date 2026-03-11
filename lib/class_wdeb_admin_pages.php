@@ -574,7 +574,7 @@ class Wdeb_AdminPages {
 				'capability' => 'edit_theme_options',
 				'url' => 'widgets.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/edit-themes.png',
-				'title' => __('Design anpassen', 'wdeb'),
+				'title' => __('Widgets', 'wdeb'),
 				'help' => __('Personalisiere Deine Webseite', 'wdeb'),
 			),
 			array (
@@ -620,7 +620,8 @@ class Wdeb_AdminPages {
 	function json_activate_plugin () {
 		// Security: Verify nonce and capabilities
 		check_ajax_referer('wdeb_plugin_action', 'nonce');
-		if (!current_user_can('activate_plugins')) {
+		$required_cap = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'manage_network_options' : 'manage_options';
+		if (!current_user_can($required_cap)) {
 			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
 		}
 		
@@ -636,7 +637,8 @@ class Wdeb_AdminPages {
 	function json_deactivate_plugin () {
 		// Security: Verify nonce and capabilities
 		check_ajax_referer('wdeb_plugin_action', 'nonce');
-		if (!current_user_can('deactivate_plugins')) {
+		$required_cap = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'manage_network_options' : 'manage_options';
+		if (!current_user_can($required_cap)) {
 			wp_send_json_error(array('message' => esc_html__('Insufficient permissions', 'wdeb')));
 		}
 		

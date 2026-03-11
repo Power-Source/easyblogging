@@ -46,20 +46,30 @@
 <script type="text/javascript">
 (function ($) {
 $(function () {
+	var pluginNonce = "<?php echo esc_js(wp_create_nonce('wdeb_plugin_action')); ?>";
+
 	$(".wdeb_activate_plugin").on("click", function () {
 		var me = $(this);
 		var plugin_id = me.attr("wdeb:plugin_id");
-		$.post(ajaxurl, {"action": "wdeb_activate_plugin", "plugin": plugin_id}, function (data) {
-			window.location = window.location;
-		});
+		$.post(ajaxurl, {"action": "wdeb_activate_plugin", "plugin": plugin_id, "nonce": pluginNonce})
+			.done(function () {
+				window.location = window.location;
+			})
+			.fail(function (xhr) {
+				window.alert("Aktivierung fehlgeschlagen (" + xhr.status + ")");
+			});
 		return false;
 	});
 	$(".wdeb_deactivate_plugin").on("click", function () {
 		var me = $(this);
 		var plugin_id = me.attr("wdeb:plugin_id");
-		$.post(ajaxurl, {"action": "wdeb_deactivate_plugin", "plugin": plugin_id}, function (data) {
-			window.location = window.location;
-		});
+		$.post(ajaxurl, {"action": "wdeb_deactivate_plugin", "plugin": plugin_id, "nonce": pluginNonce})
+			.done(function () {
+				window.location = window.location;
+			})
+			.fail(function (xhr) {
+				window.alert("Deaktivierung fehlgeschlagen (" + xhr.status + ")");
+			});
 		return false;
 	});
 });

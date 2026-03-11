@@ -259,20 +259,22 @@ class Wdeb_Menu_ManageMenuItems {
 		$opts = $this->_data->get_options('wdeb_menu_items');
 			$my_menu = isset($opts['my_menu']) ? $opts['my_menu'] : array();
 
-		echo "<p>";
+		echo "<div style='margin-bottom: 15px;'>";
 		echo "	<a href='#check_all' class='wdeb_check_all_items'>" . __('Alle auswählen', 'wdeb') . '</a>';
 		echo "	&nbsp;|&nbsp;";
 		echo "	<a href='#uncheck_all' class='wdeb_uncheck_all_items'>" . __('Alle abwählen', 'wdeb') . '</a>';
-		echo "</p>";
-		echo "<table id='wdeb_show_hide_root' class='widefat'>";
+		echo "	<small style='color: #999; margin-left: 15px;'>" . __('💡 Zum Sortieren hier klicken und ziehen', 'wdeb') . '</small>';
+		echo "</div>";
+		echo "<table id='wdeb_show_hide_root' class='widefat sortable'>";
 		foreach (array('thead', 'tfoot') as $part) {
 			echo "<{$part}>";
-			echo '<th width="5%">' . __('Zeige', 'wdeb') . '</th>';
+			echo '<th width="2%">&nbsp;</th>';
+			echo '<th width="3%">' . __('Zeige', 'wdeb') . '</th>';
 			echo '<th>' . __('Element', 'wdeb') . '</th>';
 			echo '<th width="25%">' . __('URL', 'wdeb') . '</th>';
 			echo '<th width="20%">' . __('Berechtigung', 'wdeb') . '</th>';
 			echo '<th width="10%">' . __('Typ', 'wdeb') . '</th>';
-			echo '<th width="5%">' . __('Entfernen', 'wdeb') . '</th>';
+			echo '<th width="5%">' . __('Aktion', 'wdeb') . '</th>';
 			echo "</{$part}>\n";
 		}
 		echo "<tbody>\n";
@@ -281,39 +283,47 @@ class Wdeb_Menu_ManageMenuItems {
 			if ($my_menu) {
 				$checked = in_array($url_id, array_keys($my_menu)) ? 'checked="checked"' : '';
 			} else $checked = 'checked="checked"';
-			echo "<tr >";
-			echo "<td width='5%'>";
+			echo "<tr data-id='{$url_id}'>";
+			echo "<td width='2%' style='text-align: center; color: #ccc;'>";
+			echo "	<span class='wdeb-drag-handle'></span>";
+			echo "</td>";
+			echo "<td width='3%'>";
 			echo "	<input type='checkbox' name='wdeb_menu_items[my_menu][{$url_id}]' value='1' {$checked} />";
 			echo "	<input type='hidden' class='wdeb_menu_items-url_id' name='wdeb_menu_items[order][]' value='{$url_id}' />";
 			echo "</td>";
-			echo '<td>';
-			echo '	<img style="float:left; margin-right:10px; width:32px; height: 32px;" src="' . $item['icon'] . '">';
-			echo '	<div><b>' . $item['title'] . '</b></div>';
-			echo '	<div>' . $item['help'] . '</div>';
-			echo '	<div style="clear:both"></div>';
+			echo '<td style="vertical-align: middle;">';
+			echo '	<div style="display: flex; align-items: center; gap: 10px;">';
+			echo '		<img src="' . esc_attr($item['icon']) . '" style="width: 32px; height: 32px; border-radius: 3px;">';
+			echo '		<div>';
+			echo '			<div style="font-weight: 600; color: #222; margin-bottom: 2px;">' . esc_html($item['title']) . '</div>';
+			if (!empty($item['help'])) {
+				echo '			<div style="font-size: 12px; color: #999;">' . esc_html($item['help']) . '</div>';
+			}
+			echo '		</div>';
+			echo '	</div>';
 			echo '</td>';
-			echo "<td width='25%'>" . esc_url($item['url']) . "</td>";
-			echo "<td width='10%'>" . ($item['capability'] ? $item['capability'] : '-') . "</td>";
-			echo "<td width='10%'>";
+			echo "<td width='25%' style='font-family: monospace; font-size: 12px; color: #666;'>" . esc_url($item['url']) . "</td>";
+			echo "<td width='20%'><small>" . ($item['capability'] ? esc_html($item['capability']) : '—') . "</small></td>";
+			echo "<td width='10%'><small>";
 			echo (isset($item['_builtin'])
-				? __('Built-in', 'wdeb')
-				: (isset($item['_added']) ? __('Mein Element', 'wdeb') : __('Plugin hinzugefügt', 'wdeb'))
+				? '<span style="background: #e7f3ff; color: #0073aa; padding: 2px 6px; border-radius: 2px;">' . __('Built-in', 'wdeb') . '</span>'
+				: (isset($item['_added']) 
+					? '<span style="background: #fff8e5; color: #856404; padding: 2px 6px; border-radius: 2px;">' . __('Benutzerdefiniert', 'wdeb') . '</span>'
+					: '<span style="background: #f0f0f0; color: #666; padding: 2px 6px; border-radius: 2px;">' . __('Plugin', 'wdeb') . '</span>')
 			);
-			echo "</td>";
-			echo '<td width="5%">';
+			echo "</small></td>";
+			echo '<td width="5%" style="text-align: center;">';
 			if (isset($item['_added'])) {
-				echo '<a href="#remove_item" class="wdeb_remove_menu_item">' . __('Entfernen', 'wdeb') . '</a>';
+				echo '<a href="#remove_item" class="wdeb_remove_menu_item" style="color: #dc3545; font-size: 12px; text-decoration: none;">' . __('✕', 'wdeb') . '</a>';
 			}
 			echo '</td>';
 			echo "</tr>\n";
 		}
 		echo "</tbody>";
 		echo "</table>";
-		echo "<p>";
-		echo "	<a href='#check_all' class='wdeb_check_all_items'>" . __('Alle auswählen', 'wdeb') . '</a>';
-		echo "	&nbsp;|&nbsp;";
-		echo "	<a href='#uncheck_all' class='wdeb_uncheck_all_items'>" . __('Alle abwählen', 'wdeb') . '</a>';
-		echo "</p>";
+		echo "<div style='margin-top: 15px; text-align: right;'>";
+		echo "	<small style='color: #999;'>" . __('ℹ️ Drag & Drop zum Sortieren verwenden oder Check/Uncheck oben', 'wdeb') . '</small>';
+		echo "</div>";
 	}
 
 	function create_add_item_box () {
@@ -326,30 +336,36 @@ class Wdeb_Menu_ManageMenuItems {
 			echo "<input type='hidden' name='wdeb_menu_items[new_items][{$key}][help]' value='" . esc_attr($item['help']) . "' />";
 			echo "<input type='hidden' name='wdeb_menu_items[new_items][{$key}][capability]' value='" . esc_attr($item['capability']) . "' />";
 		}
-		echo '' .
-			'<label for="wdeb_menu_items-new-title">' . __('Titel', 'wdeb') . '</label> ' .
-			"<input type='text' class='widefat' id='wdeb_menu_items-new-title' name='wdeb_menu_items[new_items][new][title]' value='' />" .
-		"<br />";
-		echo '' .
-			'<label for="wdeb_menu_items-new-url">' . __('URL', 'wdeb') . '</label> ' .
-			"<input type='text' class='widefat' id='wdeb_menu_items-new-url' name='wdeb_menu_items[new_items][new][url]' value='' />" .
-		"<br />";
-		echo '' .
-			'<label for="wdeb_menu_items-new-icon">' . __('Symbol', 'wdeb') . '</label> ' .
-			"<input type='hidden' class='widefat' id='wdeb_menu_items-new-icon' name='wdeb_menu_items[new_items][new][icon]' value='' />" .
-			"<div><a href='#choose_icon' id='wdeb_menu_items-new-icon-trigger'>" . __('Symbol auswählen', 'wdeb') . '</a></div>' .
-			'<div id="wdeb_menu_items-new-icon-target"></div>' .
-		"<br />";
-		echo '' .
-			'<label for="wdeb_menu_items-new-help">' . __('Hilfe', 'wdeb') . '</label> ' .
-			"<input type='text' class='widefat' id='wdeb_menu_items-new-help' name='wdeb_menu_items[new_items][new][help]' value='' />" .
-		"<br />";
-		/*
-		echo '' .
-			'<label for="wdeb_menu_items-new-capability">' . __('Capability', 'wdeb') . '</label> ' .
-			"<input type='text' class='widefat' id='wdeb_menu_items-new-capability' name='wdeb_menu_items[new_items][new][capability]' value='' />" .
-		"<br />";
-		*/
+		
+		echo '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">';
+		
+		// Left column
+		echo '<div>';
+		echo '<div style="margin-bottom: 15px;">';
+		echo '	<label for="wdeb_menu_items-new-title" style="display: block; font-weight: 600; margin-bottom: 6px; color: #555;">' . __('Titel *', 'wdeb') . '</label>';
+		echo "	<input type='text' class='widefat' id='wdeb_menu_items-new-title' name='wdeb_menu_items[new_items][new][title]' placeholder='" . __('z.B. Meine Custom Seite', 'wdeb') . "' value='' style='padding: 10px; border: 1px solid #ddd; border-radius: 3px;' />";
+		echo '</div>';
+		
+		echo '<div style="margin-bottom: 15px;">';
+		echo '	<label for="wdeb_menu_items-new-url" style="display: block; font-weight: 600; margin-bottom: 6px; color: #555;">' . __('URL *', 'wdeb') . '</label>';
+		echo "	<input type='text' class='widefat' id='wdeb_menu_items-new-url' name='wdeb_menu_items[new_items][new][url]' placeholder='" . __('https://example.com oder admin.php?page=custom', 'wdeb') . "' value='' style='padding: 10px; border: 1px solid #ddd; border-radius: 3px;' />";
+		echo '</div>';
+		
+		echo '<div style="margin-bottom: 15px;">';
+		echo '	<label for="wdeb_menu_items-new-help" style="display: block; font-weight: 600; margin-bottom: 6px; color: #555;">' . __('Beschreibung', 'wdeb') . '</label>';
+		echo "	<input type='text' class='widefat' id='wdeb_menu_items-new-help' name='wdeb_menu_items[new_items][new][help]' placeholder='" . __('Kurze Hilfe für diesen Menüpunkt', 'wdeb') . "' value='' style='padding: 10px; border: 1px solid #ddd; border-radius: 3px;' />";
+		echo '</div>';
+		echo '</div>';
+		
+		// Right column
+		echo '<div>';
+		echo '<div style="margin-bottom: 15px;">';
+		echo '	<label for="wdeb_menu_items-new-icon" style="display: block; font-weight: 600; margin-bottom: 6px; color: #555;">' . __('Symbol auswählen *', 'wdeb') . '</label>';
+		echo "	<input type='hidden' class='widefat' id='wdeb_menu_items-new-icon' name='wdeb_menu_items[new_items][new][icon]' value='' />";
+		echo "	<a href='#choose_icon' id='wdeb_menu_items-new-icon-trigger' class='button' style='display: inline-block;'>" . __('🖼️ Symbol auswählen', 'wdeb') . '</a>';
+		echo '	<div id="wdeb_menu_items-new-icon-target" style="margin-top: 10px;"></div>';
+		echo '</div>';
+		
 		global $wp_roles;
 		$_roles = array (
 			'administrator' => 'manage_options',
@@ -358,8 +374,10 @@ class Wdeb_Menu_ManageMenuItems {
 			'contributor' => 'edit_posts',
 			'subscriber' => 'read',
 		);
-		echo '<label for="wdeb_menu_items-new-capability">' . __('Diesen Menüeintrag anzeigen für:', 'wdeb') . '</label> ';
-		echo "<select id='wdeb_menu_items-new-capability' name='wdeb_menu_items[new_items][new][capability]'>";
+		
+		echo '<div style="margin-bottom: 15px;">';
+		echo '<label for="wdeb_menu_items-new-capability" style="display: block; font-weight: 600; margin-bottom: 6px; color: #555;">' . __('Sichtbar für:', 'wdeb') . '</label>';
+		echo "<select id='wdeb_menu_items-new-capability' name='wdeb_menu_items[new_items][new][capability]' style='width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 3px;'>";
 		foreach ($wp_roles->roles as $key => $role) {
 			$title = sprintf(__('Nur %s', 'wdeb'), $role['name']);
 			$capability = $key;
@@ -367,73 +385,75 @@ class Wdeb_Menu_ManageMenuItems {
 				$title = sprintf(__('%s und höher'), $role['name']);
 				$capability = $_roles[$key];
 			}
-			echo "<option value='{$capability}'>{$title}&nbsp;</option>";
+			echo "<option value='{$capability}'>{$title}</option>";
 		}
-		echo "</select> ";
-		echo "<a href='#enter_capability' id='wdeb_menu_items-manual_capability'>" . __('... oder gib die Funktion manuell ein', 'wdeb') . '</a>';
-		echo "<br />";
+		echo "</select>";
+		echo '<small style="display: block; margin-top: 6px; color: #999;">';
+		echo '	<a href="#enter_capability" id="wdeb_menu_items-manual_capability" style="color: #0073aa; text-decoration: none;">' . __('Benutzerdefinierte Fähigkeit (Capability) eingeben', 'wdeb') . '</a>';
+		echo '</small>';
+		echo '</div>';
+		echo '</div>';
+		echo '</div>';
 		
-		echo '<input type="submit" class="button" value="' . esc_attr(__('Neues Element hinzufügen', 'wdeb')) . '" />';
+		echo '<div style="background: #f9f9f9; padding: 15px; border-radius: 3px; margin-bottom: 20px; border-left: 4px solid #0073aa;">';
+		echo '<p style="margin: 0 0 10px 0; color: #555;"><strong>' . __('💡 Verfügbare Makros für URLs:', 'wdeb') . '</strong></p>';
+		echo '<ul style="margin: 0; padding-left: 20px; color: #999; font-size: 12px;">';
+		echo '<li><code>BLOG_PATH</code> — ' . __('Dein aktueller Blog-Pfad', 'wdeb') . '</li>';
+		echo '<li><code>LOGOUT_URL</code> — ' . __('Sichere Abmelde-URL', 'wdeb') . '</li>';
+		echo '</ul>';
+		echo '</div>';
 		
-		echo '<div>' .
-			'<p>' . __('Du kannst diese Makros in Deinen URLs verwenden:', 'wdeb') . '</p>' .
-			'<dl>' .
-				'<dt>BLOG_PATH</dt>' .
-				'<dd>' . __('Dein aktueller Blog-Pfad', 'wdeb') . '</dd>' .
-				'<dt>LOGOUT_URL</dt>' .
-				'<dd>' . __('Eine saubere Abmelde-URL', 'wdeb') . '</dd>' .
-			'</dl>' .
-			'<p>' . __('Beispiele für "Mediathek":', 'wdeb') . '</p>' .
-			'<dl>' .
-				'<dt>https://BLOG_PATH/MEINE-DOMAIN/wp-admin/upload.php</dt>' .
-				'<dd>' . __('Pfad zur Mediathek bei Subdomains', 'wdeb') . '</dd>' .
-				'<dt>https://MEINE-DOMAIN/BLOG_PATH/wp-admin/upload.php</dt>' .
-				'<dd>' . __('Pfad zur Mediathek bei Subverzeichnis', 'wdeb') . '</dd>' .
-			'</dl>' .
-		'</div>';
+		echo '<input type="submit" class="button button-primary" value="' . esc_attr(__('✚ Neuen Menüpunkt hinzufügen', 'wdeb')) . '" />';
 	}
 
 	function create_resets_box () {
-		echo '<p>' . __('Verwende die folgenden Schaltflächen, um einige Aspekte Deiner Anpassung auf ihre Standardeinstellungen zurückzusetzen', 'wdeb') . '</p>';
-		echo '<input type="button" id="wdeb_menu_items-reset_order" value="' . esc_attr(__('Menüreihenfolge zurücksetzen', 'wdeb')) . '" />';
-		echo '&nbsp;';
-		echo '<input type="button" id="wdeb_menu_items-reset_items" value="' . esc_attr(__('Neue Menüpunkte zurücksetzen', 'wdeb')) . '" />';
-		echo '&nbsp;';
-		echo '<input type="button" id="wdeb_menu_items-reset_all" value="' . esc_attr(__('Alles zurücksetzen', 'wdeb')) . '" />';
+		echo '<div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 3px; padding: 12px; margin-bottom: 15px;">';
+		echo '<strong style="color: #856404;">⚠️ ' . __('Achtung:', 'wdeb') . '</strong>';
+		echo '<p style="margin: 6px 0 0 0; font-size: 13px; color: #856404;">' . __('Diese Aktionen können nicht rückgängig gemacht werden. Verwende sie mit Bedacht.', 'wdeb') . '</p>';
+		echo '</div>';
+		
+		echo '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">';
+		
+		echo '<button type="button" id="wdeb_menu_items-reset_order" class="button" style="background: #ffc107; border-color: #ffc107; color: #333; font-weight: 600;">' . __('↺ Menüreihenfolge zurücksetzen', 'wdeb') . '</button>';
+		
+		echo '<button type="button" id="wdeb_menu_items-reset_items" class="button" style="background: #dc3545; border-color: #dc3545; color: white; font-weight: 600;">' . __('✕ Benutzerdefinierte Menüpunkte löschen', 'wdeb') . '</button>';
+		
+		echo '<button type="button" id="wdeb_menu_items-reset_all" class="button" style="background: #6c757d; border-color: #6c757d; color: white; font-weight: 600;">' . __('↻ Alles zurücksetzen', 'wdeb') . '</button>';
+		
+		echo '</div>';
 	}
 
 	function js_add_scripts () {
 		if (!isset($_GET['page']) || 'wdeb_menu_items' != $_GET['page']) return false;
-		wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('media-upload');
-		wp_enqueue_script("wdeb_menu_items", WDEB_PLUGIN_URL . '/js/wdeb-menu-items.js', array('jquery'));
-		wp_localize_script('wdeb_menu_items', 'l10nMenuItems', array(
-			"reset_order_confirmation" => __('Warnung: Dadurch werden alle Deine benutzerdefinierten Bestellungen entfernt und auf die Standardeinstellungen zurückgesetzt. Fortsetzen?', 'wdeb'),
-			"reset_items_confirmation" => __('Warnung: Dadurch werden alle neuen Menüelemente entfernt, die Du hinzugefügt hast. Fortsetzen?', 'wdeb'),
-			"reset_all_confirmation" => __('Warnung: Dadurch werden alle Anpassungen entfernt. Fortsetzen?', 'wdeb'),
+		// Load SortableJS library via footer for compatibility with Easy Mode
+		add_action('wp_footer', array($this, 'load_sortablejs'));
+	}
+
+	function load_sortablejs () {
+		wp_enqueue_script('sortablejs', 'https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js', array(), '1.15.0', true);
+		wp_enqueue_script('wdeb_menu_items', WDEB_PLUGIN_URL . '/js/wdeb-menu-items.js', array('sortablejs'), '2.0.0-modern', true);
+		wp_localize_script('wdeb_menu_items', 'wdebMenuData', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'admin_base' => admin_url(),
+			'nonce' => wp_create_nonce('wdeb_menu_action'),
+			'l10n' => array(
+				'reset_order_confirmation' => __('Warnung: Dadurch werden alle Deine benutzerdefinierten Bestellungen entfernt und auf die Standardeinstellungen zurückgesetzt. Fortsetzen?', 'wdeb'),
+				'reset_items_confirmation' => __('Warnung: Dadurch werden alle neuen Menüelemente entfernt, die Du hinzugefügt hast. Fortsetzen?', 'wdeb'),
+				'reset_all_confirmation' => __('Warnung: Dadurch werden alle Anpassungen entfernt. Fortsetzen?', 'wdeb'),
+			)
 		));
-		printf(
-			'<script type="text/javascript">
-				var _wdeb_menu_items = {
-					"admin_base": "%s",
-					"ajax_url": "%s",
-				};
-			</script>',
-			admin_url(), admin_url('admin-ajax.php')
-		);
 	}
 
 	function css_add_styles () {
 		if (!isset($_GET['page']) || 'wdeb_menu_items' != $_GET['page']) return false;
 		wp_enqueue_style('thickbox');
+		wp_enqueue_style('wdeb_menu_items_styles', WDEB_PLUGIN_URL . '/css/wdeb-menu-items.css');
 	}
 
 	function enqueue_nonce () {
-		// Enqueue nonce for AJAX calls
-		wp_localize_script('jquery', 'wdebMenuSettings', array(
-			'menuNonce' => wp_create_nonce('wdeb_menu_action'),
-		));
+		// Nonce is now localized in load_sortablejs()
 	}
 
 	/* ---------- Private API ---------- */

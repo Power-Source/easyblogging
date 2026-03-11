@@ -18,4 +18,4 @@ Biete Deinen Benutzern eine Vereinfachung des ClassicPress-Dashboards mit einem 
 
 ### Mehr Geld verdienen
 
-Reduziere Supportanfragen mit dem erzwungenen einfachen Modus für bestimmte Benutzertypen. Kombiniere es mit Mulitsite und schaffe eine niedrigere Eintrittsbarriere. Nutze die mitgelieferte PSeCommerce-Integration, um die Produkterstellung zu vereinfachen, oder erzwinge den einfachen Modus für kostenlose Benutzer in PS Bloghosting, um Upgrades zu fördern. Schaffe mit Easy Blogging ein Benutzererlebnis, das zu Deinem Kundenstamm passt.
+Reduziere Supportanfragen mit dem erzwungenen einfachen Modus für bestimmte Benutzertypen. Kombiniere es mit Mulitsite und schaffe eine niedrigere Eintrittsbarriere. Nutze die mitgelieferte PS MarketPress-Integration, um die Produkterstellung zu vereinfachen, oder erzwinge den einfachen Modus für kostenlose Benutzer in PS Bloghosting, um Upgrades zu fördern. Schaffe mit Easy Blogging ein Benutzererlebnis, das zu Deinem Kundenstamm passt.

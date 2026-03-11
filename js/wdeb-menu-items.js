@@ -1,58 +1,105 @@
 (function () {
 	'use strict';
 
+	let sortableInstance = null;
+	const menuData = (typeof window.wdebMenuData !== 'undefined')
+		? window.wdebMenuData
+		: {
+			ajax_url: (typeof window.ajaxurl !== 'undefined') ? window.ajaxurl : '',
+			admin_base: '',
+			nonce: '',
+			l10n: {
+				reset_order_confirmation: 'Warnung: Dadurch werden alle Deine benutzerdefinierten Bestellungen entfernt und auf die Standardeinstellungen zurueckgesetzt. Fortsetzen?',
+				reset_items_confirmation: 'Warnung: Dadurch werden alle neuen Menueelemente entfernt, die Du hinzugefuegt hast. Fortsetzen?',
+				reset_all_confirmation: 'Warnung: Dadurch werden alle Anpassungen entfernt. Fortsetzen?'
+			}
+		};
+
 	function initMenuManager() {
-		// Only run if we have the required data
-		if (typeof wdebMenuData === 'undefined') {
-			console.error('wdebMenuData not found');
-			return;
+		if (typeof window.wdebMenuData === 'undefined') {
+			console.warn('wdebMenuData not found, running with fallback data');
 		}
 
-		console.log('Menu Manager initializing...');
-		console.log('Sortable available:', typeof Sortable !== 'undefined');
+		console.log('✓ Menu Manager initializing...');
+		console.log('✓ Sortable available:', typeof Sortable !== 'undefined');
 
 		// Initialize the sortable table
 		const tableBody = document.querySelector('table#wdeb_show_hide_root tbody');
 		if (!tableBody) {
-			console.error('Table body not found');
+			console.error('✗ Table body not found');
 			return;
 		}
 
-		console.log('Table body found:', tableBody);
+		console.log('✓ Table body found with', tableBody.querySelectorAll('tr').length, 'rows');
 
-		if (typeof Sortable !== 'undefined') {
-			console.log('Initializing Sortable.js...');
+		// Wait a tick to ensure Sortable is fully loaded
+		if (typeof Sortable === 'undefined') {
+			console.error('✗ Sortable.js library not loaded!');
+			console.log('Waiting for Sortable.js to load...');
+			setTimeout(initMenuManager, 500);
+			return;
+		}
+
+		try {
+			console.log('Creating Sortable instance...');
 			
-			const sortableInstance = Sortable.create(tableBody, {
+			// Try first with handle - if no handles found, fall back to entire row
+			const handles = tableBody.querySelectorAll('.wdeb-drag-handle');
+			const useHandle = handles.length > 0;
+			const handleSelector = useHandle ? '.wdeb-drag-handle' : undefined;
+			
+			console.log('✓ Found', handles.length, 'drag handles in table');
+			console.log('Using handle selector:', useHandle ? 'yes (.wdeb-drag-handle)' : 'no (entire row)');
+
+			if (sortableInstance) {
+				sortableInstance.destroy();
+				sortableInstance = null;
+			}
+			
+			sortableInstance = Sortable.create(tableBody, {
 				animation: 150,
 				ghostClass: 'wdeb-sortable-ghost',
 				dragClass: 'wdeb-sortable-drag',
-				handle: '.wdeb-drag-handle',
-				forceFallback: false,
+				handle: handleSelector,
+				draggable: 'tr',
+				direction: 'vertical',
+				forceFallback: true,
+				fallbackOnBody: true,
+				fallbackTolerance: 3,
 				invertSwap: false,
-				direction: undefined, // auto-detect
+				scrollSensitivity: 30,
+				scrollSpeed: 10,
+				delay: 0,
+				delayOnTouchOnly: true,
+				
 				onStart: function(evt) {
-					console.log('Drag started:', evt);
+					console.log('✓ Drag started on row:', evt.item);
 					tableBody.classList.add('sorting');
 				},
+				
 				onEnd: function(evt) {
-					console.log('Drag ended:', evt);
+					console.log('✓ Drag ended. Old index:', evt.oldIndex, 'New index:', evt.newIndex);
 					tableBody.classList.remove('sorting');
-					updateMenuOrder();
+					
+					// Only update if position changed
+					if (evt.oldIndex !== evt.newIndex) {
+						updateMenuOrder();
+					}
 				},
+				
 				onMove: function(evt) {
-					// Allow movement
-					return true;
+					return true; // Allow movement
 				}
 			});
 			
-			console.log('Sortable instance created:', sortableInstance);
-		} else {
-			console.error('Sortable.js library not loaded!');
-			// Fallback: show alert to user
-			setTimeout(function() {
-				console.error('Sortable is still not available');
-			}, 2000);
+			console.log('✓ Sortable instance created successfully');
+			
+			if (handles.length === 0) {
+				console.warn('⚠ No drag handles found, using entire row for dragging');
+			}
+			
+		} catch (error) {
+			console.error('✗ Error creating Sortable instance:', error);
 		}
 
 		// Check/Uncheck all items
@@ -74,33 +121,51 @@
 			});
 		});
 
-		// Icon selection
-		const iconTrigger = document.getElementById('wdeb_menu_items-new-icon-trigger');
-		if (iconTrigger) {
-			iconTrigger.addEventListener('click', function(e) {
+		// Icon selection via input
+		const iconPreviewBtn = document.getElementById('wdeb_menu_items-new-icon-preview-btn');
+		if (iconPreviewBtn) {
+			iconPreviewBtn.addEventListener('click', function(e) {
 				e.preventDefault();
-				const height = Math.round(window.innerHeight * 0.35);
-				const tbUrl = wdebMenuData.admin_base + 'media-upload.php?wdeb_source=easy_blogging-new_menu_item&type=image&TB_iframe=1&width=640&height=' + height;
+				const iconUrl = document.getElementById('wdeb_menu_items-new-icon').value.trim();
+				const target = document.getElementById('wdeb_menu_items-new-icon-target');
 				
-				if (typeof tb_show !== 'undefined') {
-					const oldSendToEditor = window.send_to_editor;
-					window.send_to_editor = function(html) {
-						const parser = new DOMParser();
-						const doc = parser.parseFromString(html, 'text/html');
-						const img = doc.querySelector('img');
-						const href = img ? img.src : html;
-						
-						document.getElementById('wdeb_menu_items-new-icon').value = href;
-						const target = document.getElementById('wdeb_menu_items-new-icon-target');
-						target.innerHTML = '<img src="' + escapeHtml(href) + '" style="max-width: 100px;" />';
-						
-						if (typeof tb_remove !== 'undefined') {
-							tb_remove();
-						}
-						window.send_to_editor = oldSendToEditor;
-					};
-					tb_show('&nbsp;', tbUrl);
+				if (!iconUrl) {
+					target.innerHTML = '<small style="color: #999;">Bitte geben Sie eine URL ein</small>';
+					return;
 				}
+				
+				// Validate it's a URL
+				try {
+					new URL(iconUrl);
+				} catch (e) {
+					target.innerHTML = '<small style="color: #dc3545;">Ungültige URL</small>';
+					return;
+				}
+				
+				// Create image to test if it loads
+				const img = document.createElement('img');
+				img.style.maxHeight = '80px';
+				img.style.borderRadius = '3px';
+				img.style.boxShadow = '0 1px 3px rgba(0,0,0,0.2)';
+				
+				img.onload = function() {
+					target.innerHTML = '';
+					target.appendChild(img);
+				};
+				
+				img.onerror = function() {
+					target.innerHTML = '<small style="color: #dc3545;">Bild konnte nicht geladen werden</small>';
+				};
+				
+				img.src = iconUrl;
+			});
+		}
+
+		// Auto-preview on input change
+		const iconInput = document.getElementById('wdeb_menu_items-new-icon');
+		if (iconInput) {
+			iconInput.addEventListener('change', function() {
+				document.getElementById('wdeb_menu_items-new-icon-target').innerHTML = '';
 			});
 		}
 
@@ -121,7 +186,7 @@
 		const resetOrderBtn = document.getElementById('wdeb_menu_items-reset_order');
 		if (resetOrderBtn) {
 			resetOrderBtn.addEventListener('click', function() {
-				if (!confirm(wdebMenuData.l10n.reset_order_confirmation)) return;
+				if (!confirm(menuData.l10n.reset_order_confirmation)) return;
 				sendMenuAction('wdeb_menu_items_reset_order', {}, function() {
 					window.location.reload();
 				});
@@ -131,7 +196,7 @@
 		const resetItemsBtn = document.getElementById('wdeb_menu_items-reset_items');
 		if (resetItemsBtn) {
 			resetItemsBtn.addEventListener('click', function() {
-				if (!confirm(wdebMenuData.l10n.reset_items_confirmation)) return;
+				if (!confirm(menuData.l10n.reset_items_confirmation)) return;
 				sendMenuAction('wdeb_menu_items_reset_items', {}, function() {
 					window.location.reload();
 				});
@@ -141,7 +206,7 @@
 		const resetAllBtn = document.getElementById('wdeb_menu_items-reset_all');
 		if (resetAllBtn) {
 			resetAllBtn.addEventListener('click', function() {
-				if (!confirm(wdebMenuData.l10n.reset_all_confirmation)) return;
+				if (!confirm(menuData.l10n.reset_all_confirmation)) return;
 				sendMenuAction('wdeb_menu_items_reset_all', {}, function() {
 					window.location.reload();
 				});
@@ -175,7 +240,7 @@
 		
 		console.log('Menu order updated:', order);
 		
-		// Update the hidden order inputs in the table
+		// Update the hidden order inputs in the table (important for form submission)
 		const tbody = document.querySelector('table#wdeb_show_hide_root tbody');
 		if (tbody) {
 			const rows = tbody.querySelectorAll('tr');
@@ -189,9 +254,14 @@
 	}
 
 	function sendMenuAction(action, data, callback) {
+		if (!menuData.ajax_url) {
+			alert('Fehler: ajax_url fehlt (wdebMenuData/ajaxurl nicht verfuegbar).');
+			return;
+		}
+
 		const formData = new FormData();
 		formData.append('action', action);
-		formData.append('nonce', wdebMenuData.nonce);
+		formData.append('nonce', menuData.nonce);
 		
 		for (const key in data) {
 			if (data.hasOwnProperty(key)) {
@@ -199,7 +269,7 @@
 			}
 		}
 
-		fetch(wdebMenuData.ajax_url, {
+		fetch(menuData.ajax_url, {
 			method: 'POST',
 			body: formData
 		})
@@ -238,4 +308,12 @@
 	} else {
 		initMenuManager();
 	}
+
+	// Also try after a short delay for async-loaded content
+	setTimeout(function() {
+		if (!sortableInstance) {
+			console.warn('⚠ Sortable not initialized after delay, trying again...');
+			initMenuManager();
+		}
+	}, 1000);
 })();

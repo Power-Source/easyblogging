@@ -27,9 +27,28 @@ table#wdeb_show_hide_root {
 	margin: 15px 0;
 	border-collapse: collapse;
 	width: 100%;
+	table-layout: auto;
+}
+
+table#wdeb_show_hide_root thead,
+table#wdeb_show_hide_root tbody,
+table#wdeb_show_hide_root tfoot {
+	display: table-header-group;
+}
+
+table#wdeb_show_hide_root tbody {
+	display: table-row-group;
 }
 
 table#wdeb_show_hide_root.sortable tbody tr {
+	cursor: grab;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+}
+
+table#wdeb_show_hide_root tbody tr {
 	position: relative;
 }
 
@@ -39,6 +58,7 @@ table#wdeb_show_hide_root tbody tr.wdeb-sortable-drag {
 	cursor: grabbing;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	z-index: 1000;
+	transform: rotate(2deg);
 }
 
 table#wdeb_show_hide_root tbody tr.wdeb-sortable-ghost {
@@ -66,10 +86,11 @@ table#wdeb_show_hide_root td {
 	padding: 12px 10px;
 	border-bottom: 1px solid #eee;
 	vertical-align: middle;
+	position: relative;
 }
 
 table#wdeb_show_hide_root tbody tr {
-	transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 table#wdeb_show_hide_root tbody tr:hover {
@@ -80,9 +101,9 @@ table#wdeb_show_hide_root tbody tr:hover .wdeb-drag-handle {
 	color: #0073aa;
 }
 
-/* === DRAG HANDLE - IMPORTANT === */
+/* === DRAG HANDLE - CRITICAL === */
 
-.wdeb-drag-handle {
+table#wdeb_show_hide_root .wdeb-drag-handle {
 	cursor: grab;
 	color: #bbb;
 	padding: 8px 12px;
@@ -91,40 +112,46 @@ table#wdeb_show_hide_root tbody tr:hover .wdeb-drag-handle {
 	align-items: center;
 	justify-content: center;
 	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 1;
 	transition: all 0.2s ease;
-	min-width: 30px;
-	min-height: 30px;
+	min-width: 36px;
+	min-height: 36px;
 	border-radius: 3px;
 	background: transparent;
+	touch-action: none;
 }
 
-.wdeb-drag-handle:hover {
+table#wdeb_show_hide_root .wdeb-drag-handle:active,
+table#wdeb_show_hide_root .wdeb-drag-handle:hover {
+	cursor: grabbing;
 	color: #0073aa;
 	background: rgba(0, 115, 170, 0.1);
 }
 
-.wdeb-drag-handle::before {
-	content: '☰';
-	letter-spacing: -3px;
-}
-
-/* Make the entire first cell draggable */
+/* Make first cell draggable-friendly */
 table#wdeb_show_hide_root td:first-child {
-	cursor: grab;
 	padding: 8px;
 	background: rgba(0, 0, 0, 0.01);
+	cursor: grab;
+	touch-action: none;
 }
 
 table#wdeb_show_hide_root tbody tr:hover td:first-child {
 	background: rgba(0, 115, 170, 0.05);
 }
 
+table#wdeb_show_hide_root tbody tr.wdeb-sortable-drag td:first-child {
+	background: rgba(0, 115, 170, 0.15);
+}
+
 table#wdeb_show_hide_root img {
 	border-radius: 3px;
 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	pointer-events: none;
 }
 
 table#wdeb_show_hide_root td > div {
@@ -138,10 +165,6 @@ table#wdeb_show_hide_root b {
 	margin-top: 4px;
 }
 
-table#wdeb_show_hide_root div[style*="clear"] {
-	clear: both;
-}
-
 /* === Checkboxes === */
 
 table#wdeb_show_hide_root input[type="checkbox"] {
@@ -152,6 +175,7 @@ table#wdeb_show_hide_root input[type="checkbox"] {
 	vertical-align: middle;
 	accent-color: #0073aa;
 	flex-shrink: 0;
+	pointer-events: auto;
 }
 
 /* === Links & Buttons === */
@@ -161,6 +185,7 @@ table#wdeb_show_hide_root a {
 	text-decoration: none;
 	transition: color 0.2s ease;
 	font-size: 12px;
+	pointer-events: auto;
 }
 
 table#wdeb_show_hide_root a:hover {
@@ -368,8 +393,8 @@ table#wdeb_show_hide_root .wdeb_remove_menu_item:hover {
 
 	.wdeb-drag-handle {
 		padding: 6px 8px;
-		min-width: 28px;
-		min-height: 28px;
+		min-width: 32px;
+		min-height: 32px;
 	}
 
 	.wdeb-form-group input[type="text"],

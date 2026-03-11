@@ -338,9 +338,32 @@ class Wdeb_AdminPages {
 	function start_cache () {
 		ob_start();
 	}
+
+	function extract_head_assets ($markup) {
+		if (empty($markup) || !is_string($markup)) {
+			return '';
+		}
+
+		$assets = array();
+		$patterns = array(
+			'@<link\b[^>]*>@is',
+			'@<style\b[^>]*>.*?</style>@is',
+			'@<script\b[^>]*>.*?</script>@is',
+		);
+
+		foreach ($patterns as $pattern) {
+			if (preg_match_all($pattern, $markup, $matches) && !empty($matches[0])) {
+				$assets = array_merge($assets, $matches[0]);
+			}
+		}
+
+		return implode("\n", array_unique($assets));
+	}
+
 	function end_header_cache () {
 		$header_html = ob_get_contents();
 		ob_end_clean();
+		$header_assets = $this->extract_head_assets($header_html);
 		include apply_filters('wdeb_theme_header_partial', WDEB_PLUGIN_BASE_DIR . '/lib/forms/partials/header.php');
 	}
 	function end_footer_cache () {

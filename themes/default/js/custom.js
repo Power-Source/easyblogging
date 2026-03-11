@@ -57,9 +57,9 @@ jQuery(document).ready(function() {
 		return false;
 	}); // Toggle dialog
 	
-	jQuery('.notification').hover(function() {
- 		jQuery(this).css('cursor','pointer');
- 	}, function() {
+	jQuery('.notification').on('mouseenter', function() {
+		jQuery(this).css('cursor','pointer');
+	}).on('mouseleave', function() {
 		jQuery(this).css('cursor','auto');
 	}); // Close notifications
 			
@@ -79,22 +79,19 @@ jQuery(document).ready(function() {
 		yOffset: 50
 	}); // Tooltips! 
 			
-	jQuery('#menu li:not(".current"), #menu ul ul li a').hover(function() {
+	jQuery('#menu li:not(".current"), #menu ul ul li a').on('mouseenter', function() {
 		if (!jQuery.browser.webkit) jQuery(this).find('span').animate({ marginLeft: '5px' }, 100);
 		else jQuery(this).find('span').animate({ paddingLeft: '12px' }, 100);
-	}, function() {
+	}).on('mouseleave', function() {
 		if (!jQuery.browser.webkit) jQuery(this).find('span').animate({ marginLeft: '0px' }, 100);           
 		else jQuery(this).find('span').animate({ paddingLeft: '10px' }, 100);
 	}); // Menu simple animation
 			
-	jQuery('.fade_hover').hover(
-		function() {
-			jQuery(this).stop().animate({opacity:0.6},200);
-		},
-		function() {
-			jQuery(this).stop().animate({opacity:1},200);
-		}
-	); // The fade function
+	jQuery('.fade_hover').on('mouseenter', function() {
+		jQuery(this).stop().animate({opacity:0.6},200);
+	}).on('mouseleave', function() {
+		jQuery(this).stop().animate({opacity:1},200);
+	}); // The fade function
 			
 	//sortable, portlets
 	jQuery(".column").sortable({

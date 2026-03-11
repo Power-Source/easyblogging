@@ -41,6 +41,10 @@ if (!$this->data->get_option('admin_bar')) {
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
 
 <?php 
+	if (!empty($header_assets)) {
+		echo $header_assets;
+	}
+
 	$do_admin_head = defined('WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD') ? WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD : false;
 	if (apply_filters('wdeb-core-actions-redo_admin_head', $do_admin_head)) do_action('admin_head'); 
 ?>
@@ -173,6 +177,82 @@ html.wp-toolbar { padding-top: 0;}
 <?php } // End forced RTL check ?>
 
 <?php do_action('wdeb_style-custom_stylesheet_rules'); ?>
+
+body#wdeb-mode div.psource-chat-box {
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between;
+	padding: 0 4px;
+	box-sizing: border-box;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header div.psource-chat-module-header-title {
+	min-width: 0;
+	flex: 1 1 auto;
+	padding-right: 6px;
+	box-sizing: border-box;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header div.psource-chat-module-header-actions {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-end;
+	flex: 0 0 auto;
+	margin-left: 4px;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu {
+	width: auto !important;
+	height: 20px;
+	margin: 0 !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-end;
+	gap: 2px;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-action-item,
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-actions-settings-pop-out,
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-actions-settings-pop-in,
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-min-max {
+	float: none !important;
+	margin: 0 !important;
+	height: 16px;
+	line-height: 16px;
+}
+
+body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li a,
+body#wdeb-mode div.psource-chat-box ul.psource-chat-actions-menu li.psource-chat-actions-settings a.psource-chat-actions-settings-button {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	margin-top: 0 !important;
+	vertical-align: middle;
+}
+
+body#wdeb-mode div.psource-chat-box .psource-chat-icon-settings,
+body#wdeb-mode div.psource-chat-box .psource-chat-icon-minimize,
+body#wdeb-mode div.psource-chat-box .psource-chat-icon-maximize,
+body#wdeb-mode div.psource-chat-box .psource-chat-icon-popout,
+body#wdeb-mode div.psource-chat-box .psource-chat-icon-popin {
+	vertical-align: middle;
+}
+
+body#wdeb-mode div.psource-chat-box .ui-resizable-w {
+	display: none !important;
+}
+
+body#wdeb-mode div.psource-chat-box .ui-resizable-e,
+body#wdeb-mode div.psource-chat-box .ui-resizable-s,
+body#wdeb-mode div.psource-chat-box .ui-resizable-se {
+	background: transparent !important;
+}
 </style>
 
 <script type="text/javascript">

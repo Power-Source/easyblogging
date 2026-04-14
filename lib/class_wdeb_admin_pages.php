@@ -167,8 +167,9 @@ class Wdeb_AdminPages {
 		add_settings_field('wdeb_metaboxes_posts', __('Blende diese Meta-Felder auf den Seiten "Beitrag bearbeiten" aus', 'wdeb'), array($form, 'create_metaboxes_posts_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_metaboxes_pages', __('Blende diese Meta-Felder auf den Seiten "Seite bearbeiten" aus', 'wdeb'), array($form, 'create_metaboxes_pages_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_admin_bar', __('Admin-Leiste anzeigen', 'wdeb'), array($form, 'create_admin_bar_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_screen_options', __('Hilfe und Bildschirmoptionen anzeigen', 'wdeb'), array($form, 'create_screen_options_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_screen_options', __('ClassicPress Hilfe & Bildschirmoptionen', 'wdeb'), array($form, 'create_screen_options_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_easy_bar', __('Easy Bar anzeigen', 'wdeb'), array($form, 'create_easy_bar_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_toolbar_switch_button', __('Easy-Modus Umschaltbutton', 'wdeb'), array($form, 'create_toolbar_switch_button_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_auto_enter_role', __('Erzwinge den "Easy"-Modus für Benutzer mit dieser Rolle', 'wdeb'), array($form, 'create_auto_enter_role_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_hijack_start_page', __('Erzwinge Startseite für neue Benutzer', 'wdeb'), array($form, 'create_hijack_start_page_box'), 'wdeb_options_page', 'wdeb_settings');
 		add_settings_field('wdeb_show_logout', __('Logout-Link immer anzeigen', 'wdeb'), array($form, 'create_show_logout_box'), 'wdeb_options_page', 'wdeb_settings');
@@ -262,7 +263,14 @@ class Wdeb_AdminPages {
 
 	function js_print_scripts () {
 		$is_network_admin = defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN;
-		if (!$is_network_admin && !$this->is_in_easymode()) {
+		$show_easy_bar = (int) $this->data->get_option('easy_bar');
+		$toolbar_switch_button = $this->data->get_option('toolbar_switch_button');
+		$show_toolbar_switch = (null !== $toolbar_switch_button)
+			? (int) $toolbar_switch_button
+			: $show_easy_bar
+		;
+
+		if (!$is_network_admin && !$this->is_in_easymode() && $show_toolbar_switch) {
 			wp_enqueue_script('wdeb_switch', WDEB_PLUGIN_URL . '/js/wdeb_switch.js', 'jquery');
 			wp_localize_script('wdeb_switch', 'l10WdebSwitch', array(
 				'activate' => __('Aktiviere Easy Modus', 'wdeb')

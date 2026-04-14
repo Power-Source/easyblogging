@@ -331,7 +331,21 @@ $(function () {
 <?php do_action('wdeb_script-custom_javascript'); ?>
 
 <?php $auto_enter_role = $this->data->get_option('auto_enter_role'); ?>
-<?php if ($this->data->get_option('easy_bar') && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
+<?php
+$show_easy_bar = (int) $this->data->get_option('easy_bar');
+if (is_multisite()) {
+	$network_opts = get_site_option('wdeb');
+	if (is_array($network_opts) && array_key_exists('easy_bar', $network_opts)) {
+		$show_easy_bar = (int) $network_opts['easy_bar'];
+	} else {
+		$blog_opts = get_option('wdeb');
+		if (is_array($blog_opts) && array_key_exists('easy_bar', $blog_opts)) {
+			$show_easy_bar = (int) $blog_opts['easy_bar'];
+		}
+	}
+}
+?>
+<?php if ($show_easy_bar && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
 // Add Beende Easy-Modus link
 $(function () {
 	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Beende Easy Modus', 'wdeb');?></a>");
@@ -358,7 +372,7 @@ document.body.className = c;
 <div id="wpbody-content">
 
 <?php do_action('eab-admin_toolbar-render'); ?>
-<?php if ($this->data->get_option('easy_bar')) { ?>
+<?php if ($show_easy_bar) { ?>
 	<div class="wdeb_visit_site">
 	<a href="<?php echo site_url();?>"><?php _e('Webseite besuchen', 'wdeb');?></a>
 	</div>

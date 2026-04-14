@@ -2,10 +2,15 @@
 	position: fixed;
 	top: 12px;
 	right: 20px;
-	z-index: 1000;
+	z-index: 10000;
 	display: flex !important;
 	gap: 15px;
 	align-items: center;
+}
+
+/* Keep Easy Bar visible below the ClassicPress admin toolbar. */
+body.admin-bar .wdeb_visit_site {
+	top: 42px;
 }
 
 .wdeb_visit_site a {

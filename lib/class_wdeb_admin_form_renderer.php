@@ -113,10 +113,10 @@ class Wdeb_AdminFormRenderer {
 
 	function create_screen_options_box () {
 		echo '<div class="wdeb-form-group">';
-		echo '<div class="wdeb-form-label"><label>' . __('Bildschirmoptionen anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-label"><label>' . __('ClassicPress Hilfe & Bildschirmoptionen', 'wdeb') . '</label></div>';
 		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('screen_options');
-		echo '<p>' . __('Zeige im einfachen Modus kontextbezogene Hilfe- und Bildschirmoptionen an.', 'wdeb') . '</p>';
+		echo '<p>' . __('Zeigt im Easy-Modus die ClassicPress-Reiter "Hilfe" und "Bildschirmoptionen" an.', 'wdeb') . '</p>';
 		echo '</div></div>';
 	}
 
@@ -126,6 +126,15 @@ class Wdeb_AdminFormRenderer {
 		echo '<div class="wdeb-form-control">';
 		echo $this->_create_checkbox('easy_bar');
 		echo '<p>' . __('Zeige die permanente Easy Bar oben rechts im Easy-Modus an.', 'wdeb') . '</p>';
+		echo '</div></div>';
+	}
+
+	function create_toolbar_switch_button_box () {
+		echo '<div class="wdeb-form-group">';
+		echo '<div class="wdeb-form-label"><label>' . __('Easy-Modus Umschaltbutton anzeigen', 'wdeb') . '</label></div>';
+		echo '<div class="wdeb-form-control">';
+		echo $this->_create_checkbox('toolbar_switch_button');
+		echo '<p>' . __('Zeigt den Button "Aktiviere/Beende Easy-Modus" in der Admin-Leiste an.', 'wdeb') . '</p>';
 		echo '</div></div>';
 	}
 

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Customizer zulassen
 Description: Ermöglicht den Zugriff auf Theme Customizer.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.0
 Author: PSOURCE
 */

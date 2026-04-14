@@ -2,7 +2,7 @@
 /*
 Plugin Name: Kleine Schaltfläche
 Description: Ersetze die Standard-Umschalttaste für den einfachen Modus durch eine kleinere, symbolbasierte Version.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.0
 Author: PSOURCE
 */

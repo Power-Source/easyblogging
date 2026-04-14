@@ -2,7 +2,7 @@
 /*
 Plugin Name: Bloghosting: Erzwinge den Easy-Modus auf kostenlosen Webseiten
 Description: Erzwingt den einfachen Modus auf kostenlosen Webseiten. <b>Benötigt Bloghosting Plugin.</b>
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.2
 Author: PSOURCE
 */

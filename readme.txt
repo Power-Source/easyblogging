@@ -1,9 +1,9 @@
 === Easy Blogging ===
-Contributors: DerN3rd (PSOURCE)
-Donate link: https://n3rds.work/spendenaktionen/unterstuetze-unsere-psource-free-werke/
+Contributors: DerNerd (PSOURCE)
 Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
 Tested up to: 5.6
+ClassicPress: 2.7
 Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPLv2 or later

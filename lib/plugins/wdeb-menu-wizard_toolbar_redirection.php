@@ -2,7 +2,7 @@
 /*
 Plugin Name: Umleitung Admin-Symbolleiste für den Assistentenmodus
 Description: Leitet Nicht-Assistenten-Links von der Admin-Symbolleiste um.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.1
 Author: PSOURCE
 */

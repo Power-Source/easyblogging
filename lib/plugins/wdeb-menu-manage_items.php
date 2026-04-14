@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 /*
 Plugin Name: Menüelemente verwalten
 Description: Verwalte ganz einfach Menüelemente in Deinem Easy Blogging-Menü.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.2
 Author: PSOURCE
 */

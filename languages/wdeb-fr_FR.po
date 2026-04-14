@@ -1305,8 +1305,8 @@ msgstr "Il n'y a pas de journal des changements disponible."
 
 #. Plugin URI of the plugin/theme
 #, fuzzy
-msgid "https://n3rds.work/piestingtal_source/easy-blogging-plugin/"
-msgstr "https://n3rds.work/piestingtal_source/easy-blogging-plugin/"
+msgid "https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/"
+msgstr "https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/"
 
 #. Description of the plugin/theme
 #, fuzzy
@@ -1323,5 +1323,5 @@ msgid "PSOURCE"
 msgstr "PSOURCE"
 
 #. Author URI of the plugin/theme
-msgid "https://n3rds.work"
-msgstr "https://n3rds.work"
+msgid "https://psource.eimen.net"
+msgstr "https://psource.eimen.net"

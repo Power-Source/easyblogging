@@ -2,7 +2,7 @@
 /*
 Plugin Name: Bildlaufmenü
 Description: Ermöglicht das Scrollen des Menüs auf kleinen Bildschirmen. Ermöglicht auch ausführlichere Schritttitel des Assistenten. 
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.2
 Author: PSOURCE
 */

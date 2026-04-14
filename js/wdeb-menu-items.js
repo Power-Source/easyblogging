@@ -16,6 +16,14 @@
 		};
 
 	function initMenuManager() {
+		function setPreviewMessage(target, message, color) {
+			target.replaceChildren();
+			const msg = document.createElement('small');
+			msg.style.color = color;
+			msg.textContent = message;
+			target.appendChild(msg);
+		}
+
 		if (typeof window.wdebMenuData === 'undefined') {
 			console.warn('wdebMenuData not found, running with fallback data');
 		}
@@ -130,7 +138,7 @@
 				const target = document.getElementById('wdeb_menu_items-new-icon-target');
 				
 				if (!iconUrl) {
-					target.innerHTML = '<small style="color: #999;">Bitte geben Sie eine URL ein</small>';
+					setPreviewMessage(target, 'Bitte geben Sie eine URL ein', '#999');
 					return;
 				}
 				
@@ -138,7 +146,7 @@
 				try {
 					new URL(iconUrl);
 				} catch (e) {
-					target.innerHTML = '<small style="color: #dc3545;">Ungültige URL</small>';
+					setPreviewMessage(target, 'Ungültige URL', '#dc3545');
 					return;
 				}
 				
@@ -149,12 +157,12 @@
 				img.style.boxShadow = '0 1px 3px rgba(0,0,0,0.2)';
 				
 				img.onload = function() {
-					target.innerHTML = '';
+					target.replaceChildren();
 					target.appendChild(img);
 				};
 				
 				img.onerror = function() {
-					target.innerHTML = '<small style="color: #dc3545;">Bild konnte nicht geladen werden</small>';
+					setPreviewMessage(target, 'Bild konnte nicht geladen werden', '#dc3545');
 				};
 				
 				img.src = iconUrl;
@@ -165,7 +173,7 @@
 		const iconInput = document.getElementById('wdeb_menu_items-new-icon');
 		if (iconInput) {
 			iconInput.addEventListener('change', function() {
-				document.getElementById('wdeb_menu_items-new-icon-target').innerHTML = '';
+				document.getElementById('wdeb_menu_items-new-icon-target').replaceChildren();
 			});
 		}
 

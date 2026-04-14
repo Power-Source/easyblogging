@@ -1,15 +1,15 @@
 <?php
 /*
 Plugin Name: Easy Blogging
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Description: Ändert den ClassicPress-Verwaltungsbereich so, dass er standardmäßig einen "Anfänger" -Bereich enthält, mit der Option, zum normalen "Erweitert" -Bereich zu wechseln.
-Version: 1.0.2
+Version: 1.0.3
 Text Domain: wdeb
 Author: PSOURCE
-Author URI: https://n3rds.work
+Author URI: https://psource.eimen.net
 
 
-Copyright 2020-2026 PSOURCE (https://n3rds.work)
+Copyright 2020-2026 PSOURCE (https://psource.eimen.net)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License (Version 2 - GPLv2) as published by

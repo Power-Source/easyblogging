@@ -2,7 +2,7 @@
 /*
 Plugin Name: Dashboard Widgets Setup
 Description: Verwalte einfach angezeigte Dashboard-Widgets in Deinen Easy Blogging-Installationen.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-classicpress-multisite/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-classicpress-multisite/
 Version: 1.0
 Author: PSOURCE
 */

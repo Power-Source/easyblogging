@@ -2,7 +2,7 @@
 /*
 Plugin Name: Benachrichtigung über ausstehende Kommentare
 Description: Fügt dem Menüpunkt "Kommentare" eine Sprechblase mit ausstehenden Kommentaren hinzu.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.1
 Author: PSOURCE
 */

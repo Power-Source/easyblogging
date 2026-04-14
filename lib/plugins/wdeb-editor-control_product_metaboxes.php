@@ -2,7 +2,7 @@
 /*
 Plugin Name: Control "Product" metaboxes
 Description: Ermöglicht die Kontrolle darüber, welche Metaboxen im benutzerdefinierten Beitragstyp "Produkt" angezeigt werden. <b>Benötigt PS MarketPress</b>
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.1
 Author: WPMS N@W
 */

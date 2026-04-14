@@ -2,7 +2,7 @@
 /*
 Plugin Name: Autor Kommentare Umfang
 Description: Filtert Kommentare in der Kommentarliste heraus, um nur diejenigen in den User-Authord-Posts für Deine Nicht-Administrator-Benutzer anzuzeigen.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.0
 Author: PSOURCE
 */

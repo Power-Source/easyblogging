@@ -2,7 +2,7 @@
 /*
 Plugin Name: Kompatibilitätsmodus
 Description: Wenn Du einen Konflikt mit Deinem Plugin und Easy Blogging feststellst, aktiviere dieses Add-On.
-Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
+Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
 Version: 1.1
 Author: PSOURCE
 */

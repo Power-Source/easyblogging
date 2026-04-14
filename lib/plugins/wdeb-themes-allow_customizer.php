@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Customizer zulassen
-Description: Ermöglicht den Zugriff auf WP3.4 + Theme Customizer. <b>Benötigt ClassicPress v3.4 oder besser.</b>
+Description: Ermöglicht den Zugriff auf Theme Customizer.
 Plugin URI: https://n3rds.work/piestingtal_source/easy-blogging-plugin/
 Version: 1.0
 Author: PSOURCE

@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  */
 class Wdeb_Wizard {
 
-	var $data;
+	private $data;
 
 	function __construct () {
 		$this->data = new Wdeb_Options;

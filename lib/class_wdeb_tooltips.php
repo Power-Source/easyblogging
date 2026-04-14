@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
  */
 class Wdeb_Tooltips {
 
-	var $data;
+	private $data;
 
 	function __construct () {
 		$this->data = new Wdeb_Options;

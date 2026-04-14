@@ -78,7 +78,7 @@ class Wdeb_Pro_ForceOnFreeSites {
 	}
 
 	function save_settings ($changed) {
-		if ('wdeb' == @$_POST['option_page']) {
+		if ('wdeb' == ($_POST['option_page'] ?? '')) {
 			update_site_option('wdeb_pro', $_POST['wdeb_pro']);
 			$changed = true;
 		}

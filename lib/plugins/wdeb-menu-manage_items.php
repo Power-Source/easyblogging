@@ -238,7 +238,7 @@ class Wdeb_Menu_ManageMenuItems {
 			}
 			if (isset($_POST['wdeb_menu_items']['new_items'])) {
 				$_POST['wdeb_menu_items']['new_items'] = array_filter($_POST['wdeb_menu_items']['new_items']);
-				$_POST['wdeb_menu_items']['new_items'] = array_map('stripslashes_deep', $_POST['wdeb_menu_items']['new_items']);
+				$_POST['wdeb_menu_items']['new_items'] = array_map('wp_unslash', $_POST['wdeb_menu_items']['new_items']);
 			}
 			$this->_data->set_options($_POST['wdeb_menu_items'], 'wdeb_menu_items');
 			$changed = true;

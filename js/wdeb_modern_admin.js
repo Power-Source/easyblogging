@@ -18,6 +18,9 @@
 		
 		// Logo removal
 		initLogoRemoval();
+
+		// Plugin activation toggles (no reload)
+		initPluginToggles();
 	});
 
 	/**
@@ -66,8 +69,7 @@
 	 */
 	function initToggleSwitches() {
 		$('.wdeb-toggle-switch input').on('change', function() {
-			// Could add custom change handlers here if needed
-			console.log('Toggle changed:', this.checked);
+			// Generic toggle hook point for future enhancements.
 		});
 
 		// Keyboard support for toggle switches
@@ -98,6 +100,100 @@
 				$(this).remove();
 			});
 		});
+	}
+
+	/**
+	 * Initialize plugin activation toggles.
+	 */
+	function initPluginToggles() {
+		$(document).on('change', '.wdeb-plugin-toggle', function() {
+			var $toggle = $(this);
+			var pluginId = $toggle.data('plugin-id');
+			var isActive = $toggle.is(':checked');
+			var action = isActive ? 'wdeb_activate_plugin' : 'wdeb_deactivate_plugin';
+			var nonce = (window.wdebSettings && window.wdebSettings.pluginNonce) ? window.wdebSettings.pluginNonce : '';
+			var ajaxUrl = (window.wdebSettings && window.wdebSettings.ajaxUrl) ? window.wdebSettings.ajaxUrl : ((typeof window.ajaxurl !== 'undefined') ? window.ajaxurl : '');
+			var $row = $toggle.closest('.wdeb-plugin-row');
+			var $feedback = $row.find('.wdeb-plugin-feedback');
+			var previousStatus = $row.find('.wdeb-plugin-status').text();
+
+			if (!pluginId || !nonce || !ajaxUrl) {
+				$toggle.prop('checked', !isActive);
+				setPluginFeedback($feedback, 'AJAX-Konfiguration fehlt.', 'error');
+				showNotice('AJAX-Konfiguration unvollstaendig. Bitte Seite neu laden.', 'error');
+				return;
+			}
+
+			$row.addClass('is-loading');
+			$toggle.prop('disabled', true);
+			setPluginFeedback($feedback, 'Speichert...', 'pending');
+			updatePluginRowState($row, isActive);
+
+			$.ajax({
+				url: ajaxUrl,
+				type: 'POST',
+				cache: false,
+				timeout: 10000,
+				data: {
+					action: action,
+					plugin: pluginId,
+					nonce: nonce
+				}
+			})
+			.done(function(response) {
+				if (!response || !response.success) {
+					$toggle.prop('checked', !isActive);
+					$row.find('.wdeb-plugin-status').text(previousStatus || (!isActive ? 'Aktiv' : 'Inaktiv'));
+					$row.toggleClass('is-active', !isActive);
+					setPluginFeedback($feedback, 'Speichern fehlgeschlagen.', 'error');
+					showNotice('Status konnte nicht gespeichert werden.', 'error');
+					return;
+				}
+
+				setPluginFeedback($feedback, 'Gespeichert.', 'success');
+				window.setTimeout(function() {
+					if ($row.hasClass('is-loading')) {
+						return;
+					}
+					setPluginFeedback($feedback, '', '');
+				}, 2200);
+			})
+			.fail(function() {
+				$toggle.prop('checked', !isActive);
+				$row.find('.wdeb-plugin-status').text(previousStatus || (!isActive ? 'Aktiv' : 'Inaktiv'));
+				$row.toggleClass('is-active', !isActive);
+				setPluginFeedback($feedback, 'Fehler beim Speichern.', 'error');
+				showNotice('Aktualisierung fehlgeschlagen. Bitte erneut versuchen.', 'error');
+			})
+			.always(function() {
+				$row.removeClass('is-loading');
+				$toggle.prop('disabled', false);
+			});
+		});
+	}
+
+	function updatePluginRowState($row, isActive) {
+		$row.toggleClass('is-active', !!isActive);
+		$row.find('.wdeb-plugin-status').text(isActive ? 'Aktiv' : 'Inaktiv');
+	}
+
+	function setPluginFeedback($feedback, message, state) {
+		$feedback.removeClass('is-success is-error');
+		if (state === 'success') {
+			$feedback.addClass('is-success');
+		}
+		if (state === 'error') {
+			$feedback.addClass('is-error');
+		}
+		$feedback.text(message || '');
+	}
+
+	function showNotice(message, type) {
+		if (typeof window.wdebShowNotification === 'function') {
+			window.wdebShowNotification(message, type || 'info');
+			return;
+		}
+		window.alert(message);
 	}
 
 	/**

@@ -35,10 +35,10 @@ class Wdeb_Editor_ControlProductMetaboxes {
 		$post_boxes = @$opts['hide_boxes'];
 		$post_boxes = is_array($post_boxes) ? $post_boxes : array();
 
-		if (isset($wp_meta_boxes['product']['side']['core']) && is_array(@$wp_meta_boxes['product']['side']['core'])) foreach ($wp_meta_boxes['product']['side']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['core'][$name]);
-		if (isset($wp_meta_boxes['product']['side']['low']) && is_array(@$wp_meta_boxes['product']['side']['low'])) foreach ($wp_meta_boxes['product']['side']['low'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['low'][$name]);
-		if (isset($wp_meta_boxes['product']['normal']['core']) && is_array(@$wp_meta_boxes['product']['normal']['core'])) foreach ($wp_meta_boxes['product']['normal']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['core'][$name]);
-		if (isset($wp_meta_boxes['product']['normal']['high']) && is_array(@$wp_meta_boxes['product']['normal']['high'])) foreach ($wp_meta_boxes['product']['normal']['high'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['high'][$name]);
+		if (isset($wp_meta_boxes['product']['side']['core']) && is_array($wp_meta_boxes['product']['side']['core'])) foreach ($wp_meta_boxes['product']['side']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['core'][$name]);
+		if (isset($wp_meta_boxes['product']['side']['low']) && is_array($wp_meta_boxes['product']['side']['low'])) foreach ($wp_meta_boxes['product']['side']['low'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['low'][$name]);
+		if (isset($wp_meta_boxes['product']['normal']['core']) && is_array($wp_meta_boxes['product']['normal']['core'])) foreach ($wp_meta_boxes['product']['normal']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['core'][$name]);
+		if (isset($wp_meta_boxes['product']['normal']['high']) && is_array($wp_meta_boxes['product']['normal']['high'])) foreach ($wp_meta_boxes['product']['normal']['high'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['high'][$name]);
 	}
 
 	function add_settings () {
@@ -71,7 +71,7 @@ class Wdeb_Editor_ControlProductMetaboxes {
 	}
 
 	function save_settings ($changed) {
-		if ('wdeb' == @$_POST['option_page']) {
+		if ('wdeb' == ($_POST['option_page'] ?? '')) {
 			$this->_data->set_options($_POST['wdeb_ecpm'], 'wdeb_ecpm');
 			$changed = true;
 		}

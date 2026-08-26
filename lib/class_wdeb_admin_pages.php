@@ -410,9 +410,75 @@ class Wdeb_AdminPages {
 		if (defined('DOING_AJAX')) { return; }
 
 		$theme = $this->data->get_option('plugin_theme');
-		$theme = $theme ? $theme : 'default';
-        $wdeb_theme_url = apply_filters('wdeb_plugin_themes_url', WDEB_PLUGIN_URL . '/themes/');
-		define('WDEB_PLUGIN_THEME_URL', $wdeb_theme_url . $theme, true);
+
+		if (!in_array($theme, array('default', 'red', 'orange', 'green'), true)) {
+			$theme = 'default';
+		}
+
+		add_action('admin_head', function () use ($theme) {
+			$colors = array(
+				'default' => array(
+					'primary'        => '#3aa3e6',
+					'primary-dark'   => '#028fe8',
+					'primary-border' => '#0082d5',
+					'primary-shadow' => '#0c507b',
+					'accent'         => '#f48423',
+					'accent-dark'    => '#d86f15',
+					'accent-border'  => '#e6791c',
+					'accent-shadow'  => '#6f3a02',
+				),
+				'red' => array(
+					'primary'        => '#d94a4a',
+					'primary-dark'   => '#b52f2f',
+					'primary-border' => '#9e2424',
+					'primary-shadow' => '#6f2020',
+					'accent'         => '#e66a3a',
+					'accent-dark'    => '#c44d24',
+					'accent-border'  => '#ad3e1c',
+					'accent-shadow'  => '#682510',
+				),
+				'orange' => array(
+					'primary'        => '#f5b026',
+					'primary-dark'   => '#d89012',
+					'primary-border' => '#c8780c',
+					'primary-shadow' => '#704300',
+					'accent'         => '#f48423',
+					'accent-dark'    => '#d86f15',
+					'accent-border'  => '#e6791c',
+					'accent-shadow'  => '#6f3a02',
+				),
+				'green' => array(
+					'primary'        => '#55a85a',
+					'primary-dark'   => '#3d853f',
+					'primary-border' => '#347036',
+					'primary-shadow' => '#245326',
+					'accent'         => '#79b84a',
+					'accent-dark'    => '#5f9638',
+					'accent-border'  => '#4f8130',
+					'accent-shadow'  => '#31521f',
+				),
+			);
+
+			$color = $colors[$theme];
+
+			echo '<style id="wdeb-theme-colors">';
+			echo ':root{';
+			echo '--wdeb-primary:' . esc_html($color['primary']) . ';';
+			echo '--wdeb-primary-dark:' . esc_html($color['primary-dark']) . ';';
+			echo '--wdeb-primary-border:' . esc_html($color['primary-border']) . ';';
+			echo '--wdeb-primary-shadow:' . esc_html($color['primary-shadow']) . ';';
+			echo '--wdeb-accent:' . esc_html($color['accent']) . ';';
+			echo '--wdeb-accent-dark:' . esc_html($color['accent-dark']) . ';';
+			echo '--wdeb-accent-border:' . esc_html($color['accent-border']) . ';';
+			echo '--wdeb-accent-shadow:' . esc_html($color['accent-shadow']) . ';';
+			echo '}';
+			echo '</style>';
+		});
+
+		define(
+			'WDEB_PLUGIN_THEME_URL',
+			WDEB_PLUGIN_URL . '/themes/default'
+		);
 
 		$user = wp_get_current_user();
 		$user_id = ($user && $user->ID) ? $user->ID : false;

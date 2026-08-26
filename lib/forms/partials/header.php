@@ -18,22 +18,10 @@ if (!$this->data->get_option('admin_bar')) {
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/ColaborateLight_400.font.js'></script> <!-- the Colaborate Light font -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/easyTooltip.js'></script> <!-- element tooltips -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.tablesorter.min.js'></script> <!-- tablesorter -->
-
-	<!--[if IE 8]>
-		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
-		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
-	<![endif]-->
-
-	<!--[if IE 7]>
-		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
-		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
-	<![endif]-->
-
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js'></script> <!-- visualize plugin for graphs / statistics -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js'></script> <!-- iphone like checkboxes -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.cleditor.min.js'></script> <!-- wysiwyg editor -->
-
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
+	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
 
 <?php 
 	$do_admin_head = defined('WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD') ? WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD : false;
@@ -179,10 +167,15 @@ $(function () {
 		var str = $(this).find('.wdeb_meta').text();
 		var arr = str.split("\n");
 		var title = '';
-		$.each(arr, function(idx, el) {
-			if (idx > 1) title += " \n";
-			title += $.trim(el);
+
+		$.each(arr, function (idx, el) {
+			if (idx > 1) {
+				title += " \n";
+			}
+
+			title += el.trim();
 		});
+
 		$(this).attr('title', title);
 	});
 
@@ -256,7 +249,17 @@ $(function () {
 </script>
 </head>
 
-<body id="wdeb-mode" class="wp-admin no-js <?php echo apply_filters( 'admin_body_class', '' ) . " $admin_body_class"; ?>">
+<?php
+$wdeb_theme = $this->data->get_option( 'plugin_theme' );
+
+if ( ! in_array( $wdeb_theme, array( 'default', 'red', 'orange', 'green' ), true ) ) {
+	$wdeb_theme = 'default';
+}
+
+$wdeb_body_class = 'wdeb-theme-' . $wdeb_theme;
+?>
+
+<body id="wdeb-mode" class="wp-admin no-js <?php echo esc_attr( trim( apply_filters( 'admin_body_class', '' ) . ' ' . $admin_body_class . ' ' . $wdeb_body_class ) ); ?>">
 
 <script type="text/javascript">
 //<![CDATA[

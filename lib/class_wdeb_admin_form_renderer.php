@@ -113,34 +113,38 @@ class Wdeb_AdminFormRenderer {
 		_e('<p>Benutzer mit den ausgewählten Rollen werden gezwungen, den Easy-Modus zu verwenden.</p>', 'wdeb');
 	}
 
-	function create_plugin_theme_box () {
-    $themes_dir = apply_filters('wdeb_plugin_themes_dir', WDEB_PLUGIN_BASE_DIR . '/themes/');
-    $themes_url = apply_filters('wdeb_plugin_themes_url', WDEB_PLUGIN_URL . '/themes/');
+	function create_plugin_theme_box() {
+		$previews_url = WDEB_PLUGIN_URL . '/themes/default/previews/';
 
-    if(function_exists( 'scandir' )) {
-    $themes = scandir($themes_dir);
-           } else {
+		$colors = array(
+			'default' => __( 'Classic Blue', 'wdeb' ),
+			'red'     => __( 'Red', 'wdeb' ),
+			'orange'  => __( 'Orange', 'wdeb' ),
+			'green'   => __( 'Green', 'wdeb' ),
+		);
 
-        $themes = apply_filters('wdeb_plugin_themes_list', array(
-			"default" => __("Default %s", 'wdeb'),
-			"stripes_red" => __("Stripes Red %s", 'wdeb'),
-            "stripes_orange" => __("Stripes Orange %s", 'wdeb'),
-            "stripes_green" => __("Stripes Green %s", 'wdeb')
-		));
-            }
+		$selected = $this->_get_option( 'plugin_theme' );
 
-		foreach ($themes as $theme) {
-        if ($theme == '.' || $theme == '..') {
-
-            } else {
-
-			$img = $themes_url . $theme . '/screenshot.png';
-            echo "<label style='overflow: hidden; margin-bottom: 20px; float:left; width: 233px; height: 550px;' for='plugin_theme-{$theme}'>";
-			echo $this->_create_radiobox('plugin_theme', $theme) . $theme . '<br />';
-            echo "<img src='" . $img . "' />";
-            echo "</label>";
-            }
+		if ( ! isset( $colors[ $selected ] ) ) {
+			$selected = 'default';
 		}
+
+		echo '<div class="wdeb-theme-selector" style="display:flex; flex-direction:row; flex-wrap:nowrap; gap:20px; align-items:flex-start;">';
+
+		foreach ( $colors as $color => $label ) {
+			echo '<div class="wdeb-theme-choice" style="display:block; flex:0 0 233px; width:233px;">';
+
+			echo '<div class="wdeb-theme-choice-header">';
+			echo '<input type="radio" name="wdeb[plugin_theme]" id="plugin_theme-' . esc_attr( $color ) . '" value="' . esc_attr( $color ) . '" ' . checked( $selected, $color, false ) . ' />';
+			echo '<label for="plugin_theme-' . esc_attr( $color ) . '">' . esc_html( $label ) . '</label>';
+			echo '</div>';
+
+			echo '<img src="' . esc_url( $previews_url . $color . '.png' ) . '" alt="' . esc_attr( $label ) . '" />';
+
+			echo '</div>';
+		}
+
+		echo '</div>';
 	}
 
 	function create_hijack_start_page_box () {

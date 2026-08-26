@@ -55,7 +55,74 @@ td.available-theme p.description, .appearance_page_premium-themes #current-theme
   display: block !important;
 }
 
-
 #wpwrap #primary_left #logo {
     padding: 0px 0 20px 0px;
+}
+
+/* PS Easy Blogging - Theme selector */
+#primary_right .wdeb-theme-selector {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+    width: max-content !important;
+}
+
+#primary_right .wdeb-theme-choice {
+    display: block !important;
+    flex: 0 0 233px !important;
+    width: 233px !important;
+}
+
+#primary_right .wdeb-theme-choice-header {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    width: 233px !important;
+    height: 30px !important;
+
+    margin: 0 0 8px !important;
+    padding: 0 !important;
+}
+
+#primary_right .wdeb-theme-choice-header input[type="radio"] {
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+
+    width: auto !important;
+    min-width: 0 !important;
+
+    margin: 0 6px 0 0 !important;
+    padding: 0 !important;
+}
+
+#primary_right .wdeb-theme-choice-header label {
+    display: inline-block !important;
+    flex: 0 0 auto !important;
+
+    width: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    line-height: 20px !important;
+}
+
+#primary_right .wdeb-theme-choice img {
+    display: block !important;
+
+    width: 233px !important;
+    min-width: 233px !important;
+    max-width: 233px !important;
+
+    height: auto !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    float: none !important;
+
+    box-sizing: border-box !important;
 }

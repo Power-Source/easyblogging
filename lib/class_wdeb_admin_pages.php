@@ -40,7 +40,7 @@ class Wdeb_AdminPages {
 
 		$allowed = array('jpg', 'jpeg', 'png', 'gif');
 		$ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
-		if (!in_array($ext, $allowed)) { wp_die(__('This file type is not supported', 'wdeb')); }
+		if (!in_array($ext, $allowed)) { wp_die(__('Dieser Dateityp wird nicht unterstützt', 'wdeb')); }
 
 		$wp_upload_dir = wp_upload_dir();
 		$logo_dir = $wp_upload_dir['basedir'] . '/wdeb';
@@ -161,8 +161,8 @@ class Wdeb_AdminPages {
 
 		add_submenu_page(
 			'wdeb',
-			__( 'Easy Blogging Wizard', 'wdeb' ),
-			__( 'Easy Blogging Wizard', 'wdeb' ),
+			__( 'Easy Blogging Assistent', 'wdeb' ),
+			__( 'Easy Blogging Assistent', 'wdeb' ),
 			$perms,
 			'wdeb_wizard',
 			array( $this, 'create_admin_wizard_page' )
@@ -193,33 +193,33 @@ class Wdeb_AdminPages {
 		$form = new Wdeb_AdminFormRenderer;
 
 		register_setting('wdeb', 'wdeb');
-		add_settings_section('wdeb_settings', __('Editor Settings', 'wdeb'),  function() {}, 'wdeb_options_page');
-		add_settings_field('wdeb_metaboxes_posts', __('Hide these meta boxes on "Edit Post" pages', 'wdeb'), array($form, 'create_metaboxes_posts_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_metaboxes_pages', __('Hide these meta boxes on "Edit Page" pages', 'wdeb'), array($form, 'create_metaboxes_pages_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_admin_bar', __('Show Admin bar', 'wdeb'), array($form, 'create_admin_bar_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_screen_options', __('Show help and screen options', 'wdeb'), array($form, 'create_screen_options_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_easy_bar', __('Show Easy Bar', 'wdeb'), array($form, 'create_easy_bar_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_auto_enter_role', __('Force "Easy" mode for user with this role', 'wdeb'), array($form, 'create_auto_enter_role_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_hijack_start_page', __('Hijack start page for new users', 'wdeb'), array($form, 'create_hijack_start_page_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_show_logout', __('Always show logout link', 'wdeb'), array($form, 'create_show_logout_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_plugin_theme', __('Use this theme', 'wdeb'), array($form, 'create_plugin_theme_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_logo', __('Use this logo', 'wdeb'), array($form, 'create_logo_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_dashboard_widget', __('Dashboard widget', 'wdeb'), array($form, 'create_dashboard_widget_box'), 'wdeb_options_page', 'wdeb_settings');
-		add_settings_field('wdeb_dashboard_right_now', __('Show &quot;Right Now&quot; in Dashboard', 'wdeb'), array($form, 'create_dashboard_right_now_widget_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_section('wdeb_settings', __('Editor-Einstellungen', 'wdeb'),  function() {}, 'wdeb_options_page');
+		add_settings_field('wdeb_metaboxes_posts', __('Diese Metaboxen auf den Seiten „Beitrag bearbeiten“ ausblenden', 'wdeb'), array($form, 'create_metaboxes_posts_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_metaboxes_pages', __('Diese Metaboxen auf den Seiten „Seite bearbeiten“ ausblenden', 'wdeb'), array($form, 'create_metaboxes_pages_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_admin_bar', __('Admin-Leiste anzeigen', 'wdeb'), array($form, 'create_admin_bar_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_screen_options', __('Hilfe- und Bildschirmoptionen anzeigen', 'wdeb'), array($form, 'create_screen_options_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_easy_bar', __('Easy Bar anzeigen', 'wdeb'), array($form, 'create_easy_bar_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_auto_enter_role', __('"Einfach"-Modus für Benutzer mit dieser Rolle erzwingen', 'wdeb'), array($form, 'create_auto_enter_role_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_hijack_start_page', __('Startseite für neue Benutzer festlegen', 'wdeb'), array($form, 'create_hijack_start_page_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_show_logout', __('Abmeldelink immer anzeigen', 'wdeb'), array($form, 'create_show_logout_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_plugin_theme', __('Dieses Design verwenden', 'wdeb'), array($form, 'create_plugin_theme_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_logo', __('Dieses Logo verwenden', 'wdeb'), array($form, 'create_logo_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_dashboard_widget', __('Dashboard-Widget', 'wdeb'), array($form, 'create_dashboard_widget_box'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_dashboard_right_now', __('"Jetzt" im Dashboard anzeigen', 'wdeb'), array($form, 'create_dashboard_right_now_widget_box'), 'wdeb_options_page', 'wdeb_settings');
 
 		do_action('wdeb_admin-register_settings-settings', $form);
 
 		register_setting('wdeb', 'wdeb_wizard');
-		add_settings_section('wdeb_wizard', __('Wizard Settings', 'wdeb'),  function() {}, 'wdeb_wizard');
-		add_settings_field('wdeb_wizard_enable', __('Enable Wizard', 'wdeb'), array($form, 'create_wizard_enabled_box'), 'wdeb_wizard', 'wdeb_wizard');
-		add_settings_field('wdeb_wizard_steps', __('Configure Wizard Steps', 'wdeb'), array($form, 'create_wizard_steps_box'), 'wdeb_wizard', 'wdeb_wizard');
-		add_settings_field('wdeb_wizard_add_step', __('Add new Wizard Step', 'wdeb'), array($form, 'create_wizard_add_step_box'), 'wdeb_wizard', 'wdeb_wizard');
+		add_settings_section('wdeb_wizard', __('Wizard-Einstellungen', 'wdeb'),  function() {}, 'wdeb_wizard');
+		add_settings_field('wdeb_wizard_enable', __('Wizard aktivieren', 'wdeb'), array($form, 'create_wizard_enabled_box'), 'wdeb_wizard', 'wdeb_wizard');
+		add_settings_field('wdeb_wizard_steps', __('Wizard-Schritte konfigurieren', 'wdeb'), array($form, 'create_wizard_steps_box'), 'wdeb_wizard', 'wdeb_wizard');
+		add_settings_field('wdeb_wizard_add_step', __('Neuen Wizard-Schritt hinzufügen', 'wdeb'), array($form, 'create_wizard_add_step_box'), 'wdeb_wizard', 'wdeb_wizard');
 
 		do_action('wdeb_admin-register_settings-wizard', $form);
 
 		register_setting('wdeb', 'wdeb_help');
-		add_settings_section('wdeb_help', __('Tooltips Settings', 'wdeb'),  function() {}, 'wdeb_help');
-		add_settings_field('wdeb_show_tooltips', __('Show Tooltips', 'wdeb'), array($form, 'create_show_tooltips_box'), 'wdeb_help', 'wdeb_help');
+		add_settings_section('wdeb_help', __('Tooltips-Einstellungen', 'wdeb'),  function() {}, 'wdeb_help');
+		add_settings_field('wdeb_show_tooltips', __('Tooltips anzeigen', 'wdeb'), array($form, 'create_show_tooltips_box'), 'wdeb_help', 'wdeb_help');
 
 		do_action('wdeb_admin-register_settings-help', $form);
 	}
@@ -242,7 +242,7 @@ class Wdeb_AdminPages {
 		if (!$this->is_in_easymode()) {
 			wp_enqueue_script('wdeb_switch', WDEB_PLUGIN_URL . '/js/wdeb_switch.js', 'jquery');
 			wp_localize_script('wdeb_switch', 'l10WdebSwitch', array(
-				'activate' => __('Activate easy mode', 'wdeb')
+				'activate' => __('Einfachmodus aktivieren', 'wdeb')
 			));
 		} else {
 			wp_enqueue_script(array(
@@ -264,18 +264,24 @@ class Wdeb_AdminPages {
 
 	}
 
-	function css_print_styles () {
-		global $wp_version;
-		$version = preg_replace('/-.*$/', '', $wp_version);
-		
-		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) return;
-		wp_enqueue_style('wdeb_switch', WDEB_PLUGIN_URL . '/css/wdeb_switch.css');
-		if (version_compare($version, '3.3', '<')) {
-			echo '<style type="text/css">.wdeb_switch {height: 13px;}</style>';
-		} else {
-			echo '<style type="text/css">.wdeb_switch {height: 24px !important;}</style>';
+	function css_print_styles() {
+		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) {
+			return;
 		}
-        wp_enqueue_style('wdeb_global', WDEB_PLUGIN_URL . '/css/wdeb_global.css');
+
+		wp_enqueue_style(
+			'wdeb_switch',
+			WDEB_PLUGIN_URL . '/css/wdeb_switch.css',
+			array(),
+			WDEB_VERSION
+		);
+
+		wp_enqueue_style(
+			'wdeb_global',
+			WDEB_PLUGIN_URL . '/css/wdeb_global.css',
+			array(),
+			WDEB_VERSION
+		);
 	}
 
 	function apply_text_overrides ($haystack) {
@@ -528,55 +534,55 @@ class Wdeb_AdminPages {
 				'url' => 'index.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/home.png',
 				'title' => __('Dashboard', 'wdeb'),
-				'help' => __('Your start page', 'wdeb'),
+				'help' => __('Deine Startseite', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_posts',
 				'url' => 'post-new.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/new-post.png',
-				'title' => __('New Post', 'wdeb'),
-				'help' => __('Create a new post', 'wdeb'),
+				'title' => __('Neuer Beitrag', 'wdeb'),
+				'help' => __('Erstelle einen neuen Beitrag', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_posts',
 				'url' => 'edit.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/posts.png',
-				'title' => __('My Posts', 'wdeb'),
-				'help' => __('Edit your posts', 'wdeb'),
+				'title' => __('Meine Beiträge', 'wdeb'),
+				'help' => __('Bearbeite deine Beiträge', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_pages',
 				'url' => 'post-new.php?post_type=page',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/new-page.png',
-				'title' => __('New Page', 'wdeb'),
-				'help' => __('Create a new page', 'wdeb'),
+				'title' => __('Neue Seite', 'wdeb'),
+				'help' => __('Erstelle eine neue Seite', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_pages',
 				'url' => 'edit.php?post_type=page',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/pages.png',
-				'title' => __('My Pages', 'wdeb'),
-				'help' => __('Edit your pages', 'wdeb'),
+				'title' => __('Meine Seiten', 'wdeb'),
+				'help' => __('Bearbeite deine Seiten', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_posts', // Was moderate_comments up to v3.1
 				'url' => 'edit-comments.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/comments.png',
-				'title' => __('Comments', 'wdeb'),
-				'help' => __('Moderate your comments', 'wdeb'),
+				'title' => __('Kommentare', 'wdeb'),
+				'help' => __('Moderieren deiner Kommentare', 'wdeb'),
 			),
 			array (
 				'check_callback' => 'wdeb_supporter_themes_enabled',
 				'capability' => 'switch_themes',
 				'url' => 'themes.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/free-themes.png',
-				'title' => __('Free Themes', 'wdeb'),
-				'help' => __('Change your site appearance', 'wdeb'),
+				'title' => __('Kostenlose Themes', 'wdeb'),
+				'help' => __('Ändere das Aussehen deiner Seite', 'wdeb'),
 			),
 			array (
 				'check_callback' => 'wdeb_supporter_themes_enabled',
@@ -584,23 +590,23 @@ class Wdeb_AdminPages {
 				'url' => 'themes.php?page=premium-themes',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/premium-themes.png',
 				'title' => __('Premium Themes', 'wdeb'),
-				'help' => __('Change your site appearance', 'wdeb'),
+				'help' => __('Ändere das Aussehen deiner Seite', 'wdeb'),
 			),
 			array (
 				'check_callback' => 'wdeb_supporter_themes_not_enabled',
 				'capability' => 'switch_themes',
 				'url' => 'themes.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/free-themes.png',
-				'title' => __('Manage Themes', 'wdeb'),
-				'help' => __('Change your site appearance', 'wdeb'),
+				'title' => __('Themes verwalten', 'wdeb'),
+				'help' => __('Ändere das Aussehen deiner Seite', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
 				'capability' => 'edit_theme_options',
 				'url' => 'widgets.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/edit-themes.png',
-				'title' => __('Customize Design', 'wdeb'),
-				'help' => __('Personalize your site', 'wdeb'),
+				'title' => __('Design anpassen', 'wdeb'),
+				'help' => __('Personalisiere deine Seite', 'wdeb'),
 			),
 			array (
 				'check_callback' => 'wdeb_not_supporter',
@@ -608,7 +614,7 @@ class Wdeb_AdminPages {
 				'url' => $pro_href,//'supporter.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/supporter.png',
 				'title' => $pro_title,//__('Supporter', 'wdeb'),
-				'help' => __('Support us!', 'wdeb'),
+				'help' => __('Unterstütze uns!', 'wdeb'),
 			),
 			array (
 				'check_callback' => false,
@@ -616,7 +622,7 @@ class Wdeb_AdminPages {
 				'url' => 'profile.php',
 				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/profiles.png',
 				'title' => __('Profile', 'wdeb'),
-				'help' => __('Edit your profile information', 'wdeb'),
+				'help' => __('Bearbeite deine Profilinformationen', 'wdeb'),
 			),
 
 		);
@@ -666,24 +672,24 @@ class Wdeb_AdminPages {
 		$no_checked = "no" == $meta ? 'checked="checked"' : '';
 		$maybe_checked = !$meta ? 'checked="checked"' : '';
 		?>
-<h3><?php _e('Easy Blogging starting mode', 'wdeb'); ?></h3>
+<h3><?php _e('Easy Blogging Startmodus', 'wdeb'); ?></h3>
 <table class="form-table">
 	<tr>
-		<th><?php _e('Start in Easy mode', 'wdeb'); ?></td>
+		<th><?php _e('Im Easy-Modus starten', 'wdeb'); ?></td>
 		<td>
 			<label for="wdeb_autostart-yes">
 				<input type="radio" name="wdeb_autostart" id="wdeb_autostart-yes" value="yes" <?php echo $yes_checked; ?> />
-				<?php _e("Yes", "wdeb"); ?>
+				<?php _e("JA", "wdeb"); ?>
 			</label>
 			<br />
 			<label for="wdeb_autostart-no">
 				<input type="radio" name="wdeb_autostart" id="wdeb_autostart-no" value="no" <?php echo $no_checked; ?> />
-				<?php _e("No", "wdeb"); ?>
+				<?php _e("NEIN", "wdeb"); ?>
 			</label>
 			<br />
 			<label for="wdeb_autostart-maybe">
 				<input type="radio" name="wdeb_autostart" id="wdeb_autostart-maybe" value="" <?php echo $maybe_checked; ?> />
-				<?php _e("Ask me the next time I log in", "wdeb"); ?>
+				<?php _e("Frage mich beim nächsten Login", "wdeb"); ?>
 			</label>
 		</td>
 	</tr>

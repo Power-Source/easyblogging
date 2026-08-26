@@ -24,35 +24,70 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+define( 'WDEB_PLUGIN_SELF_DIRNAME', basename( __DIR__ ) );
+define( 'WDEB_VERSION', '1.0.3' );
 
+/*
+ * Determine plugin location and set paths/URLs.
+ */
+if (
+	is_multisite() &&
+	defined( 'WPMU_PLUGIN_DIR' ) &&
+	defined( 'WPMU_PLUGIN_URL' ) &&
+	file_exists( WPMU_PLUGIN_DIR . '/' . basename( __FILE__ ) )
+) {
+	define( 'WDEB_PLUGIN_LOCATION', 'mu-plugins' );
+	define( 'WDEB_PLUGIN_BASE_DIR', WPMU_PLUGIN_DIR );
+	define( 'WDEB_PLUGIN_URL', WPMU_PLUGIN_URL );
 
-define ('WDEB_PLUGIN_SELF_DIRNAME', basename(dirname(__FILE__)));
-
-//Setup proper paths/URLs and load text domains
-if (is_multisite() && defined('WPMU_PLUGIN_URL') && defined('WPMU_PLUGIN_DIR') && file_exists(WPMU_PLUGIN_DIR . '/' . basename(__FILE__))) {
-	define ('WDEB_PLUGIN_LOCATION', 'mu-plugins');
-	define ('WDEB_PLUGIN_BASE_DIR', WPMU_PLUGIN_DIR);
-	define ('WDEB_PLUGIN_URL', str_replace('http://', (($_SERVER["HTTPS"] ?? '') == 'on' ? 'https://' : 'http://'), WPMU_PLUGIN_URL));
 	$textdomain_handler = 'load_muplugin_textdomain';
-} else if (defined('WP_PLUGIN_URL') && defined('WP_PLUGIN_DIR') && file_exists(WP_PLUGIN_DIR . '/' . WDEB_PLUGIN_SELF_DIRNAME . '/' . basename(__FILE__))) {
-	define ('WDEB_PLUGIN_LOCATION', 'subfolder-plugins');
-	define ('WDEB_PLUGIN_BASE_DIR', WP_PLUGIN_DIR . '/' . WDEB_PLUGIN_SELF_DIRNAME);
-	define ('WDEB_PLUGIN_URL', str_replace('http://', (($_SERVER["HTTPS"] ?? '') == 'on' ? 'https://' : 'http://'), WP_PLUGIN_URL) . '/' . WDEB_PLUGIN_SELF_DIRNAME);
-	$textdomain_handler = 'load_plugin_textdomain';
-} else if (defined('WP_PLUGIN_URL') && defined('WP_PLUGIN_DIR') && file_exists(WP_PLUGIN_DIR . '/' . basename(__FILE__))) {
-	define ('WDEB_PLUGIN_LOCATION', 'plugins');
-	define ('WDEB_PLUGIN_BASE_DIR', WP_PLUGIN_DIR);
-	define ('WDEB_PLUGIN_URL', str_replace('http://', (($_SERVER["HTTPS"] ?? '') == 'on' ? 'https://' : 'http://'), WP_PLUGIN_URL));
-	$textdomain_handler = 'load_plugin_textdomain';
-} else {
-	// No textdomain is loaded because we can't determine the plugin location.
-	// No point in trying to add textdomain to string and/or localizing it.
-	wp_die(__('Es gab ein Problem beim Bestimmen, wo das Easy Blogging-Plugin installiert ist. Bitte erneut installieren.'));
-}
-$textdomain_handler('wdeb', false, WDEB_PLUGIN_SELF_DIRNAME . '/languages/');
 
-define('WDEB_LOGO_URL', WDEB_PLUGIN_URL . '/img/logo.png');
-define('WDEB_LANDING_PAGE', 'index.php');
+} elseif (
+	defined( 'WP_PLUGIN_URL' ) &&
+	defined( 'WP_PLUGIN_DIR' ) &&
+	file_exists(
+		WP_PLUGIN_DIR . '/' .
+		WDEB_PLUGIN_SELF_DIRNAME . '/' .
+		basename( __FILE__ )
+	)
+) {
+	define( 'WDEB_PLUGIN_LOCATION', 'subfolder-plugins' );
+	define( 'WDEB_PLUGIN_BASE_DIR', WP_PLUGIN_DIR . '/' . WDEB_PLUGIN_SELF_DIRNAME );
+	define( 'WDEB_PLUGIN_URL', WP_PLUGIN_URL . '/' . WDEB_PLUGIN_SELF_DIRNAME );
+
+	$textdomain_handler = 'load_plugin_textdomain';
+
+} elseif (
+	defined( 'WP_PLUGIN_URL' ) &&
+	defined( 'WP_PLUGIN_DIR' ) &&
+	file_exists(
+		WP_PLUGIN_DIR . '/' .
+		basename( __FILE__ )
+	)
+) {
+	define( 'WDEB_PLUGIN_LOCATION', 'plugins' );
+	define( 'WDEB_PLUGIN_BASE_DIR', WP_PLUGIN_DIR );
+	define( 'WDEB_PLUGIN_URL', WP_PLUGIN_URL );
+
+	$textdomain_handler = 'load_plugin_textdomain';
+
+} else {
+	wp_die(
+		__( 
+			'Es gab ein Problem beim Bestimmen, wo das Easy Blogging-Plugin installiert ist. Bitte erneut installieren.',
+			'wdeb'
+		)
+	);
+}
+
+$textdomain_handler(
+	'wdeb',
+	false,
+	WDEB_PLUGIN_SELF_DIRNAME . '/languages/'
+);
+
+define( 'WDEB_LOGO_URL', WDEB_PLUGIN_URL . '/img/logo.png' );
+define( 'WDEB_LANDING_PAGE', 'index.php' );
 
 require_once WDEB_PLUGIN_BASE_DIR . '/lib/class_wdeb_installer.php';
 Wdeb_Installer::check();

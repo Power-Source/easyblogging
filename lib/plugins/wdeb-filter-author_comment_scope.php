@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Author Comments scope
-Description: Filters out comments in comments list to show only the ones on the user-authord posts for your non-admin users.
+Plugin Name: Autor-Kommentare Bereich
+Description: Filtert die Kommentare in der Kommentarliste so, dass für Nicht-Admin-Benutzer nur Kommentare zu Beiträgen angezeigt werden, die von ihnen selbst verfasst wurden.
 Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE

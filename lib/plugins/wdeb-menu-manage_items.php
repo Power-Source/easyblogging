@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Manage menu items
-Description: Easily manage menu items on your Easy Blogging menu.
+Plugin Name: Menüeinträge verwalten
+Description: Verwalte Menüeinträge in deinem PS Easy Blogging Menü einfach.
 Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0.1
 Author: PSOURCE
@@ -121,7 +121,7 @@ class Wdeb_Menu_ManageMenuItems {
 	function json_remove_my_item() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You are not allowed to do this.', 'wdeb' ) ),
+				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
 			);
 		}
@@ -132,7 +132,7 @@ class Wdeb_Menu_ManageMenuItems {
 
 		if ( '' === $id ) {
 			wp_send_json_error(
-				array( 'message' => __( 'No menu item was specified.', 'wdeb' ) ),
+				array( 'message' => __( 'Es wurde kein Menüeintrag angegeben.', 'wdeb' ) ),
 				400
 			);
 		}
@@ -178,7 +178,7 @@ class Wdeb_Menu_ManageMenuItems {
 	function json_reset_order() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You are not allowed to do this.', 'wdeb' ) ),
+				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
 			);
 		}
@@ -205,7 +205,7 @@ class Wdeb_Menu_ManageMenuItems {
 	function json_reset_items() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You are not allowed to do this.', 'wdeb' ) ),
+				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
 			);
 		}
@@ -244,11 +244,11 @@ class Wdeb_Menu_ManageMenuItems {
 
 
 	function register_page ($perms) {
-		add_submenu_page('wdeb', __('Menu items', 'wdeb'), __('Menu items', 'wdeb'), $perms, 'wdeb_menu_items', array($this, 'render_page'));
+		add_submenu_page('wdeb', __('Menüeinträge', 'wdeb'), __('Menüeinträge', 'wdeb'), $perms, 'wdeb_menu_items', array($this, 'render_page'));
 	}
 
 	function render_page () {
-		echo '<div class="wrap"><h2>Easy Blogging Menu</h2>';
+		echo '<div class="wrap"><h2>Easy Blogging Menü</h2>';
 		echo (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN
 			? '<form action="settings.php" method="post" enctype="multipart/form-data">'
 			: '<form action="options.php" method="post" enctype="multipart/form-data">'
@@ -602,11 +602,11 @@ class Wdeb_Menu_ManageMenuItems {
 				<?php foreach ( $wp_roles->roles as $key => $role ) : ?>
 
 					<?php
-					$title      = sprintf( __( '%s only', 'wdeb' ), $role['name'] );
+					$title      = sprintf( __( 'Nur %s', 'wdeb' ), $role['name'] );
 					$capability = $key;
 
 					if ( isset( $role_capabilities[ $key ] ) ) {
-						$title      = sprintf( __( '%s and above', 'wdeb' ), $role['name'] );
+						$title      = sprintf( __( '%s und höher', 'wdeb' ), $role['name'] );
 						$capability = $role_capabilities[ $key ];
 					}
 					?>
@@ -649,7 +649,7 @@ class Wdeb_Menu_ManageMenuItems {
 	}
 
 	function create_resets_box () {
-		echo '<p>' . __('Use the buttons below to reset some aspects of your customization to their defaults', 'wdeb') . '</p>';
+		echo '<p>' . __('Verwende die untenstehenden Schaltflächen, um einige Aspekte Deiner Anpassungen auf die Standardeinstellungen zurückzusetzen.', 'wdeb') . '</p>';
 		echo '<input type="button" id="wdeb_menu_items-reset_order" value="' . esc_attr(__('Menüreihenfolge zurücksetzen', 'wdeb')) . '" />';
 		echo '&nbsp;';
 		echo '<input type="button" id="wdeb_menu_items-reset_items" value="' . esc_attr(__('Neue Menüelemente zurücksetzen', 'wdeb')) . '" />';

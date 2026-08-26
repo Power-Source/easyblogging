@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Scrollable menu
-Description: Allows menu to scroll on small screens. Also allows for more verbose wizard step titles. 
+Plugin Name: Scrollbares Menü
+Description: Ermöglicht das Scrollen des Menüs auf kleinen Bildschirmen. Ermöglicht auch ausführlichere Assistentenschritt-Titel.
 Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0.1
 Author: PSOURCE
@@ -26,89 +26,102 @@ class Wdeb_Menu_ScrollableMenu {
 		return ' ';
 	}
 
-	function handle_javascript () {
+	function handle_javascript() {
 		echo '
-// Adapt menu to small screen sizes
-function wdeb_menu_make_scrollable () {
-	var $menu = $("#menu");
-	var top_pos = $menu.height() + $menu.position().top;
-	if (top_pos < $(window).height()) return;
-	
-	// Pop the scroll, as necessary
-	$menu.height($(window).height() - $menu.position().top);
-	$("#primary_left")
-		// Fix positioning issues
-		.css("z-index", "999")
-		// Do stuffs
-		.hover(
-			function () {
-				if ($menu.is(".hover-active")) return false;
-				$menu
-					.addClass("hover-active")
-					.find("ul")
+	function wdeb_menu_make_scrollable() {
+		var $menu = $("#menu");
+		var $primaryLeft = $("#primary_left");
+
+		if (!$menu.length || !$primaryLeft.length) {
+			return;
+		}
+
+		var topPos = $menu.height() + $menu.position().top;
+
+		if (topPos < $(window).height()) {
+			return;
+		}
+
+		$menu.height($(window).height() - $menu.position().top);
+		$primaryLeft.css("z-index", "999");
+
+		if (!$primaryLeft.hasClass("wdeb-scrollable")) {
+			$primaryLeft
+				.addClass("wdeb-scrollable")
+				.on("mouseenter.wdebScrollable", function () {
+					if ($menu.hasClass("hover-active")) {
+						return;
+					}
+
+					$menu
+						.addClass("hover-active")
+						.find("ul")
+							.css("position", "relative")
+							.end()
 						.css({
-							"position": "relative"
+							"overflow-y": "scroll",
+							"overflow-x": "hidden"
 						})
-						.end()
-					.css({
-						"overflow-y": "scroll",
-						"overflow-x": "hidden"
-					})
-					.width($menu.width() - 15)
-				;
-			},
-			function () {
-				$menu
-					.removeClass("hover-active")
-					.css({
-						"overflow-y": "hidden",
-						"overflow-x": "auto",
-						"width": "100%"
-					})
-				;
-			}
-		)
-	;
-}
-$(window)
-	.load(wdeb_menu_make_scrollable)
-	.resize(function () {
-		// Reset scrolling first
-		$("#primary_left").unbind("mouseenter").unbind("mouseleave");
-		$("#menu")
+						.width($menu.width() - 15);
+				})
+				.on("mouseleave.wdebScrollable", function () {
+					$menu
+						.removeClass("hover-active")
+						.css({
+							"overflow-y": "hidden",
+							"overflow-x": "auto",
+							"width": "100%"
+						});
+				});
+		}
+	}
+
+	function wdeb_menu_reset_scrollable() {
+		var $menu = $("#menu");
+		var $primaryLeft = $("#primary_left");
+
+		if (!$menu.length || !$primaryLeft.length) {
+			return;
+		}
+
+		$menu
 			.removeClass("hover-active")
 			.find("ul")
-				.css({
-					"position": "static"
-				})
+				.css("position", "static")
 				.end()
 			.css({
 				"height": "auto",
 				"overflow-y": "hidden",
-				"overflow-x": "hidden"
-			})
-		;
-		// Make menu scrollable again, if appropriate
+				"overflow-x": "hidden",
+				"width": "100%"
+			});
+
+		$primaryLeft.css("z-index", "");
+
 		wdeb_menu_make_scrollable();
-	});
-;';
+	}
+
+	$(window)
+		.on("load.wdebScrollable", wdeb_menu_make_scrollable)
+		.on("resize.wdebScrollable", wdeb_menu_reset_scrollable);
+	';
 	}
 	
 	function handle_css () {
 		$theme_url = WDEB_PLUGIN_THEME_URL;
 		echo <<<EoWdebScrollableMenuCss
-#menu .wdeb_wizard_step a {
-	height: auto;
-}
-#menu .wdeb_wizard_step.current {
-	background:url('{$theme_url}/assets/menu_current-large.png') top right no-repeat;
-}
-@media (max-width: 1280px) {
-	#menu ul li a, #menu ul li a:hover {
-	    height: auto !important;
-	}
-}
-EoWdebScrollableMenuCss;
+		#menu .wdeb_wizard_step a {
+			height: auto;
+		}
+		#menu .wdeb_wizard_step.current {
+			background:url('{$theme_url}/assets/menu_current-large.png') top right no-repeat;
+		}
+		@media (max-width: 1280px) {
+			#menu ul li a, #menu ul li a:hover {
+				height: auto !important;
+			}
+		}
+		EoWdebScrollableMenuCss;
 	}
 }
 

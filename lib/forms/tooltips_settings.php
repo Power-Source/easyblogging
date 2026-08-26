@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2><?php _e("Easy Blogging settings", 'wdeb'); ?></h2>
+	<h2><?php esc_html_e( 'PS Easy Blogging Einstellungen', 'wdeb' ); ?></h2>
 
 <?php if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) { ?>
 	<form action="settings.php" method="post" enctype="multipart/form-data">
@@ -10,7 +10,7 @@
 	<?php settings_fields('wdeb_help'); ?>
 	<?php do_settings_sections('wdeb_help'); ?>
 	<p class="submit">
-		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Save Changes'); ?>" />
+		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Änderungen speichern', 'wdeb' ); ?>" />
 	</p>
 	</form>
 

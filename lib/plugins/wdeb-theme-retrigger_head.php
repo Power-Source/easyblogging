@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Compatibility mode
-Description: If you experience a conflict with your plugin and Easy Blogging, try activating this add-on.
+Plugin Name: Kompatibilitäts-Modus für PS Easy Blogging
+Description: Wenn du einen Konflikt zwischen deinem Plugin und PS Easy Blogging feststellst, versuche, dieses Add-on zu aktivieren.
 Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE

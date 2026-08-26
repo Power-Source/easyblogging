@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Admin toolbar switch button
-Description: Replace the standard Easy mode toggle button with an Admin toolbar menu entry.
+Plugin Name: Admin Toolbar Switch Button
+Description: Ersetzt den standardmäßigen Easy-Modus-Umschaltknopf durch einen Eintrag im Admin-Toolbar-Menü.
 Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
@@ -29,13 +29,13 @@ class Wdeb_Theme_ToolbarSwitchButton {
 		global $wp_admin_bar;
 		if (!(defined('WDEB_IS_IN_EASY_MODE') && WDEB_IS_IN_EASY_MODE)) {
 			$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_on');
-			$title = __('Activate easy mode', 'wdeb');
+			$title = __('Easy-Modus aktivieren', 'wdeb');
 		} else {
 			$data = new Wdeb_Options;
 			$auto_enter_roles = $data->get_option('auto_enter_role');
 			if (!$auto_enter_roles || !wdeb_current_user_can($auto_enter_roles)) {
 				$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_off');
-				$title = __('Exit easy mode', 'wdeb');
+				$title = __('Easy-Modus verlassen', 'wdeb');
 			} else return false; // Not showing exit easy mode link if not applicable
 		}
 		$wp_admin_bar->add_menu(array(

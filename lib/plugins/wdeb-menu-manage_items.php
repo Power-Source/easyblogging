@@ -362,12 +362,9 @@ class Wdeb_Menu_ManageMenuItems {
 	 */
 	function create_show_hide_box() {
 		if ( ! defined( 'WDEB_PLUGIN_THEME_URL' ) ) {
-			$theme = $this->_data->get_option( 'plugin_theme' );
-			$theme = $theme ? $theme : 'default';
-
 			define(
 				'WDEB_PLUGIN_THEME_URL',
-				WDEB_PLUGIN_URL . '/themes/' . $theme
+				WDEB_PLUGIN_URL . '/themes/default'
 			);
 		}
 

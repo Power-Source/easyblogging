@@ -11,8 +11,6 @@
 <title><?php _e("Start here",'wdeb'); ?></title>
 
 	<link type="text/css" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/style.css" rel="stylesheet" /> <!-- the layout css file -->
-	<link type="text/css" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/jquery.cleditor.css" rel="stylesheet" />
-
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery-1.4.2.min.js"></script>	<!-- jquery library -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery-ui-1.8.5.custom.min.js"></script> <!-- jquery UI -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/cufon-yui.js"></script> <!-- Cufon font replacement -->
@@ -21,7 +19,6 @@
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.tablesorter.min.js"></script> <!-- tablesorter -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js"></script> <!-- visualize plugin for graphs / statistics -->
 	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js"></script> <!-- iphone like checkboxes -->
-	<script type='text/javascript' src="<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.cleditor.min.js"></script> <!-- wysiwyg editor -->
 	<script type="text/javascript" src="<?php echo WDEB_PLUGIN_URL; ?>/js/custom.js"></script> <!-- the "make them work" script -->
 
 <style type="text/css">

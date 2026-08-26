@@ -381,12 +381,18 @@ class Wdeb_AdminPages {
 	}
 
 	function process_dashboard () {
-		$this->strip_down_dashboard();
 		if ($this->data->get_option('show_dashboard_widget')) {
 			$title = stripslashes($this->data->get_option('widget_title'));
 			$title = $title ? $title : __('Easy Blogging', 'wdeb');
-			wp_add_dashboard_widget('wdeb_dashboard_widget', $title, array($this, 'easy_dashboard_widget'));
+
+			wp_add_dashboard_widget(
+				'wdeb_dashboard_widget',
+				$title,
+				array($this, 'easy_dashboard_widget')
+			);
 		}
+
+		$this->strip_down_dashboard();
 	}
 
 	function start_cache () {
@@ -522,6 +528,21 @@ class Wdeb_AdminPages {
 		}
 
 		if ($this->is_in_easymode()) {
+			if ( 'index.php' === $pagenow ) {
+				add_action( 'admin_print_footer_scripts', function () {
+					wp_dequeue_script( 'site-health' );
+					wp_dequeue_style( 'site-health' );
+
+					$dashboard_items = is_multisite()
+						? get_site_option( 'wdeb_dashboard_items' )
+						: get_option( 'wdeb_dashboard_items' );
+
+					if ( empty( $dashboard_items ) ) {
+						wp_dequeue_script( 'dashboard' );
+						wp_dequeue_script( 'postbox' );
+					}
+				}, 1 );
+			}
 			// Allow others (i.e. Wizard) to hook into the menu
 			$this->_menu_partial = apply_filters('wdeb_menu_partial', $this->_menu_partial);
 

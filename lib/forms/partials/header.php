@@ -12,39 +12,30 @@ if (!$this->data->get_option('admin_bar')) {
 	<link type="text/css" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/jquery.cleditor.css" rel="stylesheet" />
 
 <?php if (version_compare($version, '3.3', '<')) { ?>
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery-ui-1.12.1.custom.min.js'></script> <!-- jquery UI -->
+	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery-ui-1.8.5.custom.min.js'></script> <!-- jquery UI -->
 <?php } ?>
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/cufon-yui.js'></script> <!-- Cufon font replacement -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/ColaborateLight_400.font.js'></script> <!-- the Colaborate Light font -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/easyTooltip.js'></script> <!-- element tooltips -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.tablesorter.min.js'></script> <!-- tablesorter -->
 
+	<!--[if IE 8]>
+		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
+		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
+	<![endif]-->
+
+	<!--[if IE 7]>
+		<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/excanvas.js'></script>
+		<link rel="stylesheet" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/css/IEfix.css" type="text/css" media="screen" />
+	<![endif]-->
+
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js'></script> <!-- visualize plugin for graphs / statistics -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js'></script> <!-- iphone like checkboxes -->
-	<script type='text/javascript'>
-	(function ($) {
-		if (!$ || $.browser) {
-			return;
-		}
-
-		var ua = (window.navigator && window.navigator.userAgent ? window.navigator.userAgent : '').toLowerCase();
-		$.browser = {
-			msie: /msie|trident/.test(ua),
-			mozilla: /firefox/.test(ua),
-			webkit: /webkit/.test(ua),
-			opera: /opera|opr\//.test(ua)
-		};
-	})(window.jQuery);
-	</script>
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.cleditor.min.js'></script> <!-- wysiwyg editor -->
 
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
 
 <?php 
-	if (!empty($header_assets)) {
-		echo $header_assets;
-	}
-
 	$do_admin_head = defined('WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD') ? WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD : false;
 	if (apply_filters('wdeb-core-actions-redo_admin_head', $do_admin_head)) do_action('admin_head'); 
 ?>
@@ -177,82 +168,6 @@ html.wp-toolbar { padding-top: 0;}
 <?php } // End forced RTL check ?>
 
 <?php do_action('wdeb_style-custom_stylesheet_rules'); ?>
-
-body#wdeb-mode div.psource-chat-box {
-	box-sizing: border-box;
-	overflow: hidden;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header {
-	display: flex !important;
-	align-items: center !important;
-	justify-content: space-between;
-	padding: 0 4px;
-	box-sizing: border-box;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header div.psource-chat-module-header-title {
-	min-width: 0;
-	flex: 1 1 auto;
-	padding-right: 6px;
-	box-sizing: border-box;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header div.psource-chat-module-header-actions {
-	display: flex !important;
-	align-items: center !important;
-	justify-content: flex-end;
-	flex: 0 0 auto;
-	margin-left: 4px;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu {
-	width: auto !important;
-	height: 20px;
-	margin: 0 !important;
-	padding: 0 !important;
-	display: flex !important;
-	align-items: center !important;
-	justify-content: flex-end;
-	gap: 2px;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-action-item,
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-actions-settings-pop-out,
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-actions-settings-pop-in,
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li.psource-chat-min-max {
-	float: none !important;
-	margin: 0 !important;
-	height: 16px;
-	line-height: 16px;
-}
-
-body#wdeb-mode div.psource-chat-box div.psource-chat-module-header ul.psource-chat-actions-menu li a,
-body#wdeb-mode div.psource-chat-box ul.psource-chat-actions-menu li.psource-chat-actions-settings a.psource-chat-actions-settings-button {
-	display: inline-flex !important;
-	align-items: center !important;
-	justify-content: center !important;
-	margin-top: 0 !important;
-	vertical-align: middle;
-}
-
-body#wdeb-mode div.psource-chat-box .psource-chat-icon-settings,
-body#wdeb-mode div.psource-chat-box .psource-chat-icon-minimize,
-body#wdeb-mode div.psource-chat-box .psource-chat-icon-maximize,
-body#wdeb-mode div.psource-chat-box .psource-chat-icon-popout,
-body#wdeb-mode div.psource-chat-box .psource-chat-icon-popin {
-	vertical-align: middle;
-}
-
-body#wdeb-mode div.psource-chat-box .ui-resizable-w {
-	display: none !important;
-}
-
-body#wdeb-mode div.psource-chat-box .ui-resizable-e,
-body#wdeb-mode div.psource-chat-box .ui-resizable-s,
-body#wdeb-mode div.psource-chat-box .ui-resizable-se {
-	background: transparent !important;
-}
 </style>
 
 <script type="text/javascript">
@@ -302,7 +217,7 @@ $(function () {
 
 /* ----- Videos bugfix ----- */
 <?php if (class_exists('WPMUDEV_Videos')) { ?>
-$(window).on("load", function () {
+$(window).load(function () {
 	$('.contextual-help-tabs-wrap [id*="wpmudev_vids"]').css({
 		"height": $(window).height() + "px",
 		"overflow-y": "scroll"
@@ -316,7 +231,7 @@ $(function () {
 		var $me = $(this);
 		$me
 			.addClass("thickbox")
-			.on("click", function () {
+			.click(function () {
 				var width = $(window).width() - $("#primary_left").width()*2.1;
 				var height = $(window).height() - 150;
 				var href = $me.attr("href");
@@ -331,24 +246,10 @@ $(function () {
 <?php do_action('wdeb_script-custom_javascript'); ?>
 
 <?php $auto_enter_role = $this->data->get_option('auto_enter_role'); ?>
-<?php
-$show_easy_bar = (int) $this->data->get_option('easy_bar');
-if (is_multisite()) {
-	$network_opts = get_site_option('wdeb');
-	if (is_array($network_opts) && array_key_exists('easy_bar', $network_opts)) {
-		$show_easy_bar = (int) $network_opts['easy_bar'];
-	} else {
-		$blog_opts = get_option('wdeb');
-		if (is_array($blog_opts) && array_key_exists('easy_bar', $blog_opts)) {
-			$show_easy_bar = (int) $blog_opts['easy_bar'];
-		}
-	}
-}
-?>
-<?php if ($show_easy_bar && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
-// Add Beende Easy-Modus link
+<?php if ($this->data->get_option('easy_bar') && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
+// Add exit easy mode link
 $(function () {
-	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Beende Easy Modus', 'wdeb');?></a>");
+	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Exit easy mode', 'wdeb');?></a>");
 });
 <?php } ?>
 })(jQuery);
@@ -372,9 +273,9 @@ document.body.className = c;
 <div id="wpbody-content">
 
 <?php do_action('eab-admin_toolbar-render'); ?>
-<?php if ($show_easy_bar) { ?>
+<?php if ($this->data->get_option('easy_bar')) { ?>
 	<div class="wdeb_visit_site">
-	<a href="<?php echo site_url();?>"><?php _e('Webseite besuchen', 'wdeb');?></a>
+	<a href="<?php echo site_url();?>"><?php _e('Visit site', 'wdeb');?></a>
 	</div>
 <?php } ?>
 

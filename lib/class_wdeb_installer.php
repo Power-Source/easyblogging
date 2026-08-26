@@ -1,8 +1,4 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
-}
-
 /**
  * Installs the defaults.
  */
@@ -35,7 +31,6 @@ class Wdeb_Installer {
 			'post_boxes' => array (),
 			'page_boxes' => array (),
 			'screen_options' => '0',
-			'toolbar_switch_button' => '1',
 			'auto_enter_role' => '0',
 			'hijack_start_page' => '0',
 			'plugin_theme' => 'default',

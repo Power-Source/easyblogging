@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Umleitung Admin-Symbolleiste für den Assistentenmodus
-Description: Leitet Nicht-Assistenten-Links von der Admin-Symbolleiste um.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
-Version: 1.1
+Plugin Name: Admin toolbar redirection for Wizard mode
+Description: Redirects non-wizard links from Admin toolbar.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
+Version: 1.0
 Author: PSOURCE
 */
 
@@ -21,7 +21,7 @@ class Wdeb_Menu_WizardToolbarRedirection {
 	}
 
 	function output_javascript () {
-		$confirmation_msg = esc_js(__('Wenn Du diesem Link folgst, wird der Assistentenmodus beendet. Bist Du sicher, dass Du fortfahren möchtest?', 'wdeb'));
+		$confirmation_msg = esc_js(__('Following this link will exit the Wizard mode. Are you sure you want to proceed?', 'wdeb'));
 		echo <<<EoWizardRedirectionJs
 <script type="text/javascript">
 (function ($) {

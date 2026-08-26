@@ -57,7 +57,7 @@ $.fn.visualize = function(options, container){
 						});
 					}
 					else {
-						var cols = self.find('tr:eq(1) td').filter(o.colFilter).length;
+						var cols = self.find('tr:eq(1) td').filter(o.colFilter).size();
 						for(var i=0; i<cols; i++){
 							dataGroups[i] = {};
 							dataGroups[i].points = [];
@@ -389,7 +389,7 @@ $.fn.visualize = function(options, container){
 		var title = o.title || self.find('caption').text();
 		
 		//create canvas wrapper div, set inline w&h, append
-		var canvasContain = (container || $('<div class="visualize" role="img" />').attr('aria-label', 'Chart representing data from the table: ' + title))
+		var canvasContain = (container || $('<div class="visualize" role="img" aria-label="Chart representing data from the table: '+ title +'" />'))
 			.height(o.height)
 			.width(o.width)
 			.append(canvas);
@@ -415,7 +415,7 @@ $.fn.visualize = function(options, container){
 		
 		//append title
 		if(o.appendTitle){
-			$('<div class="visualize-title"></div>').text(title).appendTo(infoContain);
+			$('<div class="visualize-title">'+ title +'</div>').appendTo(infoContain);
 		}
 		
 		
@@ -431,9 +431,7 @@ $.fn.visualize = function(options, container){
 			}
 			
 			selector.each(function(i){
-				$('<li></li>')
-					.append($('<span class="visualize-key-color"></span>').css('background', dataGroups[i].color))
-					.append($('<span class="visualize-key-label"></span>').text($(this).text()))
+				$('<li><span class="visualize-key-color" style="background: '+dataGroups[i].color+'"></span><span class="visualize-key-label">'+ $(this).text() +'</span></li>')
 					.appendTo(newKey);
 			});
 			newKey.appendTo(infoContain);
@@ -454,7 +452,7 @@ $.fn.visualize = function(options, container){
 		$('.visualize-line li:first-child span.line, .visualize-line li:last-child span.line, .visualize-area li:first-child span.line, .visualize-area li:last-child span.line, .visualize-bar li:first-child span.line,.visualize-bar .visualize-labels-y li:last-child span.line').css('border','none');
 		if(!container){
 		//add event for updating
-		canvasContain.on('visualizeRefresh', function(){
+		canvasContain.bind('visualizeRefresh', function(){
 			self.visualize(o, $(this).empty()); 
 		});
 		}

@@ -1,14 +1,10 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
-}
-
 /**
  * Handles Tooltips access functionality.
  */
 class Wdeb_Tooltips {
 
-	private $data;
+	var $data;
 
 	function __construct () {
 		$this->data = new Wdeb_Options;
@@ -45,7 +41,7 @@ class Wdeb_Tooltips {
 				"var _wdeb_help_tpl = '%s';" .
 			"</script>",
 			'<div class="wdeb_tooltip"><div class="tooltip" title="%%text%%">&nbsp;</div></div>',
-			'<div class="wdeb_help_popup"><a href="#" id="wdeb_show_help"><span>' . __('Hilfe', 'wdeb') . '</span></a><div class="help" id="wdeb_help_container"><div id="wdeb_help_inside_wrapper">%%text%%</div></div></div>'
+			'<div class="wdeb_help_popup"><a href="#" id="wdeb_show_help"><span>' . __('Help', 'wdeb') . '</span></a><div class="help" id="wdeb_help_container"><div id="wdeb_help_inside_wrapper">%%text%%</div></div></div>'
 		);
 	}
 

@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h2><?php _e('Einfache Assistenteneinstellungen','wdeb'); ?></h2>
+	<h2><?php _e('Easy Wizard settings','wdeb'); ?></h2>
 
 <?php if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) { ?>
 	<form action="settings.php" method="post" enctype="multipart/form-data">
@@ -10,7 +10,7 @@
 	<?php settings_fields('wdeb_wizard'); ?>
 	<?php do_settings_sections('wdeb_wizard'); ?>
 	<p class="submit">
-		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Änderungen speichern'); ?>" />
+		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e('Änderungen speichern', 'wdeb'); ?>" />
 	</p>
 	</form>
 
@@ -92,15 +92,15 @@ if (typeof $("#wdeb_steps").sortable != "undefined") {
 	;
 }
 
-$(".wdeb_step_delete").on("click", function () {
+$(".wdeb_step_delete").on('click', function () {
 	$(this).parents('li.wdeb_step').remove();
 	return false;
 });
 
-$("#wdeb_last_wizard_step_url_type").change(updateUrlPreview);
-$("#wdeb_last_wizard_step_url").keyup(updateUrlPreview);
+$("#wdeb_last_wizard_step_url_type").on("change", updateUrlPreview);
+$("#wdeb_last_wizard_step_url").on("input", updateUrlPreview);
 
-$(".wdeb_step_edit").on("click", function () {
+$(".wdeb_step_edit").on('click', function () {
 	var $parent = $(this).parents('li.wdeb_step');
 	var $url = $parent.find('input:hidden.wdeb_step_url');
 	var $title = $parent.find('input:hidden.wdeb_step_title');

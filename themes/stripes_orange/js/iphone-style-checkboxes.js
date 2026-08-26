@@ -75,7 +75,7 @@ $.extend($[iphoneStyle].prototype, {
     
     // A mousedown anywhere in the control will start tracking for dragging
     this.container
-      .on('mousedown touchstart', function(event) {          
+      .bind('mousedown touchstart', function(event) {          
         event.preventDefault();
         
         if (obj.$elem.is(':disabled')) { return; }
@@ -87,7 +87,7 @@ $.extend($[iphoneStyle].prototype, {
       })
     
       // Utilize event bubbling to handle drag on any element beneath the container
-      .on('iPhoneDrag', function(event, x) {
+      .bind('iPhoneDrag', function(event, x) {
         event.preventDefault();
         
         if (obj.$elem.is(':disabled')) { return; }
@@ -102,7 +102,7 @@ $.extend($[iphoneStyle].prototype, {
       })
     
         // Utilize event bubbling to handle drag end on any element beneath the container
-      .on('iPhoneDragEnd', function(event, x) {
+      .bind('iPhoneDragEnd', function(event, x) {
         if (obj.$elem.is(':disabled')) { return; }
         
         if ($[iphoneStyle].dragging) {
@@ -180,7 +180,7 @@ $.fn[iphoneStyle] = function(options) {
   if (!$[iphoneStyle].initComplete) {
     // As the mouse moves on the page, animate if we are in a drag state
     $(document)
-      .on('mousemove touchmove', function(event) {
+      .bind('mousemove touchmove', function(event) {
         if (!$[iphoneStyle].currentlyClicking) { return; }
         event.preventDefault();
         
@@ -194,7 +194,7 @@ $.fn[iphoneStyle] = function(options) {
       })
 
       // When the mouse comes up, leave drag state
-      .on('mouseup touchend', function(event) {        
+      .bind('mouseup touchend', function(event) {        
         if (!$[iphoneStyle].currentlyClicking) { return; }
         event.preventDefault();
     

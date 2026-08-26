@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Benachrichtigung über ausstehende Kommentare
-Description: Fügt dem Menüpunkt "Kommentare" eine Sprechblase mit ausstehenden Kommentaren hinzu.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
-Version: 1.1
+Description: Fügt dem Menüpunkt "Kommentare" eine Benachrichtigung über ausstehende Kommentare hinzu.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
+Version: 1.0
 Author: PSOURCE
 */
 
@@ -67,10 +67,11 @@ EOMenuPcStyle;
 		return $count ? " <span class='wdeb-count'><span class='wdeb-comments_count wdeb-comments_moderated'>{$count}</span></span>" : '';
 	}
 
-	private function _count_comments ($what=false) {
-		$what = $what ? $what : 'moderated';
+	private function _count_comments( $what = false ) {
+		$what = $what ?: 'moderated';
 		$comments = wp_count_comments();
-		return (int)@$comments->$what;
+
+		return isset( $comments->$what ) ? (int) $comments->$what : 0;
 	}
 }
 

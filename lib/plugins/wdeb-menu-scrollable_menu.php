@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Bildlaufmenü
-Description: Ermöglicht das Scrollen des Menüs auf kleinen Bildschirmen. Ermöglicht auch ausführlichere Schritttitel des Assistenten. 
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
-Version: 1.2
+Plugin Name: Scrollable menu
+Description: Allows menu to scroll on small screens. Also allows for more verbose wizard step titles. 
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
+Version: 1.0.1
 Author: PSOURCE
 */
 
@@ -71,10 +71,10 @@ function wdeb_menu_make_scrollable () {
 	;
 }
 $(window)
-	.on("load", wdeb_menu_make_scrollable)
+	.load(wdeb_menu_make_scrollable)
 	.resize(function () {
 		// Reset scrolling first
-		$("#primary_left").off("mouseenter").off("mouseleave");
+		$("#primary_left").unbind("mouseenter").unbind("mouseleave");
 		$("#menu")
 			.removeClass("hover-active")
 			.find("ul")

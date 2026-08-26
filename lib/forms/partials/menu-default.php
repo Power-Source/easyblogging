@@ -43,11 +43,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_wizard_on" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/wizard-mode.png" alt="" />
-			<span class="current"><?php _e('Assistentmodus', 'wdeb');?></span>
+			<span class="current"><?php _e('Wizard mode', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Assistentmodus', 'wdeb');?></strong>
-			<?php _e('Rufe den geführten Schritt-für-Schritt-Modus auf', 'wdeb')?>
+			<strong><?php _e('Wizard mode', 'wdeb');?></strong>
+			<?php _e('Enter guided step-by-step mode', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -57,11 +57,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_off" id="wdeb_exit_easy_mode" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/home.png" alt="" />
-			<span class="current"><?php _e('Beende Easy-Modus', 'wdeb');?></span>
+			<span class="current"><?php _e('Exit Easy Mode', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Beende Easy-Modus', 'wdeb');?></strong>
-			<?php _e('Kehre zum erweiterten Modus zurück', 'wdeb')?>
+			<strong><?php _e('Exit Easy Mode', 'wdeb');?></strong>
+			<?php _e('Return to advanced mode', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -71,11 +71,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo wp_logout_url();?>" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/settings.png" alt="" />
-			<span class="current"><?php _e('Abmelden', 'wdeb');?></span>
+			<span class="current"><?php _e('Log Out', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Abmelden', 'wdeb');?></strong>
-			<?php _e('Melde Dich von Deiner Webseite ab', 'wdeb')?>
+			<strong><?php _e('Log Out', 'wdeb');?></strong>
+			<?php _e('Log Out of your website', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>

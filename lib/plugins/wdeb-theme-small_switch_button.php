@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Kleine Schaltfläche
-Description: Ersetze die Standard-Umschalttaste für den einfachen Modus durch eine kleinere, symbolbasierte Version.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
+Plugin Name: Small switch button
+Description: Replace the standard Easy mode toggle button with a smaller, icon-based version.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */

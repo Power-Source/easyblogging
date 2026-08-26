@@ -13,7 +13,7 @@ $current_request = admin_url($current_request);
 	<?php $url = site_url($step['url']); ?>
 <li class="wdeb_wizard_step <?php echo (($url == $current_request) ? 'current' : '');?>" >
 	<a href="<?php echo $url;?>" class="wdeb_menu_link">
-		<b><?php printf(__('Schritt %d', 'wdeb'), $count++); ?>:</b>
+		<b><?php printf(__('Step %d', 'wdeb'), $count++); ?>:</b>
 		<br />
 		<?php echo preg_replace('/\s/', apply_filters('wdeb_menu-wizard-non_breaking_space', '&nbsp;'), $step['title']);?>
 	</a>
@@ -30,10 +30,10 @@ $current_request = admin_url($current_request);
 <li>
 	<a href="#" class="wdeb_menu_link" id="wdeb_wizard_next_step">
 		<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/forward.png" alt="" />
-		<span><?php _e('Nächster Schritt', 'wdeb');?></span>
+		<span><?php _e('Next step', 'wdeb');?></span>
 	</a>
 	<div class="wdeb_meta">
-		<?php _e('Fahre mit dem nächsten Schritt fort', 'wdeb') ?>
+		<?php _e('Proceed to the next step', 'wdeb') ?>
 	</div>
 </li>
 
@@ -44,11 +44,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_wizard_off" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/wizard-mode.png" alt="" />
-			<span class="current"><?php _e('Beende den Assistentenmodus', 'wdeb');?></span>
+			<span class="current"><?php _e('Exit Wizard mode', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Beende den Assistentenmodus', 'wdeb');?></strong>
-			<?php _e('Verlasse den geführten Schritt-für-Schritt-Modus', 'wdeb')?>
+			<strong><?php _e('Exit Wizard mode', 'wdeb');?></strong>
+			<?php _e('Exit guided step-by-step mode', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -58,11 +58,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_off" id="wdeb_exit_easy_mode" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/home.png" alt="" />
-			<span class="current"><?php _e('Beende Easy-Modus', 'wdeb');?></span>
+			<span class="current"><?php _e('Exit Easy Mode', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Beende Easy-Modus', 'wdeb');?></strong>
-			<?php _e('Kehre zum Standardmodus zurück', 'wdeb')?>
+			<strong><?php _e('Exit Easy Mode', 'wdeb');?></strong>
+			<?php _e('Return to standard mode', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -71,11 +71,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo wp_logout_url();?>" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/settings.png" alt="" />
-			<span class="current"><?php _e('Abmelden', 'wdeb');?></span>
+			<span class="current"><?php _e('Log Out', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Abmelden', 'wdeb');?></strong>
-			<?php _e('Melde Dich von Deiner Webseite ab', 'wdeb')?>
+			<strong><?php _e('Log Out', 'wdeb');?></strong>
+			<?php _e('Log Out of your website', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -99,7 +99,7 @@ function gotoFirstStep() {
 	if (!$first.length) return false;
 
 	var href = $first.find('a').attr('href');
-	$first.find('a').trigger("click");
+	$first.find('a').click();
 	window.location = href;
 }
 
@@ -113,7 +113,7 @@ function initialize () {
 	}
 }
 
-$("#wdeb_wizard_next_step").on("click", function () {
+$("#wdeb_wizard_next_step").click(function () {
 	var $current = $("#menu ul li.current");
 	if (!$current.length) {
 		gotoFirstStep();
@@ -124,7 +124,7 @@ $("#wdeb_wizard_next_step").on("click", function () {
 	if (!$next.length) return false;
 
 	var href = $next.find('a').attr('href');
-	$next.find('a').trigger("click");
+	$next.find('a').click();
 	if (!$next.is(".do-not-follow")) window.location = href;
 	return false;
 });
@@ -195,7 +195,7 @@ function allow_avatar_redirects () {
 		var $me = $(this);
 		if ($me.find("a.wdeb_menu_link").attr("href").match(term_rx)) {
 			$me.addClass("current");
-			$(document).off('wdeb-wizard-menu-missing_current_step', gotoFirstStep);
+			$(document).unbind('wdeb-wizard-menu-missing_current_step', gotoFirstStep);
 		}
 	});
 	var $current = $("#menu ul li.current");
@@ -205,10 +205,10 @@ function allow_avatar_redirects () {
 	}
 }
 // Rebind missing current step action.
-$(document).on('wdeb-wizard-menu-initialize', function () {
+$(document).bind('wdeb-wizard-menu-initialize', function () {
 	$(document)
-		.off('wdeb-wizard-menu-missing_current_step')
-		.on('wdeb-wizard-menu-missing_current_step', allow_avatar_redirects)
+		.unbind('wdeb-wizard-menu-missing_current_step')
+		.bind('wdeb-wizard-menu-missing_current_step', allow_avatar_redirects)
 	;	
 });
 <?php } ?>
@@ -229,7 +229,7 @@ function allow_customizer_redirects () {
 }
 
 $(document)
-	.on('wdeb-wizard-menu-missing_current_step', allow_post_type_redirects)
+	.bind('wdeb-wizard-menu-missing_current_step', allow_post_type_redirects)
 ;
 initialize();
 

@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Control "Product" metaboxes
-Description: Ermöglicht die Kontrolle darüber, welche Metaboxen im benutzerdefinierten Beitragstyp "Produkt" angezeigt werden. <b>Benötigt PS MarketPress</b>
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
-Version: 1.1
-Author: WPMS N@W
+Plugin Name: Kontrolle der "Produkt"-Metaboxen
+Description: Ermöglicht die Kontrolle darüber, welche Metaboxen im benutzerdefinierten Beitragstyp "Produkt" angezeigt werden. <b>Erfordert das PS MarketPress-Plugin</b>
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
+Version: 1.0
+Author: PSOURCE
 */
 
 class Wdeb_Editor_ControlProductMetaboxes {
@@ -29,52 +29,82 @@ class Wdeb_Editor_ControlProductMetaboxes {
 		add_action('wdeb_admin-editor_metaboxes_cleanup', array($this, 'remove_metaboxes'));
 	}
 
-	function remove_metaboxes () {
+	function remove_metaboxes() {
 		global $wp_meta_boxes;
-		$opts = $this->_data->get_options('wdeb_ecpm');
-		$post_boxes = @$opts['hide_boxes'];
-		$post_boxes = is_array($post_boxes) ? $post_boxes : array();
 
-		if (isset($wp_meta_boxes['product']['side']['core']) && is_array($wp_meta_boxes['product']['side']['core'])) foreach ($wp_meta_boxes['product']['side']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['core'][$name]);
-		if (isset($wp_meta_boxes['product']['side']['low']) && is_array($wp_meta_boxes['product']['side']['low'])) foreach ($wp_meta_boxes['product']['side']['low'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['side']['low'][$name]);
-		if (isset($wp_meta_boxes['product']['normal']['core']) && is_array($wp_meta_boxes['product']['normal']['core'])) foreach ($wp_meta_boxes['product']['normal']['core'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['core'][$name]);
-		if (isset($wp_meta_boxes['product']['normal']['high']) && is_array($wp_meta_boxes['product']['normal']['high'])) foreach ($wp_meta_boxes['product']['normal']['high'] as $name => $box) if (in_array($name, $post_boxes)) unset($wp_meta_boxes['product']['normal']['high'][$name]);
+		$opts = $this->_data->get_options( 'wdeb_ecpm' );
+		$post_boxes = is_array( $opts ) && ! empty( $opts['hide_boxes'] )
+			? $opts['hide_boxes']
+			: array();
+
+		$locations = array(
+			array( 'side', 'core' ),
+			array( 'side', 'low' ),
+			array( 'normal', 'core' ),
+			array( 'normal', 'high' ),
+		);
+
+		foreach ( $locations as $location ) {
+			list( $context, $priority ) = $location;
+
+			if (
+				isset( $wp_meta_boxes['product'][ $context ][ $priority ] ) &&
+				is_array( $wp_meta_boxes['product'][ $context ][ $priority ] )
+			) {
+				foreach ( $wp_meta_boxes['product'][ $context ][ $priority ] as $name => $box ) {
+					if ( in_array( $name, $post_boxes, true ) ) {
+						unset( $wp_meta_boxes['product'][ $context ][ $priority ][ $name ] );
+					}
+				}
+			}
+		}
 	}
 
 	function add_settings () {
-		add_settings_field('wdeb_ecpm_boxes', __('Blende diese Produktmetaboxen aus', 'wdeb'), array($this, 'render_settings'), 'wdeb_options_page', 'wdeb_settings');
+		add_settings_field('wdeb_ecpm_boxes', __('Diese Produkt-Metaboxen ausblenden', 'wdeb'), array($this, 'render_settings'), 'wdeb_options_page', 'wdeb_settings');
 	}
 
-	function render_settings () {
+	function render_settings() {
 		$pfx = 'wdeb_ecpm';
 		$name = 'hide_boxes';
-		$opts = $this->_data->get_options($pfx);
-		$hides = @$opts[$name];
-		$hides = is_array($hides) ? $hides : array();
-		
-		$_boxes = array (
-			'authordiv' => __('Autor'),
-			'postexcerpt' => __('Auszug'),
-			'product_categorydiv' => __('Produktkategorien', 'wdeb'),
-			'tagsdiv-product_tag' => __('Produkt Tags', 'wdeb'),
-			'mp-meta-download' => __('Produkt Download', 'wdeb'),
+
+		$opts = $this->_data->get_options( $pfx );
+		$hides = is_array( $opts ) && isset( $opts[ $name ] ) && is_array( $opts[ $name ] )
+			? $opts[ $name ]
+			: array();
+
+		$boxes = array(
+			'authordiv'           => __( 'Autor', 'wdeb' ),
+			'postexcerpt'         => __( 'Auszug', 'wdeb' ),
+			'product_categorydiv' => __( 'Produktkategorien', 'wdeb' ),
+			'tagsdiv-product_tag' => __( 'Produkt-Tags', 'wdeb' ),
+			'mp-meta-download'    => __( 'Produkt-Download', 'wdeb' ),
 		);
-		foreach ($_boxes as $bid => $label) {
-			$checked = in_array($bid, $hides) ? 'checked="checked"' : '';
-			echo "<input type='hidden' name='{$pfx}[{$name}][{$bid}]' value='0' />" .
-				"<input {$checked} type='checkbox' name='{$pfx}[{$name}][{$bid}]' value='{$bid}' id='wdeb_product_post_boxes_{$bid}' /> " .
-				"<label for='wdeb_product_post_boxes_{$bid}'>{$label}</label><br />\n";
+
+		foreach ( $boxes as $bid => $label ) {
+			$checked = in_array( $bid, $hides, true ) ? ' checked="checked"' : '';
+
+			echo '<label>';
+			echo '<input type="checkbox" name="' . esc_attr( $pfx . '[' . $name . '][]' ) . '" value="' . esc_attr( $bid ) . '"' . $checked . '>';
+			echo ' ' . esc_html( $label );
+			echo '</label><br>' . "\n";
 		}
-		_e(
-			'<p><b>Warnung:</b> Alle anderen Felder werden entsprechend ihren Bildschirmeinstellungen ein- oder ausgeblendet</p>',
-		'wdeb');
+
+		echo '<p><strong>' . esc_html__( 'Warnung:', 'wdeb' ) . '</strong> ';
+		echo esc_html__( 'alle anderen Boxen werden entsprechend ihren Anzeigeeinstellungen angezeigt oder ausgeblendet', 'wdeb' );
+		echo '</p>';
 	}
 
-	function save_settings ($changed) {
-		if ('wdeb' == ($_POST['option_page'] ?? '')) {
-			$this->_data->set_options($_POST['wdeb_ecpm'], 'wdeb_ecpm');
+	function save_settings( $changed ) {
+		if ( isset( $_POST['option_page'] ) && 'wdeb_ecpm' === $_POST['option_page'] ) {
+			$options = isset( $_POST['wdeb_ecpm'] ) && is_array( $_POST['wdeb_ecpm'] )
+				? $_POST['wdeb_ecpm']
+				: array();
+
+			$this->_data->set_options( $options, 'wdeb_ecpm' );
 			$changed = true;
 		}
+
 		return $changed;
 	}
 }

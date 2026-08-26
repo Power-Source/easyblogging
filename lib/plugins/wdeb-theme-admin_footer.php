@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Admin Footer
-Description: Zeige im einfachen Modus auf allen Seiten einen Fußzeilenbereich an.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
+Description: Fußzeilenbereich auf allen Seiten im Easy-Modus anzeigen.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */
@@ -77,18 +77,18 @@ EOFooterCss;
 	}
 	
 	function register_page ($perms) {
-		add_submenu_page('wdeb', __('Admin Footer', 'wdeb'), __('Admin Footer', 'wdeb'), $perms, 'wdeb_admin_footer', array($this, 'render_page'));
+		add_submenu_page('wdeb', __('Admin footer', 'wdeb'), __('Admin Footer', 'wdeb'), $perms, 'wdeb_admin_footer', array($this, 'render_page'));
 	}
 
 	function render_page () {
-		echo '<div class="wrap"><h2>' . __('Easy Blogging Admin Footer', 'wdeb') . '</h2>';
+		echo '<div class="wrap"><h2>' . __('PS Easy Blogging Admin Footer', 'wdeb') . '</h2>';
 		echo (is_network_admin()
 			? '<form action="settings.php" method="post" enctype="multipart/form-data">'
 			: '<form action="options.php" method="post" enctype="multipart/form-data">'
 		);
 		settings_fields('wdeb_admin_footer');
 		do_settings_sections('wdeb_admin_footer');
-		echo '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="' . __('Änderungen speichern') . '" /></p>';
+		echo '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="' . __('Änderungen speichern', 'wdeb') . '" /></p>';
 		echo '</form></div>';
 	}
 
@@ -96,26 +96,79 @@ EOFooterCss;
 		register_setting('wdeb', 'wdeb_admin_footer');
 		
 		if ($this->_have_existing_footer()) {
-			add_settings_section('wdeb_existing_footer', __('Admin Footer', 'wdeb'), function() {return;}, 'wdeb_admin_footer');
-			add_settings_field('wdeb_use_existing_footer', __('Verwende vorhandene Admin-Fußzeile', 'wdeb'), array($this, 'create_use_existing_box'), 'wdeb_admin_footer', 'wdeb_existing_footer');
+			add_settings_section(
+				'wdeb_existing_footer',
+				__('Admin Footer', 'wdeb'),
+				static function () {},
+				'wdeb_admin_footer'
+			);
+
+			add_settings_field(
+				'wdeb_use_existing_footer',
+				__('Vorhandenen Admin-Footer verwenden', 'wdeb'),
+				array($this, 'create_use_existing_box'),
+				'wdeb_admin_footer',
+				'wdeb_existing_footer'
+			);
 		}
 
-		add_settings_section('wdeb_custom_footer', __('Benutzerdefinierter Footer', 'wdeb'), function() {return;}, 'wdeb_admin_footer');
-		add_settings_field('wdeb_use_custom_footer', __('Verwende eine benutzerdefinierte Fußzeile', 'wdeb'), array($this, 'create_use_custom_box'), 'wdeb_admin_footer', 'wdeb_custom_footer');
-		add_settings_field('wdeb_custom_footer', __('Benutzerdefinierter Footer Inhalt', 'wdeb'), array($this, 'create_custom_footer_box'), 'wdeb_admin_footer', 'wdeb_custom_footer');
+		add_settings_section(
+			'wdeb_custom_footer',
+			__('Custom Footer', 'wdeb'),
+			static function () {},
+			'wdeb_admin_footer'
+		);
 
-		add_settings_section('wdeb_footer_settings', __('Einstellungen', 'wdeb'), function() {return;}, 'wdeb_admin_footer');
-		add_settings_field('wdeb_wizard_footer', __('Verwende die Fußzeile auch auf den Assistentenseiten', 'wdeb'), array($this, 'create_wizard_footer_box'), 'wdeb_admin_footer', 'wdeb_footer_settings');
+		add_settings_field(
+			'wdeb_use_custom_footer',
+			__('Eigenen Admin-Footer verwenden', 'wdeb'),
+			array($this, 'create_use_custom_box'),
+			'wdeb_admin_footer',
+			'wdeb_custom_footer'
+		);
+
+		add_settings_field(
+			'wdeb_custom_footer',
+			__('Inhalt des eigenen Admin-Footers', 'wdeb'),
+			array($this, 'create_custom_footer_box'),
+			'wdeb_admin_footer',
+			'wdeb_custom_footer'
+		);
+
+		add_settings_section(
+			'wdeb_footer_settings',
+			__('Einstellungen', 'wdeb'),
+			static function () {},
+			'wdeb_admin_footer'
+		);
+
+		add_settings_field(
+			'wdeb_wizard_footer',
+			__('Footer auch auf Wizard-Seiten verwenden', 'wdeb'),
+			array($this, 'create_wizard_footer_box'),
+			'wdeb_admin_footer',
+			'wdeb_footer_settings'
+		);
 	}
 
-	function save_settings ($changed) {
-		if ('wdeb_admin_footer' == ($_POST['option_page'] ?? '')) {
-			if (!empty($_POST['wdeb_admin_footer']['custom_footer'])) {
-				$_POST['wdeb_admin_footer']['custom_footer'] = stripslashes(wp_filter_post_kses($_POST['wdeb_admin_footer']['custom_footer']));
+	function save_settings( $changed ) {
+		if ( isset( $_POST['option_page'] ) && 'wdeb_admin_footer' === $_POST['option_page'] ) {
+
+			$settings = isset( $_POST['wdeb_admin_footer'] ) && is_array( $_POST['wdeb_admin_footer'] )
+				? $_POST['wdeb_admin_footer']
+				: array();
+
+			if ( ! empty( $settings['custom_footer'] ) ) {
+				$settings['custom_footer'] = stripslashes(
+					wp_filter_post_kses( $settings['custom_footer'] )
+				);
 			}
-			$this->_data->set_options($_POST['wdeb_admin_footer'], 'wdeb_admin_footer');
+
+			$this->_data->set_options( $settings, 'wdeb_admin_footer' );
+
 			$changed = true;
 		}
+
 		return $changed;
 	}
 
@@ -136,11 +189,11 @@ EOFooterCss;
 	}
 
 	function create_use_existing_box () {
-		echo $this->_create_bool_box('use_existing', __('Verwende die Fußzeile wie im Admin-Footer-Plugin definiert', 'wdeb'));
+		echo $this->_create_bool_box('use_existing', __('Vorhandenen Admin-Footer verwenden', 'wdeb'));
 	}
 
 	function create_use_custom_box () {
-		echo $this->_create_bool_box('use_custom', __('Verwende die Fußzeile wie im Feld unten definiert', 'wdeb'));
+		echo $this->_create_bool_box('use_custom', __('Eigenen Admin-Footer verwenden', 'wdeb'));
 	}
 
 	function create_custom_footer_box () {
@@ -149,7 +202,7 @@ EOFooterCss;
 	}
 
 	function create_wizard_footer_box () {
-		echo $this->_create_bool_box('apply_to_wizard', __('Wende die Fußzeile auch auf Assistentenseiten an', 'wdeb'));
+		echo $this->_create_bool_box('apply_to_wizard', __('Footer auch auf Wizard-Seiten verwenden', 'wdeb'));
 	}
 }
 

@@ -1,7 +1,4 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
-}
 
 function wdeb_reset_autostart () {
 	setcookie("wdeb_on", "", time()-60000, '/', COOKIE_DOMAIN);
@@ -25,22 +22,41 @@ function wdeb_current_user_can ($roles) {
 	return $cap_enter;
 }
 
-function wdeb_expand_url ($url) {
-	// Passthrough relative URLs
-	$is_absolute = preg_match('/^https?:\/\//', $url);
-	$url = preg_replace('/^https?:\/\//', '', $url);
-	if (is_multisite()) {
+function wdeb_expand_url( $url ) {
+	$is_absolute = preg_match( '/^https?:\/\//', $url );
+
+	$url = preg_replace( '/^https?:\/\//', '', $url );
+
+	if ( is_multisite() ) {
 		global $blog_id;
-		$current_site = get_blog_details($blog_id);
-		$root_site = get_blog_details(1);
-	
-		$current_path = trim(preg_replace('/' . preg_quote($root_site->path, '/') . '/', '', $current_site->path), '/');
-		$url = preg_replace('/BLOG_PATH/', $current_path, $url);
+
+		$current_site = get_blog_details( $blog_id );
+		$root_site    = get_blog_details( 1 );
+
+		$current_path = trim(
+			preg_replace(
+				'/' . preg_quote( $root_site->path, '/' ) . '/',
+				'',
+				$current_site->path
+			),
+			'/'
+		);
+
+		$url = preg_replace( '/BLOG_PATH/', $current_path, $url );
 	}
-	$url = preg_replace('/LOGOUT_URL/', preg_replace('/^https?:\/\//', '', wp_logout_url()), $url);
-	
-	$url = preg_replace('/\/\/+/', '/', $url);
-	if ($is_absolute) $url = (($_SERVER["HTTPS"] ?? '') == 'on' ? 'https://' : 'http://') . $url;
+
+	$url = preg_replace(
+		'/LOGOUT_URL/',
+		preg_replace( '/^https?:\/\//', '', wp_logout_url() ),
+		$url
+	);
+
+	$url = preg_replace( '/\/{2,}/', '/', $url );
+
+	if ( $is_absolute ) {
+		$url = ( is_ssl() ? 'https://' : 'http://' ) . $url;
+	}
+
 	return $url;
 }
 
@@ -58,7 +74,7 @@ function wdeb_expand_url ($url) {
 function wdeb_supporter_themes_enabled () {
 	if (class_exists('ProSites')) {
 		global $psts;
-		if ($psts && !empty($psts->version) && version_compare($psts->version, '1.0.0', '>=')) {
+		if ($psts && !empty($psts->version) && version_compare($psts->version, '3.3.3', '>=')) {
 			$has_themes = false;
 		} else {
 			$ps_modules = ProSites::get_setting('modules_enabled');
@@ -72,7 +88,7 @@ function wdeb_supporter_themes_enabled () {
 function wdeb_supporter_themes_not_enabled () {
 	if (class_exists('ProSites')) {
 		global $psts;
-		if ($psts && !empty($psts->version) && version_compare($psts->version, '1.0.0', '>=')) {
+		if ($psts && !empty($psts->version) && version_compare($psts->version, '3.3.3', '>=')) {
 			$has_themes = false;
 		} else {
 			$ps_modules = ProSites::get_setting('modules_enabled');

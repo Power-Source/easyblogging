@@ -1,14 +1,10 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit; // Exit if accessed directly
-}
-
 /**
  * Handles Wizard access functionality.
  */
 class Wdeb_Wizard {
 
-	private $data;
+	var $data;
 
 	function __construct () {
 		$this->data = new Wdeb_Options;

@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Dashboard Widgets Setup
-Description: Verwalte einfach angezeigte Dashboard-Widgets in Deinen Easy Blogging-Installationen.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-classicpress-multisite/
+Plugin Name: Dashboard-Widgets Setup
+Description: Verwalte ganz einfach die angezeigten Dashboard-Widgets Deiner PS Easy-Blogging-Installationen.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */
@@ -60,39 +60,57 @@ class Wdeb_Dashboard_WidgetsSetup {
 	}
 	
 	function register_page ($perms) {
-		add_submenu_page('wdeb', __('Dashboard-Elemente', 'wdeb'), __('Dashboard-Elemente', 'wdeb'), $perms, 'wdeb_dashboard_items', array($this, 'render_page'));
+		add_submenu_page('wdeb', __('Dashboard Elemente', 'wdeb'), __('Dashboard Elemente', 'wdeb'), $perms, 'wdeb_dashboard_items', array($this, 'render_page'));
 	}
 
 	function render_page () {
-		echo '<div class="wrap"><h2>Easy Blogging Dashboard Widgets</h2>';
+		echo '<div class="wrap"><h2>PS Easy Blogging Dashboard Widgets</h2>';
 		echo (is_network_admin()
 			? '<form action="settings.php" method="post" enctype="multipart/form-data">'
 			: '<form action="options.php" method="post" enctype="multipart/form-data">'
 		);
 		settings_fields('wdeb_dashboard_items');
 		do_settings_sections('wdeb_dashboard_items');
-		echo '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="' . __('Änderungen speichern') . '" /></p>';
+		echo '<p class="submit"><input name="Submit" type="submit" class="button-primary" value="' . __('Änderungen speichern', 'wdeb') . '" /></p>';
 		echo '</form></div>';
 	}
 
 	function add_settings () {
-		register_setting('wdeb', 'wdeb_dashboard_items');
-		add_settings_section('wdeb_dashboard_items', __('Widgets', 'wdeb'), function() {return;}, 'wdeb_dashboard_items');
-		add_settings_field('wdeb_show_dashboard_items', __('Zuvor ausgeblendete Dashboard-Elemente', 'wdeb'), array($this, 'create_show_hide_box'), 'wdeb_dashboard_items', 'wdeb_dashboard_items');
+		register_setting( 'wdeb', 'wdeb_dashboard_items' );
+
+		add_settings_section(
+			'wdeb_dashboard_items',
+			__( 'Widgets', 'wdeb' ),
+			static function () {},
+			'wdeb_dashboard_items'
+		);
+
+		add_settings_field(
+			'wdeb_show_dashboard_items',
+			__( 'Zuvor ausgeblendete Dashboard-Elemente', 'wdeb' ),
+			array( $this, 'create_show_hide_box' ),
+			'wdeb_dashboard_items',
+			'wdeb_dashboard_items'
+		);
 	}
 
-	function save_settings ($changed) {
-		if ('wdeb_dashboard_items' == ($_POST['option_page'] ?? '')) {
-			$this->_data->set_options($_POST['wdeb_dashboard_items'], 'wdeb_dashboard_items');
+	function save_settings( $changed ) {
+		if ( isset( $_POST['option_page'] ) && 'wdeb_dashboard_items' === $_POST['option_page'] ) {
+			$this->_data->set_options(
+				$_POST['wdeb_dashboard_items'],
+				'wdeb_dashboard_items'
+			);
+
 			$changed = true;
 		}
+
 		return $changed;
 	}
 
 	function create_show_hide_box () {
 		$history = $this->_load_history();
 		if (!$history) {
-			echo '<div class="error below-h2"><p>' . __('Kein aufgezeichneter Verlauf. Möglicherweise möchtest Du zuerst das Dashboard Deines Blogs besuchen.', 'wdeb') . '</p></div>';
+			echo '<div class="error below-h2"><p>' . __('Kein aufgezeichneter Verlauf. Möglicherweise möchtest Du zuerst das Dashboard Deines Blogs aufrufen.', 'wdeb') . '</p></div>';
 			return false;
 		}
 		$allowed = $this->_data->get_options('wdeb_dashboard_items');
@@ -105,7 +123,7 @@ class Wdeb_Dashboard_WidgetsSetup {
 			'</div>';
 		}
 		echo '<p>' .
-			__('Wenn Du Dein Dashboard-Widget hier nicht siehst, besuche zuerst das Dashboard Deiner Webseite im einfachen Modus.', 'wdeb') .
+			__('Wenn Du Dein Dashboard-Widget hier nicht siehst, besuche bitte zuerst das Dashboard Deiner Seite im Easy Mode.', 'wdeb') .
 		'</p>';
 	}
 }

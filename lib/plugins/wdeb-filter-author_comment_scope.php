@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Autor Kommentare Umfang
-Description: Filtert Kommentare in der Kommentarliste heraus, um nur diejenigen in den User-Authord-Posts für Deine Nicht-Administrator-Benutzer anzuzeigen.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
+Plugin Name: Author Comments scope
+Description: Filters out comments in comments list to show only the ones on the user-authord posts for your non-admin users.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */
@@ -47,26 +47,11 @@ class Wdeb_Menu_AuthorCommentsScope {
 
 		if (false !== $count) return $count;
 
-		// Use wpdb->prepare() for secure SQL queries
-		$post_ids = $wpdb->get_col($wpdb->prepare(
-			"SELECT ID FROM {$wpdb->posts} WHERE post_author = %d",
-			$user->ID
-		));
-		
-		// Return early if no posts found
-		if (empty($post_ids)) {
-			return $stats;
-		}
-		
-		// Validate and sanitize post IDs
-		$post_ids = array_map('absint', $post_ids);
-		$placeholders = implode(',', array_fill(0, count($post_ids), '%d'));
+		$post_ids = $wpdb->get_col("SELECT ID FROM {$wpdb->posts} WHERE post_author={$user->ID}");
+		$where = 'WHERE comment_post_ID IN (' . join(',', $post_ids) . ')';
 
 		// Below is taken from wp-includes/comment.php::wp_count_comments
-		$count = $wpdb->get_results($wpdb->prepare(
-			"SELECT comment_approved, COUNT(*) AS num_comments FROM {$wpdb->comments} WHERE comment_post_ID IN ({$placeholders}) GROUP BY comment_approved",
-			...$post_ids
-		), ARRAY_A);
+		$count = $wpdb->get_results( "SELECT comment_approved, COUNT( * ) AS num_comments FROM {$wpdb->comments} {$where} GROUP BY comment_approved", ARRAY_A );
 
 		$total = 0;
 		$approved = array('0' => 'moderated', '1' => 'approved', 'spam' => 'spam', 'trash' => 'trash', 'post-trashed' => 'post-trashed');

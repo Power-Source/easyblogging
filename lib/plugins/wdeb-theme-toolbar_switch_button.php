@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Schaltfläche in Adminbar zum Wechseln des Modus
-Description: Ersetzen Sie die Standardschaltfläche für den einfachen Modus durch einen Menüeintrag in der Admin-Symbolleiste.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
+Plugin Name: Admin toolbar switch button
+Description: Replace the standard Easy mode toggle button with an Admin toolbar menu entry.
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */
@@ -27,27 +27,16 @@ class Wdeb_Theme_ToolbarSwitchButton {
 
 	function add_to_admin_bar () {
 		global $wp_admin_bar;
-		$data = new Wdeb_Options;
-		$show_easy_bar = (int) $data->get_option('easy_bar');
-		$toolbar_switch_button = $data->get_option('toolbar_switch_button');
-		$show_toolbar_switch = (null !== $toolbar_switch_button)
-			? (int) $toolbar_switch_button
-			: $show_easy_bar
-		;
-
-		if (!$show_toolbar_switch) {
-			return false;
-		}
-
 		if (!(defined('WDEB_IS_IN_EASY_MODE') && WDEB_IS_IN_EASY_MODE)) {
 			$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_on');
-			$title = __('Aktiviere Easy-Modus', 'wdeb');
+			$title = __('Activate easy mode', 'wdeb');
 		} else {
+			$data = new Wdeb_Options;
 			$auto_enter_roles = $data->get_option('auto_enter_role');
 			if (!$auto_enter_roles || !wdeb_current_user_can($auto_enter_roles)) {
 				$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_off');
-				$title = __('Beende Easy-Modus', 'wdeb');
-			} else return false; // Not showing Beende Easy-Modus link if not applicable
+				$title = __('Exit easy mode', 'wdeb');
+			} else return false; // Not showing exit easy mode link if not applicable
 		}
 		$wp_admin_bar->add_menu(array(
 			'parent' => 'site-name',

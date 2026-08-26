@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Customizer zulassen
-Description: Ermöglicht den Zugriff auf Theme Customizer.
-Plugin URI: https://psource.eimen.net/piestingtal_source/easy-blogging-plugin/
+Plugin Name: Allow Customizer
+Description: Allows WP3.4+ Theme Customizer access. <b>Requires WordPress v3.4 or better.</b>
+Plugin URI: https://psource.eimen.net/wiki/easy-blogging-dokumentation/
 Version: 1.0
 Author: PSOURCE
 */
@@ -33,7 +33,7 @@ class Wdeb_Themes_AllowCustomizer {
 	}
 
 	function script_init () {
-		echo '$(window).on("load", function () {
+		echo '$(window).load(function () {
 			$(".hide-if-no-customize").show();
 			$(".hide-if-customize").hide();
 		});';

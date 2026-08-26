@@ -17,7 +17,7 @@ window.onscroll = function()
 
 function initMenu() {
     jQuery('#menu ul ul').hide();
-	jQuery('#menu ul li').on("click", function() {
+	jQuery('#menu ul li').click(function() {
 		jQuery(this).parent().find("ul").slideUp('fast');
 		jQuery(this).parent().find("li").removeClass("current");
 		jQuery(this).find("ul").slideToggle('fast');
@@ -52,25 +52,26 @@ jQuery(document).ready(function() {
 		}
 	}); // Default dialog. Each should have it's own instance.
 			
-	jQuery('.dialog_link').on("click", function(){
+	jQuery('.dialog_link').click(function(){
 		jQuery('#dialog').dialog('open');
 		return false;
 	}); // Toggle dialog
 	
-	jQuery('.notification').on('mouseenter', function() {
-		jQuery(this).css('cursor','pointer');
-	}).on('mouseleave', function() {
+	jQuery('.notification').hover(function() {
+ 		jQuery(this).css('cursor','pointer');
+ 	}, function() {
 		jQuery(this).css('cursor','auto');
 	}); // Close notifications
 			
-	jQuery('.checkall').on("click", function(){
+	jQuery('.checkall').click(
+		function(){
 			jQuery(this).parent().parent().parent().parent().find("input[type='checkbox']").attr('checked', jQuery(this).is(':checked'));   
 		}
 	); // Top checkbox in a table will select all other checkboxes in a specified column
 			
 	jQuery('.iphone').iphoneStyle(); //iPhone like checkboxes
 
-	jQuery('.notification span').on("click", function() {
+	jQuery('.notification span').click(function() {
 		jQuery(this).parents('.notification').fadeOut(800);
 	}); // Close notifications on clicking the X button
 			
@@ -79,19 +80,22 @@ jQuery(document).ready(function() {
 		yOffset: 50
 	}); // Tooltips! 
 			
-	jQuery('#menu li:not(".current"), #menu ul ul li a').on('mouseenter', function() {
+	jQuery('#menu li:not(".current"), #menu ul ul li a').hover(function() {
 		if (!jQuery.browser.webkit) jQuery(this).find('span').animate({ marginLeft: '5px' }, 100);
 		else jQuery(this).find('span').animate({ paddingLeft: '12px' }, 100);
-	}).on('mouseleave', function() {
+	}, function() {
 		if (!jQuery.browser.webkit) jQuery(this).find('span').animate({ marginLeft: '0px' }, 100);           
 		else jQuery(this).find('span').animate({ paddingLeft: '10px' }, 100);
 	}); // Menu simple animation
 			
-	jQuery('.fade_hover').on('mouseenter', function() {
-		jQuery(this).stop().animate({opacity:0.6},200);
-	}).on('mouseleave', function() {
-		jQuery(this).stop().animate({opacity:1},200);
-	}); // The fade function
+	jQuery('.fade_hover').hover(
+		function() {
+			jQuery(this).stop().animate({opacity:0.6},200);
+		},
+		function() {
+			jQuery(this).stop().animate({opacity:1},200);
+		}
+	); // The fade function
 			
 	//sortable, portlets
 	jQuery(".column").sortable({
@@ -104,7 +108,7 @@ jQuery(document).ready(function() {
 				
 	jQuery(".portlet").addClass("ui-widget ui-widget-content ui-helper-clearfix ui-corner-all").find(".portlet-header").addClass("ui-widget-header ui-corner-all").prepend('<span class="ui-icon ui-icon-circle-arrow-s"></span>').end().find(".portlet-content");
 
-	jQuery(".portlet-header .ui-icon").on("click", function() {
+	jQuery(".portlet-header .ui-icon").click(function() {
 		jQuery(this).toggleClass("ui-icon-minusthick");
 		jQuery(this).parents(".portlet:first").find(".portlet-content").toggle();
 	});

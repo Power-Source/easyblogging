@@ -4,10 +4,41 @@ $(function () {
 var __oldSentToEditor;
 
 /* --- Sortable table --- */
-$("table#wdeb_show_hide_root tbody").sortable({
-	"items": "tr",
-	"containment": "tbody"
-});
+const menuTable = document.querySelector('#wdeb_show_hide_root tbody');
+
+if (menuTable) {
+	let draggedRow = null;
+
+	menuTable.querySelectorAll('tr').forEach(function (row) {
+		row.draggable = true;
+
+		row.addEventListener('dragstart', function () {
+			draggedRow = row;
+			row.classList.add('wdeb-dragging');
+		});
+
+		row.addEventListener('dragend', function () {
+			row.classList.remove('wdeb-dragging');
+			draggedRow = null;
+		});
+
+		row.addEventListener('dragover', function (event) {
+			event.preventDefault();
+
+			if (!draggedRow || draggedRow === row) {
+				return;
+			}
+
+			const rect = row.getBoundingClientRect();
+			const after = event.clientY > rect.top + rect.height / 2;
+
+			row.parentNode.insertBefore(
+				draggedRow,
+				after ? row.nextSibling : row
+			);
+		});
+	});
+}
 
 /* --- (Un)Check all --- */
 $(".wdeb_check_all_items").on('click', function () {

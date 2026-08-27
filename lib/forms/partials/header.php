@@ -9,12 +9,8 @@ if (!$this->data->get_option('admin_bar')) {
 }
 ?>
 	<link type="text/css" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/style.css" rel="stylesheet" /> <!-- the layout css file -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/cufon-yui.js'></script> <!-- Cufon font replacement -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/ColaborateLight_400.font.js'></script> <!-- the Colaborate Light font -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/easyTooltip.js'></script> <!-- element tooltips -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/jquery.tablesorter.min.js'></script> <!-- tablesorter -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js'></script> <!-- visualize plugin for graphs / statistics -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/iphone-style-checkboxes.js'></script> <!-- iphone like checkboxes -->
 	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
 
 <?php 
@@ -64,8 +60,26 @@ html.wp-toolbar { padding-top: 0;}
 }
 
 .wdeb_tooltip {
-	background: url(<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/tooltip.png) top left no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+    vertical-align: middle;
+    background: url(<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/tooltip.png) top left no-repeat;
 }
+
+#wdeb-mode #titlewrap {
+    position: relative;
+}
+
+#wdeb-mode #titlewrap > .wdeb_tooltip {
+    position: absolute;
+    left: -17px;
+    top: 9px;
+    margin: 0;
+    z-index: 10;
+}
+
 .wdeb_help_popup a {
 	background: #fff url(<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/help.png) 10px 4px no-repeat;
 }

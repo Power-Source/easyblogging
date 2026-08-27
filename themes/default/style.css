@@ -109,7 +109,7 @@ fieldset hr {
 }
 
 h1 {
-	color::#333;
+	color:#333;
 	font-size:28px;
 	clear:both;
 }
@@ -348,7 +348,6 @@ div#edit-slug-box a {
 	text-align: justify;
 	float: left;
 	margin-right: 15px;
-	*margin-top: 15px; /*IE8 fix*/
 	margin-bottom:0!important;
 	padding-top:12px;
 }
@@ -371,10 +370,8 @@ div#edit-slug-box a {
 .success {
 	border-top: 1px solid #edf7d0;
 	border-bottom: 1px solid #b7e789;
-
 	background: #dff3a8;
-	background: -moz-linear-gradient(top,#dff3a8,#c4fb92);
-	background: -webkit-gradient(linear, left top, left bottom, from(#dff3a8), to(#c4fb92));
+	background: linear-gradient(to bottom, #dff3a8, #c4fb92);
 }
 
 .success:before {
@@ -915,9 +912,9 @@ a.table_icon {
     color: #fff;
 	border:1px solid var(--wdeb-accent-border);
 	border-bottom:1px solid var(--wdeb-accent-dark);
-	background: var(--wdeb-accent;
-	background: -moz-linear-gradient(top, #ffdf9e, #f5b026 2%, var(--wdeb-accent);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent));
+	background: var(--wdeb-accent);
+	background: -moz-linear-gradient(top, #ffdf9e, #f5b026 2%, var(--wdeb-accent));
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent)));
 	cursor:pointer;
 
 }
@@ -948,7 +945,7 @@ a.table_icon {
     color: #fff;
 	border:1px solid var(--wdeb-accent-border);
 	border-bottom:1px solid var(--wdeb-accent-dark);
-	background: var(--wdeb-accent;
+	background: var(--wdeb-accent);
 	cursor:pointer;
 
 }
@@ -1054,9 +1051,9 @@ ul.paginator li a.current {
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	border-radius:10px;
-	background: var(--wdeb-accent;
-	background: -moz-linear-gradient(top, #ffdf9e, #f5b026 2%, var(--wdeb-accent);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent)); 
+	background: var(--wdeb-accent);
+	background: -moz-linear-gradient(top, #ffdf9e, #f5b026 2%, var(--wdeb-accent));
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent)));
 
 }
 
@@ -1082,7 +1079,7 @@ ul.paginator li a.current {
 	width:0;
 	height:0;
 	border:7px solid transparent;
-	border-top-color:var(--wdeb-accent;
+	border-top-color:var(--wdeb-accent);
 }
 
 /* Reverse tooltips */
@@ -1107,9 +1104,9 @@ ul.paginator li a.current {
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	border-radius:10px;
-	background: var(--wdeb-accent;
-	background: -moz-linear-gradient(bottom, #ffdf9e, #f5b026 2%, var(--wdeb-accent);
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent)); 
+	background: var(--wdeb-accent);
+	background: -moz-linear-gradient(bottom, #ffdf9e, #f5b026 2%, var(--wdeb-accent));
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ffd683), color-stop(.01, #f5b026), to(var(--wdeb-accent)));
 
 }
 #easyTooltip.reverse:before {
@@ -1132,11 +1129,35 @@ ul.paginator li a.current {
 	width:0;
 	height:0;
 	border:7px solid transparent;
-	border-bottom-color:var(--wdeb-accent;
+	border-bottom-color:var(--wdeb-accent);
 }
 
 table {
 	border-spacing:0;
+}
+
+#wdeb-mode #titlewrap {
+	position: relative;
+}
+
+#wdeb-mode #titlewrap > .wdeb_tooltip {
+	position: absolute;
+	left: 27px;
+	top: 9px;
+	margin: 0;
+	z-index: 10;
+}
+
+#wdeb-mode #titlewrap {
+	position: relative;
+}
+
+#wdeb-mode #titlewrap > .wdeb_tooltip {
+	position: absolute;
+	left: 27px;
+	top: 9px;
+	margin: 0;
+	z-index: 10;
 }
 
 /* --- FOOTER --- */

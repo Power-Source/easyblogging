@@ -656,7 +656,7 @@ class Wdeb_Menu_ManageMenuItems {
 
 	function js_add_scripts () {
 		if (!isset($_GET['page']) || 'wdeb_menu_items' != $_GET['page']) return false;
-		wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('media-upload');
 		wp_enqueue_script("wdeb_menu_items", WDEB_PLUGIN_URL . '/js/wdeb-menu-items.js', array('jquery'));

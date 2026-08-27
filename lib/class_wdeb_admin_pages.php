@@ -245,17 +245,7 @@ class Wdeb_AdminPages {
 				'activate' => __('Einfachmodus aktivieren', 'wdeb')
 			));
 		} else {
-			wp_enqueue_script(array(
-				'jquery', 
-				'jquery-ui-core', 
-				'jquery-ui-sortable',
-				'jquery-ui-dialog', 
-				'jquery-ui-tabs', 
-				'jquery-ui-datepicker', 
-				'jquery-ui-dialog', 
-				'jquery-ui-slider', 
-				'jquery-ui-progressbar', 
-			));
+			wp_enqueue_script( 'jquery' );
 		}
 		printf(
 			'<script type="text/javascript">_wdebLandingPage = "%s";</script>',
@@ -556,8 +546,13 @@ class Wdeb_AdminPages {
 			add_action('in_admin_footer', array($this, 'start_cache'), 1);
 			add_action('admin_footer', array($this, 'end_footer_cache'), 999);
 
-			remove_action('in_admin_header', 'wp_admin_bar_render', 0);
-			add_action('eab-admin_toolbar-render', 'wp_admin_bar_render');
+			if (
+				$current_screen &&
+				'dashboard' === $current_screen->base
+			) {
+				remove_action( 'in_admin_header', 'wp_admin_bar_render', 0 );
+				add_action( 'eab-admin_toolbar-render', 'wp_admin_bar_render' );
+			}
 
 			add_filter('get_user_option_media_library_mode', array($this, 'override_media_library_format'));
 

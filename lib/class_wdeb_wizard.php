@@ -23,13 +23,11 @@ class Wdeb_Wizard {
 	function css_print_styles () {
 		if (!isset($_GET['page']) || 'wdeb_wizard' != $_GET['page']) return false;
 		$protocol = ($_SERVER["HTTPS"] == 'on') ? 'https://' : 'http://';
-		//wp_enqueue_style('jquery-ui', $protocol . 'ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css');
-		wp_enqueue_style('wp-jquery-ui-dialog');
 	}
 
 	function js_print_scripts () {
 		if (!isset($_GET['page']) || 'wdeb_wizard' != $_GET['page']) return false;
-		wp_enqueue_script( array("jquery", "jquery-ui-core", "jquery-ui-sortable", 'jquery-ui-dialog') );
+		wp_enqueue_script( 'jquery' );
 	}
 
 	function rebind_menu_partial ($menu) {

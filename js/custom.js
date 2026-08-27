@@ -26,27 +26,6 @@
 
 		initMenu();
 
-		// Default dialog.
-		if ($.fn.dialog && $('#dialog').length) {
-			$('#dialog').dialog({
-				autoOpen: false,
-				width: 650,
-				buttons: {
-					Done: function () {
-						$(this).dialog('close');
-					},
-					Cancel: function () {
-						$(this).dialog('close');
-					}
-				}
-			});
-
-			$('.dialog_link').on('click', function (event) {
-				event.preventDefault();
-				$('#dialog').dialog('open');
-			});
-		}
-
 		// Notifications.
 		$('.notification').css('cursor', 'pointer');
 
@@ -90,27 +69,16 @@
 
 		// Fade effect.
 		$('.fade_hover')
-			.on('mouseenter', function () {
-				$(this).stop(true, true).animate({
-					opacity: 0.6
-				}, 200);
-			})
-			.on('mouseleave', function () {
-				$(this).stop(true, true).animate({
-					opacity: 1
-				}, 200);
-			});
-
-		// Sortable columns.
-		if ($.fn.sortable) {
-			$('.column').sortable({
-				connectWith: '.column',
-				placeholder: 'ui-sortable-placeholder',
-				forcePlaceholderSize: true,
-				scroll: false,
-				helper: 'clone'
-			});
-		}
+		.on('mouseenter', function () {
+			$(this).stop(true, true).animate({
+				opacity: 0.6
+			}, 200);
+		})
+		.on('mouseleave', function () {
+			$(this).stop(true, true).animate({
+				opacity: 1
+			}, 200);
+		});
 
 		// Portlets.
 		$('.portlet')
@@ -145,31 +113,6 @@
 						'#ddd74c'
 					]
 				});
-			});
-		}
-
-		// Tabs.
-		if ($.fn.tabs) {
-			$('.tabs').tabs();
-		}
-
-		// Datepicker.
-		if ($.fn.datepicker) {
-			$('.datepicker').datepicker();
-		}
-
-		// Slider.
-		if ($.fn.slider) {
-			$('.slider').slider({
-				range: true,
-				values: [20, 70]
-			});
-		}
-
-		// Progressbar.
-		if ($.fn.progressbar) {
-			$('.progressbar').progressbar({
-				value: 40
 			});
 		}
 

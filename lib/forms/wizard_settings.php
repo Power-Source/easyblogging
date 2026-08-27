@@ -16,7 +16,7 @@
 
 </div>
 
-<div id="wdeb_step_edit_dialog" style="display:none">
+<dialog id="wdeb_step_edit_dialog">
 	<p>
 		<label><?php _e("Titel", 'wdeb'); ?></label>
 			<input class="widefat" id="wdeb_step_edit_dialog_title" />
@@ -29,7 +29,15 @@
 		<label><?php _e("Hilfe", 'wdeb'); ?></label>
 			<textarea class="widefat" id="wdeb_step_edit_dialog_help"></textarea>
 	</p>
-</div>
+	<p class="submit">
+	<button type="button" class="button button-primary" id="wdeb_step_edit_save">
+		<?php esc_html_e( 'Speichern', 'wdeb' ); ?>
+	</button>
+	<button type="button" class="button" id="wdeb_step_edit_cancel">
+		<?php esc_html_e( 'Abbrechen', 'wdeb' ); ?>
+	</button>
+</p>
+</dialog>
 
 <style type="text/css">
 .wdeb_step {
@@ -61,7 +69,16 @@
 	float: right;
 }
 #wdeb_step_edit_dialog {
+	width: 600px;
+	max-width: calc(100vw - 40px);
 	padding: 10px 20px;
+	border: 0;
+	border-radius: 4px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+#wdeb_step_edit_dialog::backdrop {
+	background: rgba(0, 0, 0, 0.5);
 }
 </style>
 <script type="text/javascript">
@@ -79,17 +96,51 @@ function updateUrlPreview () {
 	return true;
 }
 
-if (typeof $("#wdeb_steps").sortable != "undefined") {
-	$("#wdeb_steps")
-		.sortable({
-			"update": function () {
-				$("#wdeb_steps li").each(function (idx) {
-					$(this).find('h4 .wdeb_step_count').html(idx+1);
-				});
+const steps = document.getElementById('wdeb_steps');
+
+if (steps) {
+	let draggedItem = null;
+
+	steps.querySelectorAll(':scope > li').forEach(function (item) {
+		item.draggable = true;
+
+		item.addEventListener('dragstart', function () {
+			draggedItem = item;
+			item.classList.add('wdeb-dragging');
+		});
+
+		item.addEventListener('dragend', function () {
+			item.classList.remove('wdeb-dragging');
+			draggedItem = null;
+			updateStepNumbers();
+		});
+
+		item.addEventListener('dragover', function (event) {
+			event.preventDefault();
+
+			if (!draggedItem || draggedItem === item) {
+				return;
 			}
-		})
-		.disableSelection()
-	;
+
+			const rect = item.getBoundingClientRect();
+			const insertAfter = event.clientY > rect.top + rect.height / 2;
+
+			steps.insertBefore(
+				draggedItem,
+				insertAfter ? item.nextSibling : item
+			);
+		});
+	});
+
+	function updateStepNumbers() {
+		steps.querySelectorAll(':scope > li').forEach(function (item, index) {
+			const count = item.querySelector('h4 .wdeb_step_count');
+
+			if (count) {
+				count.textContent = index + 1;
+			}
+		});
+	}
 }
 
 $(".wdeb_step_delete").on('click', function () {
@@ -101,27 +152,34 @@ $("#wdeb_last_wizard_step_url_type").on("change", updateUrlPreview);
 $("#wdeb_last_wizard_step_url").on("input", updateUrlPreview);
 
 $(".wdeb_step_edit").on('click', function () {
-	var $parent = $(this).parents('li.wdeb_step');
-	var $url = $parent.find('input:hidden.wdeb_step_url');
-	var $title = $parent.find('input:hidden.wdeb_step_title');
-	var $help = $parent.find('input:hidden.wdeb_step_help');
-	var $titleSpan = $parent.find('h4 .wdeb_step_title');
+	const $parent = $(this).parents('li.wdeb_step');
+	const $url = $parent.find('input:hidden.wdeb_step_url');
+	const $title = $parent.find('input:hidden.wdeb_step_title');
+	const $help = $parent.find('input:hidden.wdeb_step_help');
+	const $titleSpan = $parent.find('h4 .wdeb_step_title');
+	const dialog = document.getElementById('wdeb_step_edit_dialog');
+
+	if (!dialog) {
+		return false;
+	}
 
 	$("#wdeb_step_edit_dialog_title").val($title.val());
 	$("#wdeb_step_edit_dialog_url").val($url.val());
 	$("#wdeb_step_edit_dialog_help").val($help.val());
 
-	$("#wdeb_step_edit_dialog").dialog({
-		"dialogClass": "wp-dialog",
-		"title": $title.val(),
-		"modal": true,
-		"width": 600,
-		"close": function () {
-			$title.val($("#wdeb_step_edit_dialog_title").val());
-			$titleSpan.html($("#wdeb_step_edit_dialog_title").val());
-			$url.val($("#wdeb_step_edit_dialog_url").val());
-			$help.val($("#wdeb_step_edit_dialog_help").val());
-		}
+	dialog.showModal();
+
+	$("#wdeb_step_edit_save").off('click').on('click', function () {
+		$title.val($("#wdeb_step_edit_dialog_title").val());
+		$titleSpan.text($("#wdeb_step_edit_dialog_title").val());
+		$url.val($("#wdeb_step_edit_dialog_url").val());
+		$help.val($("#wdeb_step_edit_dialog_help").val());
+
+		dialog.close();
+	});
+
+	$("#wdeb_step_edit_cancel").off('click').on('click', function () {
+		dialog.close();
 	});
 
 	return false;

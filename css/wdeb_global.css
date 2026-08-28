@@ -1,7 +1,7 @@
 .wdeb_visit_site {
   position: fixed;
   right: 3px;
-  top:1px;
+  top:35px;
   z-index: 9999999;
 }
 
@@ -56,7 +56,7 @@ td.available-theme p.description, .appearance_page_premium-themes #current-theme
 }
 
 #wpwrap #primary_left #logo {
-    padding: 0px 0 20px 0px;
+    padding: 0px 0 20px 8px;
 }
 
 /* PS Easy Blogging - Theme selector */
@@ -143,4 +143,8 @@ td.available-theme p.description, .appearance_page_premium-themes #current-theme
 	height: auto !important;
 	max-width: 150px !important;
 	max-height: 80px !important;
+}
+
+.wdeb_switch.admin_area.button {
+    max-height: 30px;
 }

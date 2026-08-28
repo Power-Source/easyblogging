@@ -1,11 +1,11 @@
-=== Easy Blogging ===
+=== PS Easy Blogging ===
 Contributors: DerNerd (PSOURCE)
 Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
-Tested up to: 5.6
-ClassicPress: 2.7
-Stable tag: 1.0.3
-Requires PHP: 7.4
+WordPress: 7.1.0
+ClassicPress: 2.7.1
+Stable tag: 1.0.4
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,20 @@ Verwende die integrierte MarketPress-Integration, um die Produkterstellung zu ve
 Schaffe mit Easy Blogging eine Benutzererfahrung, die zu Deinem Kundenstamm passt.
 
 == ChangeLog ==
+
+= 1.0.4 =
+
+* Veraltete jQuery-UI-Abhängigkeiten entfernt.
+* Sortierfunktionen auf natives HTML5 Drag & Drop umgestellt.
+* Wizard-Dialog auf das native HTML5-Dialogelement umgestellt.
+* Unbenutzte jQuery-UI-Komponenten entfernt.
+* Veraltete IE-Kompatibilität für CSS3 PIE und ExplorerCanvas entfernt.
+* Unsichere HTML-Generierung in JavaScript durch sichere DOM-Methoden ersetzt.
+* Logo-Vorschau überarbeitet und proportional begrenzt.
+* CSS-Modernisierungen und Bereinigung veralteter Browserpräfixe.
+* Admin-Bar-Verhalten im Easy Mode und in Multisite korrigiert.
+* Stylesheets für den Network Admin korrigiert.
+* Kompatibilität mit aktuellen WordPress- und ClassicPress-Versionen verbessert.
 
 = 1.0.3 =
 

@@ -125,8 +125,9 @@ html.wp-toolbar { padding-top: 0;}
 
 #wpwrap #screen-meta {
     position: absolute;
-    right: 140px;
-    top: 0;
+    right: 50px;
+    top: 5px;
+	left: 20px;
 }
 
 /* ----- RTL ----- */
@@ -250,7 +251,7 @@ $(function () {
 <?php if ($this->data->get_option('easy_bar') && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
 // Add exit easy mode link
 $(function () {
-	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Exit easy mode', 'wdeb');?></a>");
+	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Profi-Modus', 'wdeb');?></a>");
 });
 <?php } ?>
 })(jQuery);
@@ -286,7 +287,7 @@ document.body.className = c;
 <?php do_action('eab-admin_toolbar-render'); ?>
 <?php if ($this->data->get_option('easy_bar')) { ?>
 	<div class="wdeb_visit_site">
-	<a href="<?php echo site_url();?>"><?php _e('Visit site', 'wdeb');?></a>
+	<a href="<?php echo site_url();?>"><?php _e('Zur Webseite', 'wdeb');?></a>
 	</div>
 <?php } ?>
 

@@ -43,11 +43,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_wizard_on" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/wizard-mode.png" alt="" />
-			<span class="current"><?php _e('Wizard mode', 'wdeb');?></span>
+			<span class="current"><?php _e('Assistent Modus', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Wizard mode', 'wdeb');?></strong>
-			<?php _e('Enter guided step-by-step mode', 'wdeb')?>
+			<strong><?php _e('Assistent Modus', 'wdeb');?></strong>
+			<?php _e('Geführten Schritt-für-Schritt-Modus betreten', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -57,11 +57,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo admin_url('index.php');?>?wdeb_off" id="wdeb_exit_easy_mode" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/home.png" alt="" />
-			<span class="current"><?php _e('Exit Easy Mode', 'wdeb');?></span>
+			<span class="current"><?php _e('Profi-Modus', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Exit Easy Mode', 'wdeb');?></strong>
-			<?php _e('Return to advanced mode', 'wdeb')?>
+			<strong><?php _e('Profi-Modus', 'wdeb');?></strong>
+			<?php _e('Zurück zum erweiterten Modus', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>
@@ -71,11 +71,11 @@ $current_request = admin_url($current_request);
 	<li>
 		<a href="<?php echo wp_logout_url();?>" class="dashboard">
 			<img src="<?php echo WDEB_PLUGIN_THEME_URL ?>/assets/icons/theme_icons/settings.png" alt="" />
-			<span class="current"><?php _e('Log Out', 'wdeb');?></span>
+			<span class="current"><?php _e('Ausloggen', 'wdeb');?></span>
 		</a>
 		<div class="wdeb_meta">
-			<strong><?php _e('Log Out', 'wdeb');?></strong>
-			<?php _e('Log Out of your website', 'wdeb')?>
+			<strong><?php _e('Ausloggen', 'wdeb');?></strong>
+			<?php _e('Von Deiner Webseite abmelden', 'wdeb')?>
 		</div>
 	</li>
 <?php } ?>

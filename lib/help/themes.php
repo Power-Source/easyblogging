@@ -1,10 +1,10 @@
 <?php
 wp_enqueue_script('wdeb_help', WDEB_PLUGIN_URL . '/js/help/themes.js');
 wp_localize_script('wdeb_help', 'l10WdebHelp', array(
-	'title' => __('Change the design of your blog, preview and activate new themes.', 'wdeb'),
-	'current' => __('This is the design that you are currently using for your blog. If you would like to change it, you can choose from the Available Themes below', 'wdeb'),
-	'available' => __('You can choose any of these designs, and your blog will be automatically updated to look like this. Simply click on any of the images to preview what your blog will look like with that design.', 'wdeb'),
+	'title' => __('Ändere das Design Deines Blogs, sieh Dir eine Vorschau an und aktiviere neue Designs.', 'wdeb'),
+	'current' => __('Dies ist das Design, das Du derzeit für Deinen Blog verwendest. Wenn Du es ändern möchtest, kannst Du eines der unten verfügbaren Designs auswählen.', 'wdeb'),
+	'available' => __('Du kannst eines dieser Designs auswählen, und Dein Blog wird automatisch so aktualisiert, dass er so aussieht. Klicke einfach auf eines der Bilder, um eine Vorschau zu sehen, wie Dein Blog mit diesem Design aussehen wird.', 'wdeb'),
 
-	'help' => __('Here you can change your blog\'s theme', 'wdeb'),
+	'help' => __('Hier kannst Du das Design Deines Blogs ändern.', 'wdeb'),
 
 ));

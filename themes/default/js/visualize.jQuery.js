@@ -430,9 +430,16 @@ $.fn.visualize = function(options, container){
 				selector = self.find('tr:eq(0) th').filter(o.colFilter);
 			}
 			
-			selector.each(function(i){
-				$('<li><span class="visualize-key-color" style="background: '+dataGroups[i].color+'"></span><span class="visualize-key-label">'+ $(this).text() +'</span></li>')
-					.appendTo(newKey);
+			selector.each(function(i) {
+				var $item = $('<li>');
+				var $color = $('<span>', {
+					class: 'visualize-key-color'
+				}).css('background', dataGroups[i].color);
+				var $label = $('<span>', {
+					class: 'visualize-key-label'
+				}).text($(this).text());
+
+				$item.append($color, $label).appendTo(newKey);
 			});
 			newKey.appendTo(infoContain);
 		};		

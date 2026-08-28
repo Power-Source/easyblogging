@@ -389,7 +389,19 @@ $.fn.visualize = function(options, container){
 		var title = o.title || self.find('caption').text();
 		
 		//create canvas wrapper div, set inline w&h, append
-		var canvasContain = (container || $('<div class="visualize" role="img" aria-label="Chart representing data from the table: '+ title +'" />'))
+		var canvasContain = container || $('<div>', {
+			class: 'visualize',
+			role: 'img'
+		});
+
+		if (!container) {
+			canvasContain.attr(
+				'aria-label',
+				'Chart representing data from the table: ' + title
+			);
+		}
+
+		canvasContain
 			.height(o.height)
 			.width(o.width)
 			.append(canvas);

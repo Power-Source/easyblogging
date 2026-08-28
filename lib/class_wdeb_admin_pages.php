@@ -547,8 +547,8 @@ class Wdeb_AdminPages {
 			add_action('admin_footer', array($this, 'end_footer_cache'), 999);
 
 			if (
-				$current_screen &&
-				'dashboard' === $current_screen->base
+				isset( $_SERVER['PHP_SELF'] ) &&
+				'/wp-admin/user/index.php' !== $_SERVER['PHP_SELF']
 			) {
 				remove_action( 'in_admin_header', 'wp_admin_bar_render', 0 );
 				add_action( 'eab-admin_toolbar-render', 'wp_admin_bar_render' );

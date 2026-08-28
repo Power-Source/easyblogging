@@ -162,14 +162,24 @@ class Wdeb_AdminFormRenderer {
 	function create_logo_box () {
 		$opts = new Wdeb_Options;
 		$logo = $opts->get_logo();
-		if ($logo) {
-			printf (__("Aktuelles Logo:<br /> %s", 'wdeb'), "<img id='wdeb-logo-logo_output' src='{$logo}' /><br />");
-			echo '<a href="#remove-logo" id="wdeb-logo-remove_logo">' . __('Logo zurücksetzen', 'wdeb') . '</a><br />';
-		}
-		echo "<input type='hidden' name='wdeb[wdeb_logo]' id='wdeb-logo-custom_logo' value='{$logo}' />";
-		_e('Eigenes Logo hochladen:<br /><em>*geeignete Logodimension: Breite=150px Höhe=80px oder mehr</em><br />', 'wdeb');
-		echo " <input type='file' name='wdeb_logo' />";
 
+		if ( $logo ) {
+			printf(
+				__( 'Aktuelles Logo:<br /> %s', 'wdeb' ),
+				'<div class="wdeb-logo-preview"><img id="wdeb-logo-logo_output" src="' . esc_url( $logo ) . '" alt="' . esc_attr__( 'Aktuelles Logo', 'wdeb' ) . '" /></div><br />'
+			);
+
+			echo '<a href="#remove-logo" id="wdeb-logo-remove_logo">' . esc_html__( 'Logo zurücksetzen', 'wdeb' ) . '</a><br />';
+		}
+
+		echo '<input type="hidden" name="wdeb[wdeb_logo]" id="wdeb-logo-custom_logo" value="' . esc_url( $logo ) . '" />';
+
+		_e(
+			'Eigenes Logo hochladen:<br /><em>*geeignete Logodimension: Breite=150px Höhe=80px oder mehr</em><br />',
+			'wdeb'
+		);
+
+		echo '<input type="file" name="wdeb_logo" />';
 	}
 
 	function create_dashboard_widget_box () {

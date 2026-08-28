@@ -255,6 +255,13 @@ class Wdeb_AdminPages {
 	}
 
 	function css_print_styles() {
+		wp_enqueue_style(
+			'wdeb_global',
+			WDEB_PLUGIN_URL . '/css/wdeb_global.css',
+			array(),
+			WDEB_VERSION
+		);
+
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) {
 			return;
 		}
@@ -262,13 +269,6 @@ class Wdeb_AdminPages {
 		wp_enqueue_style(
 			'wdeb_switch',
 			WDEB_PLUGIN_URL . '/css/wdeb_switch.css',
-			array(),
-			WDEB_VERSION
-		);
-
-		wp_enqueue_style(
-			'wdeb_global',
-			WDEB_PLUGIN_URL . '/css/wdeb_global.css',
 			array(),
 			WDEB_VERSION
 		);

@@ -36,9 +36,11 @@
 						$("#" + options.tooltipId).remove();
 					}
 
-					$("body").append(
-						"<div id='" + options.tooltipId + "'>" + title + "</div>"
-					);
+					var $tooltip = $("<div>", {
+						id: options.tooltipId
+					}).text(title);
+
+					$("body").append($tooltip);
 
 					$("#" + options.tooltipId).css("position", "absolute");
 

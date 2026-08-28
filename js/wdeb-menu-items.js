@@ -110,13 +110,15 @@ $("#wdeb_menu_items-manual_capability").on('click', function () {
 	var $select = $("#wdeb_menu_items-new-capability");
 	if (!$select.length) return false;
 	
-	$select.replaceWith(
-		'<input type="text" class="widefat" id="' + 
-			$select.attr("id") + '" name="' + 
-			$select.attr("name") + '" value="' + 
-			$select.val() + 
-		'" />'
-	);
+	var $input = $('<input>', {
+		type: 'text',
+		class: 'widefat',
+		id: $select.attr('id'),
+		name: $select.attr('name'),
+		value: $select.val()
+	});
+
+	$select.replaceWith($input);
 	$me.remove();
 	
 	return false;

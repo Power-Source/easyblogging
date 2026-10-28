@@ -255,11 +255,16 @@ class Wdeb_AdminPages {
 	}
 
 	function css_print_styles() {
+		$global_style_modified = filemtime( WDEB_PLUGIN_BASE_DIR . '/css/wdeb_global.css' );
+		$global_style_version = false === $global_style_modified
+			? WDEB_VERSION
+			: WDEB_VERSION . '.' . $global_style_modified;
+
 		wp_enqueue_style(
 			'wdeb_global',
 			WDEB_PLUGIN_URL . '/css/wdeb_global.css',
-			array(),
-			WDEB_VERSION
+			array( 'dashicons' ),
+			$global_style_version
 		);
 
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) {
@@ -389,8 +394,12 @@ class Wdeb_AdminPages {
 		ob_start();
 	}
 	function end_header_cache () {
-		$header_html = ob_get_contents();
-		ob_end_clean();
+		$header_html = ob_get_clean();
+		$head_end = stripos( $header_html, '</head>' );
+		$admin_head_html = false === $head_end
+			? ''
+			: substr( $header_html, 0, $head_end );
+
 		include apply_filters('wdeb_theme_header_partial', WDEB_PLUGIN_BASE_DIR . '/lib/forms/partials/header.php');
 	}
 	function end_footer_cache () {

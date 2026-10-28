@@ -1,6 +1,11 @@
 <?php
 global $pagenow, $admin_body_class, $current_screen, $wp_version;
 $version = preg_replace('/-.*$/', '', $wp_version);
+$wdeb_asset_version = function ( $relative_path ) {
+	$modified = filemtime( WDEB_PLUGIN_BASE_DIR . '/' . ltrim( $relative_path, '/' ) );
+
+	return false === $modified ? WDEB_VERSION : WDEB_VERSION . '.' . $modified;
+};
 
 if (!$this->data->get_option('admin_bar')) {
 	remove_action('wp_footer', 'wp_admin_bar_render', 1000);
@@ -8,10 +13,11 @@ if (!$this->data->get_option('admin_bar')) {
 	$wp_admin_bar = false;
 }
 ?>
-	<link type="text/css" href="<?php echo WDEB_PLUGIN_THEME_URL ?>/style.css" rel="stylesheet" /> <!-- the layout css file -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/easyTooltip.js'></script> <!-- element tooltips -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_THEME_URL ?>/js/visualize.jQuery.js'></script> <!-- visualize plugin for graphs / statistics -->
-	<script type='text/javascript' src='<?php echo WDEB_PLUGIN_URL ?>/js/custom.js'></script> <!-- the "make them work" script -->
+	<link type="text/css" href="<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/style.css' ), WDEB_PLUGIN_THEME_URL . '/style.css' ) ); ?>" rel="stylesheet" /> <!-- the layout css file -->
+	<?php echo $admin_head_html; ?>
+	<script type='text/javascript' src='<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/js/easyTooltip.js' ), WDEB_PLUGIN_THEME_URL . '/js/easyTooltip.js' ) ); ?>'></script> <!-- element tooltips -->
+	<script type='text/javascript' src='<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/js/visualize.jQuery.js' ), WDEB_PLUGIN_THEME_URL . '/js/visualize.jQuery.js' ) ); ?>'></script> <!-- visualize plugin for graphs / statistics -->
+	<script type='text/javascript' src='<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'js/custom.js' ), WDEB_PLUGIN_URL . '/js/custom.js' ) ); ?>'></script> <!-- the "make them work" script -->
 
 <?php 
 	$do_admin_head = defined('WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD') ? WDEB_CORE_ACTIONS_REDO_ADMIN_HEAD : false;
@@ -93,30 +99,6 @@ html.wp-toolbar { padding-top: 0;}
 .nav-menus-php .postbox .howto input, .nav-menus-php .accordion-container .howto input {
 	float: left
 }
-
-@media (max-width: 1280px) {
-#menu ul li a, #menu ul li a:hover {
-    height: 25px !important;
-}
-#menu ul li a img {
-    height: 22px;
-    margin: 1px 4px 4px 4px;
-    width: 22px;
-}
-#menu ul li a span {
-    padding: 4px 14px;
-}
-.wdeb_wizard_step b, .wdeb_wizard_step br {
-	display: none;
-}
-#primary_right .inner {
-    width: 700px;
-}
-.available-theme a.screenshot {
-    width: 200px;
-}
-}
-
 
 #wpwrap #primary_left #logo img {
     max-width: 90%;
@@ -251,7 +233,16 @@ $(function () {
 <?php if ($this->data->get_option('easy_bar') && (!$auto_enter_role || !wdeb_current_user_can($auto_enter_role))) { ?>
 // Add exit easy mode link
 $(function () {
-	$(".wdeb_visit_site").first().append("<a href='<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off'><?php _e('Profi-Modus', 'wdeb');?></a>");
+	$(".wdeb_visit_site").first().append(
+		$("<a>", {
+			href: "<?php echo WDEB_LANDING_PAGE; ?>?wdeb_off"
+		})
+			.append($("<span>", {
+				"class": "dashicons dashicons-admin-tools",
+				"aria-hidden": "true"
+			}))
+			.append($("<span>").text("<?php echo esc_js( __( 'Profi-Modus', 'wdeb' ) ); ?>"))
+	);
 });
 <?php } ?>
 })(jQuery);
@@ -287,11 +278,27 @@ document.body.className = c;
 <?php do_action('eab-admin_toolbar-render'); ?>
 <?php if ($this->data->get_option('easy_bar')) { ?>
 	<div class="wdeb_visit_site">
-	<a href="<?php echo site_url();?>"><?php _e('Zur Webseite', 'wdeb');?></a>
+	<a href="<?php echo site_url();?>">
+		<span class="dashicons dashicons-external" aria-hidden="true"></span>
+		<span><?php _e('Zur Webseite', 'wdeb');?></span>
+	</a>
 	</div>
 <?php } ?>
 
+<div class="wdeb_mobile_controls">
+	<button type="button" class="wdeb_menu_toggle" aria-controls="primary_left" aria-expanded="false">
+		<span class="wdeb_menu_toggle_icon" aria-hidden="true"></span>
+		<span><?php _e('Menü', 'wdeb'); ?></span>
+	</button>
+</div>
+
+<button type="button" class="wdeb_menu_backdrop" aria-label="<?php esc_attr_e('Menü schließen', 'wdeb'); ?>" hidden></button>
+
 <div id="primary_left">
+
+<button type="button" class="wdeb_menu_close" aria-label="<?php esc_attr_e('Menü schließen', 'wdeb'); ?>">
+	<span aria-hidden="true">&times;</span>
+</button>
 
 <div id="logo">
 <!--<a href="dashboard.html" title="Dashboard"><img src="assets/logo.png" alt="" /></a> -->
@@ -299,9 +306,9 @@ document.body.className = c;
 <img src="<?php echo $this->data->get_logo();?>" />
 </a>
 </div> <!-- logo end -->
-<div id="menu"> <!-- navigation menu -->
+<nav id="menu" aria-label="<?php esc_attr_e('Easy-Mode-Navigation', 'wdeb'); ?>"> <!-- navigation menu -->
 <?php $this->get_menu_partial(); ?>
-</div> <!-- navigation menu end -->
+</nav> <!-- navigation menu end -->
 </div> <!-- primary-left end -->
 
 <?php echo apply_filters('wdeb-admin_footer-markup', ''); ?>
@@ -321,4 +328,3 @@ if ($this->data->get_option('screen_options')) {
 <p></p>
 </div>
 </div>-->
-

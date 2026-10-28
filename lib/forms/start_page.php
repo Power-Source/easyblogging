@@ -191,10 +191,10 @@ if ($('#menu li.current .wdeb_meta').length) {
 
 				<div id="menu"> <!-- navigation menu -->
 					<ul>
-						<li class="tooltip" title="<strong><?php _e('Easy mode', 'wdeb');?></strong><br /><?php _e('I want to start in Easy mode', 'wdeb')?>">
+						<li class="tooltip" title="<strong><?php _e('Einfacher Modus', 'wdeb');?></strong><br /><?php _e('Ich möchte im einfachen Modus starten.', 'wdeb')?>">
 							<a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on" class="wdeb_menu_link dashboard">
 								<img src="<?php echo WDEB_PLUGIN_URL ?>/img/easy-mode.png" alt="" />
-								<span class="current"><?php _e('Easy mode', 'wdeb');?></span>
+								<span class="current"><?php _e('Einfacher Modus', 'wdeb');?></span>
 							</a>
 
 
@@ -202,18 +202,18 @@ if ($('#menu li.current .wdeb_meta').length) {
 						</li>
 					<?php if ($this->data->get_option('wizard_enabled', 'wdeb_wizard')) { ?>
 					<!-- Wizard is enabled, add menu entry -->
-						<li class="tooltip" title="<strong><?php _e('Wizard mode', 'wdeb');?></strong><br /><?php _e('I want to start in a guided, step-by-step mode', 'wdeb')?>">
+						<li class="tooltip" title="<strong><?php _e('Assistent Modus', 'wdeb');?></strong><br /><?php _e('Ich möchte im geführten, schrittweisen Modus starten.', 'wdeb')?>">
 							<a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on&wdeb_wizard_on" class="wdeb_menu_link dashboard">
 							  <img src="<?php echo WDEB_PLUGIN_URL ?>/img/wizard-mode.png" alt="" />
-								<span class="current"><?php _e('Wizard mode', 'wdeb');?></span>
+								<span class="current"><?php _e('Assistent Modus', 'wdeb');?></span>
 							</a>
 
 						</li>
 					<?php } ?>
-						<li class="tooltip" title="<strong><?php _e('Standard mode', 'wdeb');?></strong><br /><?php _e('I want to start in Standard mode', 'wdeb')?>">
+						<li class="tooltip" title="<strong><?php _e('Standard Modus', 'wdeb');?></strong><br /><?php _e('Ich möchte im Standard Modus starten.', 'wdeb')?>">
 							<a href="index.php?wdeb_off" class="wdeb_menu_link dashboard">
 							   <img src="<?php echo WDEB_PLUGIN_URL ?>/img/advance-mode.png" alt="" />
-								<span class="current"><?php _e('Standard mode', 'wdeb');?></span>
+								<span class="current"><?php _e('Standard Modus', 'wdeb');?></span>
 							</a>
 
 						</li>
@@ -231,15 +231,15 @@ if ($('#menu li.current .wdeb_meta').length) {
 	$current_network_site = !empty($current_site->site_name) ? $current_site->site_name : get_bloginfo("name");
 ?>
 
-	<h1><?php printf(__('Welcome to %s', 'wdeb'), $current_network_site );?></h1>
+	<h1><?php printf(__('Willkommen bei %s', 'wdeb'), $current_network_site );?></h1>
 
 <?php } else { ?>
 
-	<h1><?php printf(__('Welcome to %s', 'wdeb'), get_bloginfo('name'));?></h1>
+	<h1><?php printf(__('Willkommen bei %s', 'wdeb'), get_bloginfo('name'));?></h1>
 
 <?php } ?>
 
-       <div class="start-headline"><?php printf(__("Select how you'd like to use your site - %s (you can change at any time)", 'wdeb'), get_bloginfo('name'));?></div>
+       <div class="start-headline"><?php printf(__("Wähle, wie Du Dein Dashboard nutzen möchtest - %s (Du kannst dies jederzeit ändern)", 'wdeb'), get_bloginfo('name'));?></div>
 
 					<!--<div class="notification tip">
 						<span></span>
@@ -249,20 +249,20 @@ if ($('#menu li.current .wdeb_meta').length) {
 					</div>-->
 
 					<dl>
-						<dt><?php _e('Easy mode', 'wdeb');?>&nbsp;&nbsp;<small><a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on"><?php _e('Activate', 'wdeb');?></a></small></dt>
-						<dd><?php _e('Great for beginners, easily and quickly manage your blog', 'wdeb');?></dd>
+						<dt><?php _e('Einfacher Modus', 'wdeb');?>&nbsp;&nbsp;<small><a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on"><?php _e('Aktivieren', 'wdeb');?></a></small></dt>
+						<dd><?php _e('Ideal für Anfänger, verwalte Dein Blog einfach und schnell', 'wdeb');?></dd>
 
 					<?php if ($this->data->get_option('wizard_enabled', 'wdeb_wizard')) { ?>
 					<!-- Wizard is enabled, add description -->
-						<dt><?php _e('Wizard mode', 'wdeb');?>&nbsp;&nbsp;<small><a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on&wdeb_wizard_on"><?php _e('Activate', 'wdeb');?></a></small></dt>
-						<dd><?php _e('Even greater for beginners, offers a guided step-by-step tour of your blog', 'wdeb');?></dd>
+						<dt><?php _e('Assistent Modus', 'wdeb');?>&nbsp;&nbsp;<small><a href="<?php echo WDEB_LANDING_PAGE;?>?wdeb_on&wdeb_wizard_on"><?php _e('Aktivieren', 'wdeb');?></a></small></dt>
+						<dd><?php _e('Noch besser für Anfänger, bietet eine geführte Schritt-für-Schritt-Tour durch Dein Blog', 'wdeb');?></dd>
 					<?php } ?>
 
-						<dt><?php _e('Standard mode', 'wdeb');?>&nbsp;&nbsp;<small><a href="index.php?wdeb_off"><?php _e('Activate', 'wdeb');?></a></small></dt>
-						<dd><?php _e('Allows for fine-tuning your blog', 'wdeb');?></dd>
+						<dt><?php _e('Standard Modus', 'wdeb');?>&nbsp;&nbsp;<small><a href="index.php?wdeb_off"><?php _e('Aktivieren', 'wdeb');?></a></small></dt>
+						<dd><?php _e('Ermöglicht die Feinabstimmung Deines Blogs', 'wdeb');?></dd>
 					</dl>
 
-					<p class="start-remember"><?php _e('Remember, no matter which mode you select now, you can switch back at any time' , 'wdeb');?></p>
+					<p class="start-remember"><?php _e('Denke daran, egal welchen Modus Du jetzt wählst, Du kannst jederzeit zurückwechseln' , 'wdeb');?></p>
 
 
 

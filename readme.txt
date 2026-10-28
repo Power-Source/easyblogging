@@ -4,7 +4,7 @@ Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
 WordPress: 7.1.0
 ClassicPress: 2.7.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -31,8 +31,15 @@ Schaffe mit Easy Blogging eine Benutzererfahrung, die zu Deinem Kundenstamm pass
 
 == ChangeLog ==
 
-= 1.0.4 =
+= 1.0.5 =
+* Ausgaben anderer Plugins im Admin-Header bleiben im Easy Mode erhalten.
+* Darstellung und Bedienbarkeit des PS-Chat-Headers im Easy Mode korrigiert.
+* Easy-Mode-Layout mit CSS Grid und flexiblen Inhaltsbreiten modernisiert.
+* Kompakte Tablet-Navigation und zugängliches mobiles Off-Canvas-Menü ergänzt.
+* Formulare, Tabellen, Dashboard-Spalten und Medien für kleine Displays optimiert.
+* Globale CSS-Resets reduziert und die Kompatibilität mit Adminseiten anderer Plugins verbessert.
 
+= 1.0.4 =
 * Veraltete jQuery-UI-Abhängigkeiten entfernt.
 * Sortierfunktionen auf natives HTML5 Drag & Drop umgestellt.
 * Wizard-Dialog auf das native HTML5-Dialogelement umgestellt.

@@ -24,8 +24,9 @@ $current_request = admin_url($current_request);
 	$url = admin_url($item['url']);
 	$item = apply_filters('wdeb_menu-item_before_render', $item);
 	?>
-	<li <?php echo (($url == $current_request) ? 'class="current"' : '');?> >
-		<a href="<?php echo wdeb_expand_url($item['url']); ?>" class="wdeb_menu_link dashboard">
+	<?php $is_current = ( $url === $current_request ); ?>
+	<li <?php echo $is_current ? 'class="current"' : '';?> >
+		<a href="<?php echo wdeb_expand_url($item['url']); ?>" class="wdeb_menu_link dashboard"<?php echo $is_current ? ' aria-current="page"' : ''; ?>>
 			<img src="<?php echo $item['icon'];?>" alt="" />
 			<span class="current"><?php echo $item['title'];?></span>
 		</a>

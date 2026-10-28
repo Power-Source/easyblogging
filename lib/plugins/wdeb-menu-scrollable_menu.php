@@ -36,6 +36,16 @@ class Wdeb_Menu_ScrollableMenu {
 			return;
 		}
 
+		if (window.matchMedia("(max-width: 782px)").matches) {
+			$menu.css({
+				"height": "auto",
+				"overflow": "visible",
+				"width": "100%"
+			});
+			$primaryLeft.css("z-index", "");
+			return;
+		}
+
 		var topPos = $menu.height() + $menu.position().top;
 
 		if (topPos < $(window).height()) {

@@ -16,15 +16,99 @@
 		});
 	}
 
-	$(function () {
+	function initMobileMenu() {
+		const $body = $('body');
+		const $sidebar = $('#primary_left');
+		const $toggle = $('.wdeb_menu_toggle');
+		const $close = $('.wdeb_menu_close');
+		const $backdrop = $('.wdeb_menu_backdrop');
+		const mobileQuery = window.matchMedia('(max-width: 782px)');
+		let returnFocus = null;
 
-		// Fix the left navigation.
-		$('#primary_left').css({
-			position: 'fixed',
-			top: 0
+		$('#wp-admin-bar-menu-toggle').remove();
+
+		function setMenuState(isOpen) {
+			$body.toggleClass('wdeb_mobile_menu_open', isOpen);
+			$sidebar.toggleClass('wdeb_menu_is_open', isOpen);
+			$toggle.attr('aria-expanded', isOpen ? 'true' : 'false');
+			$backdrop.prop('hidden', !isOpen);
+
+			if (isOpen) {
+				returnFocus = document.activeElement;
+				$close.get(0).focus({ preventScroll: true });
+			} else if (returnFocus && returnFocus.isConnected && typeof returnFocus.focus === 'function') {
+				returnFocus.focus({ preventScroll: true });
+				returnFocus = null;
+			}
+		}
+
+		$toggle.on('click', function () {
+			setMenuState(!$body.hasClass('wdeb_mobile_menu_open'));
 		});
 
+		$close.add($backdrop).on('click', function () {
+			setMenuState(false);
+		});
+
+		$sidebar.on('keydown', function (event) {
+			if (event.key === 'Escape') {
+				event.preventDefault();
+				setMenuState(false);
+				return;
+			}
+
+			if (event.key !== 'Tab' || !mobileQuery.matches) {
+				return;
+			}
+
+			const $focusable = $sidebar
+				.find('a:visible, button:visible, input:visible, select:visible, textarea:visible, [tabindex]:not([tabindex="-1"]):visible')
+				.filter(':enabled');
+
+			if (!$focusable.length) {
+				return;
+			}
+
+			const first = $focusable.get(0);
+			const last = $focusable.get($focusable.length - 1);
+
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first.focus();
+			}
+		});
+
+		$('#menu a').on('click', function () {
+			if (mobileQuery.matches) {
+				setMenuState(false);
+			}
+		});
+
+		$(document).on('keydown', function (event) {
+			if (event.key === 'Escape' && $body.hasClass('wdeb_mobile_menu_open')) {
+				setMenuState(false);
+			}
+		});
+
+		function handleBreakpointChange(event) {
+			if (!event.matches) {
+				setMenuState(false);
+			}
+		}
+
+		if (mobileQuery.addEventListener) {
+			mobileQuery.addEventListener('change', handleBreakpointChange);
+		} else {
+			mobileQuery.addListener(handleBreakpointChange);
+		}
+	}
+
+	$(function () {
 		initMenu();
+		initMobileMenu();
 
 		// Notifications.
 		$('.notification').css('cursor', 'pointer');
@@ -119,4 +203,3 @@
 	});
 
 })(jQuery);
-

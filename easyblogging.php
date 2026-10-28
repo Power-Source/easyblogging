@@ -5,6 +5,7 @@ Plugin URI: https://psource.eimen.net/wiki/ps-easy-blogging/
 Description: Ändert den ClassicPress-Verwaltungsbereich so, dass er standardmäßig einen "Anfänger" -Bereich enthält, mit der Option, zum normalen "Erweitert" -Bereich zu wechseln.
 Version: 1.0.5
 Text Domain: wdeb
+Domain Path: /languages
 Author: PSOURCE
 Author URI: https://psource.eimen.net
 

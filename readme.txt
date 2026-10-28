@@ -32,6 +32,7 @@ Schaffe mit Easy Blogging eine Benutzererfahrung, die zu Deinem Kundenstamm pass
 == ChangeLog ==
 
 = 1.0.5 =
+* Übersetzungsvorlage und vollständige englische Sprachdateien ergänzt.
 * Ausgaben anderer Plugins im Admin-Header bleiben im Easy Mode erhalten.
 * Darstellung und Bedienbarkeit des PS-Chat-Headers im Easy Mode korrigiert.
 * Easy-Mode-Layout mit CSS Grid und flexiblen Inhaltsbreiten modernisiert.

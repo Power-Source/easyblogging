@@ -544,6 +544,12 @@ class Wdeb_AdminPages {
 		}
 
 		if ($this->is_in_easymode()) {
+			$this->_menu_partial = apply_filters('wdeb_menu_partial', $this->_menu_partial);
+			if ( ! $this->is_easy_mode_page_allowed( $pagenow ) ) {
+				wp_safe_redirect( admin_url( WDEB_LANDING_PAGE ) );
+				exit;
+			}
+
 			if ( 'index.php' === $pagenow ) {
 				add_action( 'admin_print_footer_scripts', function () {
 					wp_dequeue_script( 'site-health' );
@@ -557,8 +563,6 @@ class Wdeb_AdminPages {
 					}
 				}, 1 );
 			}
-			// Allow others (i.e. Wizard) to hook into the menu
-			$this->_menu_partial = apply_filters('wdeb_menu_partial', $this->_menu_partial);
 
 			add_action('admin_head', array($this, 'start_cache'), 1);
 			add_action('admin_notices', array($this, 'end_header_cache'), 1);
@@ -592,6 +596,141 @@ class Wdeb_AdminPages {
 				if (!$start) { update_user_meta($user_id, 'wdeb_autostart', 'no'); }
 			}
 		}
+	}
+
+	private function is_easy_mode_page_allowed( $pagenow ) {
+		if (
+			'index.php' === $pagenow
+			|| in_array( $pagenow, array( 'admin-ajax.php', 'admin-post.php', 'async-upload.php' ), true )
+			|| ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ?? 'GET' ), array( 'GET', 'HEAD' ), true )
+		) {
+			return true;
+		}
+
+		if ( ! in_array( $this->_menu_partial, array( 'menu-default', 'menu-wizard' ), true ) ) {
+			return true;
+		}
+
+		$menu_urls = array();
+
+		if ( 'menu-wizard' === $this->_menu_partial ) {
+			$wizard_steps = apply_filters( 'wdeb_wizard_steps', array() );
+			foreach ( $wizard_steps as $step ) {
+				if ( ! empty( $step['url'] ) ) {
+					$menu_urls[] = site_url( $step['url'] );
+				}
+			}
+		} else {
+			$menu_items = apply_filters( 'wdeb_initialize_menu', array() );
+			$menu_items = apply_filters( 'wdeb_menu_items', $menu_items );
+
+			foreach ( $menu_items as $item ) {
+				if (
+					isset( $item['capability'] )
+					&& $item['capability']
+					&& ! current_user_can( $item['capability'] )
+				) {
+					continue;
+				}
+
+				if (
+					! empty( $item['check_callback'] )
+					&& ! call_user_func( $item['check_callback'], $item )
+				) {
+					continue;
+				}
+
+				$item = apply_filters( 'wdeb_menu-item_before_render', $item );
+				if ( ! empty( $item['url'] ) ) {
+					$menu_urls[] = wdeb_expand_url( $item['url'] );
+				}
+			}
+		}
+
+		foreach ( $menu_urls as $url ) {
+			if ( $this->easy_mode_url_matches_request( $url, $pagenow ) ) {
+				return true;
+			}
+		}
+
+		if ( 'post.php' === $pagenow && isset( $_GET['post'] ) ) {
+			$post_type = get_post_type( (int) $_GET['post'] );
+			return $post_type && $this->easy_mode_menu_has_post_type( $menu_urls, $post_type );
+		}
+
+		if ( 'comment.php' === $pagenow ) {
+			foreach ( $menu_urls as $url ) {
+				$menu_page = wp_parse_url( $url, PHP_URL_PATH );
+				if ( is_string( $menu_page ) && 'edit-comments.php' === basename( $menu_page ) ) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private function easy_mode_url_matches_request( $url, $pagenow ) {
+		$url_parts = wp_parse_url( $url );
+		if ( empty( $url_parts['path'] ) || basename( $url_parts['path'] ) !== $pagenow ) {
+			return false;
+		}
+
+		$expected_args = array();
+		parse_str( $url_parts['query'] ?? '', $expected_args );
+		$current_args = wp_unslash( $_GET );
+
+		foreach ( array( 'page', 'post_type' ) as $key ) {
+			if ( ! isset( $current_args[ $key ] ) ) {
+				continue;
+			}
+
+			if ( ! isset( $expected_args[ $key ] ) ) {
+				if ( 'post_type' === $key && 'post' === $current_args[ $key ] ) {
+					continue;
+				}
+				return false;
+			}
+
+			if ( $expected_args[ $key ] !== $current_args[ $key ] ) {
+				return false;
+			}
+		}
+
+		foreach ( $expected_args as $key => $value ) {
+			if (
+				! array_key_exists( $key, $current_args )
+				|| $current_args[ $key ] !== $value
+			) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private function easy_mode_menu_has_post_type( $menu_urls, $post_type ) {
+		foreach ( $menu_urls as $url ) {
+			$url_parts = wp_parse_url( $url );
+			if ( ! is_array( $url_parts ) ) {
+				continue;
+			}
+
+			$page = basename( $url_parts['path'] ?? '' );
+			if ( ! in_array( $page, array( 'edit.php', 'post-new.php' ), true ) ) {
+				continue;
+			}
+
+			$args = array();
+			parse_str( $url_parts['query'] ?? '', $args );
+			$menu_post_type = $args['post_type'] ?? 'post';
+
+			if ( $post_type === $menu_post_type ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public function override_media_library_format ($mode) {
@@ -742,14 +881,20 @@ class Wdeb_AdminPages {
 	}
 
 	function set_easy_mode_flag () {
+		$cookie_name = wdeb_get_easy_mode_cookie_name();
+
+		if ( is_multisite() && isset( $_COOKIE['wdeb_on'] ) ) {
+			setcookie( 'wdeb_on', '', time() - 3600, '/', COOKIE_DOMAIN );
+		}
+
 		if (isset($_GET['wdeb_on'])) {
-			if (!isset($_COOKIE['wdeb_on']) || (int)$_COOKIE['wdeb_on'] <= 0) setcookie("wdeb_on", 1, time() + 31556926, '/', COOKIE_DOMAIN);
+			if (!isset($_COOKIE[$cookie_name]) || (int)$_COOKIE[$cookie_name] <= 0) setcookie($cookie_name, 1, time() + 31556926, '/', COOKIE_DOMAIN);
 			$this->_is_in_easymode = true;
 		} else if (isset($_GET['wdeb_off'])) {
-			if (isset($_COOKIE['wdeb_on']) && (int)$_COOKIE['wdeb_on'] > 0) setcookie("wdeb_on", 0, time() + 31556926, '/', COOKIE_DOMAIN);
+			if (isset($_COOKIE[$cookie_name]) && (int)$_COOKIE[$cookie_name] > 0) setcookie($cookie_name, 0, time() + 31556926, '/', COOKIE_DOMAIN);
 			$this->_is_in_easymode = false;
 		} else {
-			$this->_is_in_easymode = (isset($_COOKIE['wdeb_on']) && (int)$_COOKIE['wdeb_on'] > 0) ? true : false;
+			$this->_is_in_easymode = (isset($_COOKIE[$cookie_name]) && (int)$_COOKIE[$cookie_name] > 0) ? true : false;
 		}
 
 		if (!defined('WDEB_IS_IN_EASY_MODE')) define('WDEB_IS_IN_EASY_MODE', $this->_is_in_easymode);

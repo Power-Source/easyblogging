@@ -4,7 +4,7 @@ Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
 WordPress: 7.1.4
 ClassicPress: 2.7.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -33,6 +33,10 @@ In einem Multisite-Netzwerk kannst Du das Plugin für eine einzelne Website akti
 Registrierte Plugin-Menüs können aus einer Liste übernommen werden. Bei Netzwerkaktivierung werden globale Menüpunkte im Mainblog ausgewählt. Netzwerkadmins können außerdem lokale Menüanpassungen durch Subsite-Admins erlauben.
 
 == ChangeLog ==
+
+= 1.0.7 =
+* Easy-Modus-Status wird bei Netzwerkaktivierung pro Subsite gespeichert, damit der Modus nicht unbeabsichtigt auf andere Websites übergreift.
+* Nicht im Easy-Menü freigegebene Adminseiten führen zurück zum Dashboard; konfigurierte Menüziele und Beitragsbearbeitung bleiben erreichbar.
 
 = 1.0.6 =
 * Easy-Modus-Umschalter führt zuverlässig zum Dashboard der jeweiligen Website oder Netzwerkverwaltung.

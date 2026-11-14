@@ -1,7 +1,22 @@
 <?php
 
+function wdeb_get_easy_mode_cookie_name () {
+	if ( ! is_multisite() ) {
+		return 'wdeb_on';
+	}
+
+	if ( is_network_admin() ) {
+		return 'wdeb_on_network_' . get_current_network_id();
+	}
+
+	return 'wdeb_on_site_' . get_current_blog_id();
+}
+
 function wdeb_reset_autostart () {
-	setcookie("wdeb_on", "", time()-60000, '/', COOKIE_DOMAIN);
+	setcookie( wdeb_get_easy_mode_cookie_name(), '', time() - 60000, '/', COOKIE_DOMAIN );
+	if ( is_multisite() ) {
+		setcookie( 'wdeb_on', '', time() - 60000, '/', COOKIE_DOMAIN );
+	}
 	$user = wp_get_current_user();
 	if (!$user || !$user->ID) return;
 	//delete_user_meta($user->ID, "wdeb_autostart");

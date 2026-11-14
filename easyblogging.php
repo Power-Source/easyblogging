@@ -3,7 +3,7 @@
 Plugin Name: PS Easy Blogging
 Plugin URI: https://psource.eimen.net/psource/ps-easy-blogging/
 Description: Ändert den ClassicPress-Verwaltungsbereich so, dass er standardmäßig einen "Anfänger" -Bereich enthält, mit der Option, zum normalen "Erweitert" -Bereich zu wechseln.
-Version: 1.0.6
+Version: 1.0.7
 Text Domain: wdeb
 Domain Path: /languages
 Author: PSOURCE
@@ -26,7 +26,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 define( 'WDEB_PLUGIN_SELF_DIRNAME', basename( __DIR__ ) );
-define( 'WDEB_VERSION', '1.0.6' );
+define( 'WDEB_VERSION', '1.0.7' );
 define( 'WDEB_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /*

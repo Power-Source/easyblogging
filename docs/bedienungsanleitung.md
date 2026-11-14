@@ -42,6 +42,12 @@ Unter **Easy Blogging → Erweiterungen** können verfügbare Easy-Blogging-Erwe
 
 Öffne **Easy Blogging → Menüeinträge**. Die Tabelle zeigt, welche Einträge im Easy-Modus sichtbar sind. Über das Kontrollkästchen wird ein Eintrag ein- oder ausgeblendet; am Ziehgriff lässt sich die Reihenfolge ändern. Speichere die Änderungen anschließend mit **Änderungen speichern**.
 
+### Vorgegebene Menüeinträge anpassen
+
+Bei den eingebauten Menüeinträgen lässt sich **Bearbeiten** öffnen, um Titel, Hilfetext, URL, Icon und erforderliche Berechtigung anzupassen. Die Änderungen werden im jeweiligen Menüeditor gespeichert. Bei Netzwerkaktivierung bearbeitest du die netzwerkweiten Vorgaben im Mainblog; Subsite-Admins können diese Vorgaben nicht überschreiben.
+
+Die Berechtigung steuert nur, für wen der Menüeintrag angezeigt wird. Sie erteilt keine zusätzlichen Zugriffsrechte auf die Zielseite. Die ursprüngliche Zuordnung des Menüeintrags bleibt erhalten, sodass gespeicherte Sichtbarkeit und Reihenfolge nach einer Bearbeitung weiter gelten.
+
 ### Vorhandene Plugin-Menüs übernehmen
 
 Im Formular **Menüpunkt hinzufügen** kannst du ein vorhandenes Admin-Menü aus der Auswahlliste übernehmen. Titel, URL, Icon und Berechtigung werden vorausgefüllt und können vor dem Hinzufügen angepasst werden. Es erscheinen nur Menüs, auf die das aktuell angemeldete Konto Zugriff hat.

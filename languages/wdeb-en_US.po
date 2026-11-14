@@ -1059,3 +1059,11 @@ msgstr "Activate Easy Mode"
 #: lib/plugins/wdeb-theme-toolbar_switch_button.php:38
 msgid "Easy-Modus verlassen"
 msgstr "Exit Easy-Mode"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Icon-URL, Dashicon-Klasse oder SVG-Daten-URI"
+msgstr "Icon URL, Dashicon class, or SVG data URI"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Die Berechtigung steuert nur die Anzeige des Menüeintrags; sie erteilt keine Zugriffsrechte auf die Zielseite."
+msgstr "The capability controls menu visibility only; it does not grant access to the target page."

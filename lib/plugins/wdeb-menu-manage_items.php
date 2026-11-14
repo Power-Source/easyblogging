@@ -249,9 +249,32 @@ class Wdeb_Menu_ManageMenuItems {
 			? $this->get_stored_menu_options()
 			: array();
 		$options = $this->get_effective_menu_options();
+		$menu_overrides = isset( $global_options['menu_overrides'] ) && is_array( $global_options['menu_overrides'] )
+			? $global_options['menu_overrides']
+			: array();
 		$global_items = isset( $global_options['new_items'] ) && is_array( $global_options['new_items'] )
 			? $global_options['new_items']
 			: array();
+
+		foreach ( $items as $index => $item ) {
+			if ( ! isset( $item['_builtin'] ) ) {
+				continue;
+			}
+
+			$item_id = $this->_item_to_id( $item );
+			$item['_wdeb_id'] = $item_id;
+
+			if ( isset( $menu_overrides[ $item_id ] ) && is_array( $menu_overrides[ $item_id ] ) ) {
+				$edited_item = $this->sanitize_menu_item(
+					array_merge( $item, $menu_overrides[ $item_id ] )
+				);
+				foreach ( $edited_item as $field => $value ) {
+					$item[ $field ] = $value;
+				}
+			}
+
+			$items[ $index ] = $item;
+		}
 
 		foreach ($global_items as $item) {
 			$item['check_callback'] = false;
@@ -621,6 +644,17 @@ class Wdeb_Menu_ManageMenuItems {
 		}
 
 		$current_options = $this->get_stored_menu_options();
+		if ( $this->site_menu_overrides_enabled() ) {
+			unset( $posted['menu_overrides'] );
+		} else {
+			$posted['menu_overrides'] = $this->sanitize_menu_overrides(
+				isset( $posted['menu_overrides'] ) && is_array( $posted['menu_overrides'] )
+					? $posted['menu_overrides']
+					: null,
+				$current_options
+			);
+		}
+
 		if ( ! array_key_exists( 'allow_site_overrides', $posted ) && isset( $current_options['allow_site_overrides'] ) ) {
 			$posted['allow_site_overrides'] = $current_options['allow_site_overrides'];
 		}
@@ -633,6 +667,57 @@ class Wdeb_Menu_ManageMenuItems {
 		$this->save_menu_options( $posted );
 
 		return true;
+	}
+
+	private function sanitize_menu_overrides( $submitted, $current_options ) {
+		$overrides = isset( $current_options['menu_overrides'] ) && is_array( $current_options['menu_overrides'] )
+			? $current_options['menu_overrides']
+			: array();
+		if ( ! is_array( $submitted ) ) {
+			return $overrides;
+		}
+
+		$default_items = $this->get_default_menu_items_by_id();
+		$fields = array( 'title', 'url', 'help', 'icon', 'capability' );
+
+		foreach ( $submitted as $id => $item ) {
+			$id = $this->sanitize_menu_id( $id );
+			if ( '' === $id || ! isset( $default_items[ $id ] ) || ! is_array( $item ) ) {
+				continue;
+			}
+
+			unset( $overrides[ $id ] );
+
+			$defaults = $this->sanitize_menu_item( $default_items[ $id ] );
+			$edited = $this->sanitize_menu_item( array_merge( $default_items[ $id ], $item ) );
+			$changes = array();
+			foreach ( $fields as $field ) {
+				if ( $edited[ $field ] !== $defaults[ $field ] ) {
+					$changes[ $field ] = $edited[ $field ];
+				}
+			}
+
+			if ( $changes ) {
+				$overrides[ $id ] = $changes;
+			}
+		}
+
+		return $overrides;
+	}
+
+	private function get_default_menu_items_by_id() {
+		$items = apply_filters( 'wdeb_initialize_menu', array() );
+		$default_items = array();
+
+		foreach ( (array) $items as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+			$item['_builtin'] = true;
+			$default_items[ $this->_item_to_id( $item ) ] = $item;
+		}
+
+		return $default_items;
 	}
 
 	private function sanitize_menu_item( $item ) {
@@ -721,6 +806,7 @@ class Wdeb_Menu_ManageMenuItems {
 		echo ' &nbsp;|&nbsp; ';
 		echo '<a href="#uncheck_all" class="wdeb_uncheck_all_items">' . esc_html__( 'Alle abwählen', 'wdeb' ) . '</a>';
 		echo '</p>';
+		echo '<p class="description">' . esc_html__( 'Die Berechtigung steuert nur die Anzeige des Menüeintrags; sie erteilt keine Zugriffsrechte auf die Zielseite.', 'wdeb' ) . '</p>';
 
 		echo '<table id="wdeb_show_hide_root" class="widefat">';
 		echo '<thead>';
@@ -778,6 +864,23 @@ class Wdeb_Menu_ManageMenuItems {
 
 			if ( $help ) {
 				echo '<div class="description">' . esc_html( $help ) . '</div>';
+			}
+
+			if ( isset( $item['_builtin'] ) && ! $local_context ) {
+				$override_name = 'wdeb_menu_items[menu_overrides][' . $url_id . ']';
+				echo '<details class="wdeb-menu-item-editor">';
+				echo '<summary>' . esc_html__( 'Bearbeiten', 'wdeb' ) . '</summary>';
+				echo '<p><label>' . esc_html__( 'Titel', 'wdeb' );
+				echo '<input class="widefat" type="text" name="' . esc_attr( $override_name . '[title]' ) . '" value="' . esc_attr( $title ) . '"></label></p>';
+				echo '<p><label>' . esc_html__( 'Hilfe', 'wdeb' );
+				echo '<input class="widefat" type="text" name="' . esc_attr( $override_name . '[help]' ) . '" value="' . esc_attr( $help ) . '"></label></p>';
+				echo '<p><label>' . esc_html__( 'URL', 'wdeb' );
+				echo '<input class="widefat" type="text" name="' . esc_attr( $override_name . '[url]' ) . '" value="' . esc_attr( $url ) . '"></label></p>';
+				echo '<p><label>' . esc_html__( 'Icon-URL, Dashicon-Klasse oder SVG-Daten-URI', 'wdeb' );
+				echo '<input class="widefat" type="text" name="' . esc_attr( $override_name . '[icon]' ) . '" value="' . esc_attr( $icon ) . '"></label></p>';
+				echo '<p><label>' . esc_html__( 'Berechtigung', 'wdeb' );
+				echo '<input class="widefat" type="text" name="' . esc_attr( $override_name . '[capability]' ) . '" value="' . esc_attr( $capability ) . '"></label></p>';
+				echo '</details>';
 			}
 
 			echo '</div>';
@@ -1266,6 +1369,10 @@ class Wdeb_Menu_ManageMenuItems {
 	 * @return string
 	 */
 	private function _item_to_id( $item ) {
+		if ( isset( $item['_wdeb_id'] ) ) {
+			return $item['_wdeb_id'];
+		}
+
 		$data = array(
 			isset( $item['title'] ) ? $item['title'] : '',
 			isset( $item['url'] ) ? $item['url'] : '',

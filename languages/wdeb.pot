@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the PS Easy Blogging plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: PS Easy Blogging 1.0.5\n"
+"Project-Id-Version: PS Easy Blogging 1.0.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/easyblogging\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1052,4 +1052,12 @@ msgstr ""
 
 #: lib/plugins/wdeb-theme-toolbar_switch_button.php:38
 msgid "Easy-Modus verlassen"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Icon-URL, Dashicon-Klasse oder SVG-Daten-URI"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Die Berechtigung steuert nur die Anzeige des Menüeintrags; sie erteilt keine Zugriffsrechte auf die Zielseite."
 msgstr ""

@@ -4,7 +4,7 @@ Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
 WordPress: 7.1.4
 ClassicPress: 2.7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html

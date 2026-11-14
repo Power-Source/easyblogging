@@ -247,9 +247,12 @@ class Wdeb_AdminPages {
 		} else {
 			wp_enqueue_script( 'jquery' );
 		}
+		$landing_url = is_network_admin()
+			? network_admin_url( WDEB_LANDING_PAGE . '?wdeb_on' )
+			: admin_url( WDEB_LANDING_PAGE . '?wdeb_on' );
 		printf(
 			'<script type="text/javascript">_wdebLandingPage = "%s";</script>',
-			apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_on')
+			apply_filters('wdeb_easy_mode_init', $landing_url)
 		);
 
 	}
@@ -269,6 +272,20 @@ class Wdeb_AdminPages {
 
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) {
 			return;
+		}
+
+		if ($this->is_in_easymode()) {
+			$theme_style_modified = filemtime( WDEB_PLUGIN_BASE_DIR . '/themes/default/style.css' );
+			$theme_style_version = false === $theme_style_modified
+				? WDEB_VERSION
+				: WDEB_VERSION . '.' . $theme_style_modified;
+
+			wp_enqueue_style(
+				'wdeb_theme',
+				WDEB_PLUGIN_URL . '/themes/default/style.css',
+				array( 'wdeb_global' ),
+				$theme_style_version
+			);
 		}
 
 		wp_enqueue_style(
@@ -532,9 +549,7 @@ class Wdeb_AdminPages {
 					wp_dequeue_script( 'site-health' );
 					wp_dequeue_style( 'site-health' );
 
-					$dashboard_items = is_multisite()
-						? get_site_option( 'wdeb_dashboard_items' )
-						: get_option( 'wdeb_dashboard_items' );
+					$dashboard_items = $this->data->get_options( 'wdeb_dashboard_items' );
 
 					if ( empty( $dashboard_items ) ) {
 						wp_dequeue_script( 'dashboard' );
@@ -608,9 +623,16 @@ class Wdeb_AdminPages {
 	function easy_mode_menu () {
 		global $psts;
 		$pro_href = $pro_title = false;
-		if (class_exists('ProSites')) { // Official
+		$pro_help = __('Unterstütze uns!', 'wdeb');
+		$pro_icon = WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/supporter.png';
+		if (class_exists('ProSites') && isset($psts) && $psts instanceof ProSites) { // Official
 			$pro_href = 'admin.php?page=psts-checkout';
 			$pro_title = $psts->get_setting('rebrand');
+			$pro_help = sprintf(
+				__('Entdecke Pakete und Upgrade-Möglichkeiten für %s', 'wdeb'),
+				$pro_title
+			);
+			$pro_icon = trailingslashit($psts->plugin_url) . 'images/levels.png';
 		} else if (class_exists('ProBlogs')) { // Beta
 			$pro_href = 'admin.php?page=pblgs-checkout';
 			$pro_title = ProBlogs::get_setting('rebrand');
@@ -703,9 +725,9 @@ class Wdeb_AdminPages {
 				'check_callback' => 'wdeb_not_supporter',
 				'capability' => 'manage_options',
 				'url' => $pro_href,//'supporter.php',
-				'icon' => WDEB_PLUGIN_THEME_URL . '/assets/icons/theme_icons/supporter.png',
+				'icon' => $pro_icon,
 				'title' => $pro_title,//__('Supporter', 'wdeb'),
-				'help' => __('Unterstütze uns!', 'wdeb'),
+				'help' => $pro_help,
 			),
 			array (
 				'check_callback' => false,
@@ -796,9 +818,9 @@ class Wdeb_AdminPages {
 
 	function add_hooks () {
 		add_action('admin_init', array($this, 'register_settings'));
-		if (is_multisite()) {
+		if (Wdeb_Options::is_network_activated()) {
 			add_action('network_admin_menu', array($this, 'create_site_admin_menu_entry'));
-		} else {
+		} elseif (!is_network_admin()) {
 			add_action('admin_menu', array($this, 'create_site_admin_menu_entry'));
 		}
 

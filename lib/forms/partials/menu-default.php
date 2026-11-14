@@ -26,11 +26,17 @@ $current_request = admin_url($current_request);
 	?>
 	<?php $is_current = ( $url === $current_request ); ?>
 	<li <?php echo $is_current ? 'class="current"' : '';?> >
-		<a href="<?php echo wdeb_expand_url($item['url']); ?>" class="wdeb_menu_link dashboard"<?php echo $is_current ? ' aria-current="page"' : ''; ?>>
-			<img src="<?php echo $item['icon'];?>" alt="" />
-			<span class="current"><?php echo $item['title'];?></span>
+		<a href="<?php echo esc_url( wdeb_expand_url( $item['url'] ) ); ?>" class="wdeb_menu_link dashboard"<?php echo $is_current ? ' aria-current="page"' : ''; ?>>
+		<?php if ( ! empty( $item['icon'] ) && preg_match( '/^dashicons-[a-z0-9-]+$/', $item['icon'] ) ) : ?>
+			<span class="dashicons <?php echo esc_attr( $item['icon'] ); ?>" aria-hidden="true" style="font-size:24px;width:32px;height:32px;"></span>
+		<?php elseif ( ! empty( $item['icon'] ) && preg_match( '~^data:image/svg\+xml;base64,[A-Za-z0-9+/=]+$~', $item['icon'] ) ) : ?>
+			<img src="<?php echo esc_attr( $item['icon'] ); ?>" alt="" />
+		<?php elseif ( ! empty( $item['icon'] ) ) : ?>
+			<img src="<?php echo esc_url( $item['icon'] ); ?>" alt="" />
+		<?php endif; ?>
+		<span class="current"><?php echo esc_html( $item['title'] ); ?></span>
 		</a>
-		<div class="wdeb_meta"><?php echo $item['help'];?></div>
+	<div class="wdeb_meta"><?php echo esc_html( $item['help'] ); ?></div>
 	</li>
 	<?php } ?>
 <?php } ?>

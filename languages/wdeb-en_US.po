@@ -202,6 +202,74 @@ msgstr "Customise design"
 msgid "Unterstütze uns!"
 msgstr "Support us!"
 
+#: lib/class_wdeb_admin_pages.php
+msgid "Entdecke Pakete und Upgrade-Möglichkeiten für %s"
+msgstr "Explore plans and upgrade options for %s"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Easy Blogging Menü"
+msgstr "Easy Blogging Menu"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Easy Blogging Menü dieser Website"
+msgstr "Easy Blogging Menu for this Site"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Du bist nicht berechtigt, diese Einstellungen zu bearbeiten."
+msgstr "You are not allowed to edit these settings."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Ungültiger Menübereich."
+msgstr "Invalid menu context."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Die lokale Menüverwaltung ist deaktiviert."
+msgstr "Local menu management is disabled."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Netzwerkvorgaben bleiben erhalten. Änderungen auf dieser Seite gelten nur für diese Subsite."
+msgstr "Network defaults remain in place. Changes on this page apply only to this subsite."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Diese Menüpunkte gelten netzwerkweit. Plugin-Menüs werden anhand des Mainblogs ausgewählt."
+msgstr "These menu items apply network-wide. Plugin menus are selected from the main site."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Plugin-Menüs für das Netzwerk werden im Adminbereich des Mainblogs ausgewählt."
+msgstr "Plugin menus for the network are selected in the main site's dashboard."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüeditor im Mainblog öffnen"
+msgstr "Open the menu editor on the main site"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüverwaltung für Subsites"
+msgstr "Subsite menu management"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Subsite-Admins dürfen eigene Menüpunkte hinzufügen sowie ihre lokale Sichtbarkeit und Reihenfolge festlegen."
+msgstr "Subsite admins may add menu items and set their local visibility and order."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Netzwerkvorgaben bleiben unverändert. Lokale Ergänzungen und Anpassungen gelten nur für die jeweilige Subsite."
+msgstr "Network defaults remain unchanged. Local additions and adjustments apply only to the respective subsite."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Vorhandenes Admin-Menü übernehmen"
+msgstr "Import an existing admin menu"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüpunkt auswählen …"
+msgstr "Select a menu item…"
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Titel, URL, Icon und Berechtigung werden übernommen und können vor dem Hinzufügen angepasst werden."
+msgstr "The title, URL, icon, and capability will be imported and can be adjusted before adding."
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Plugin-Menüs werden im Menüeditor des Mainblogs ausgewählt."
+msgstr "Plugin menus are selected in the main site's menu editor."
+
 #: lib/forms/wizard_settings.php:29
 #: lib/plugins/wdeb-menu-manage_items.php:565
 msgid "Hilfe"

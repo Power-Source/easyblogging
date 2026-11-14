@@ -10,16 +10,30 @@ class Wdeb_PluginsHandler {
 	}
 
 	public static function get_active_plugins () {
-		$active = get_site_option('wdeb_activated_plugins');
+		$active = ( new Wdeb_Options )->get_options( 'wdeb_activated_plugins' );
 		$active = $active ? $active : array();
 
 		return $active;
+	}
+
+	private static function is_plugin_available( $plugin ) {
+		if ( 'wdeb-pro-force_free' !== $plugin ) {
+			return true;
+		}
+
+		return Wdeb_Options::is_network_activated()
+			&& class_exists( 'ProSites' )
+			&& function_exists( 'is_pro_site' );
 	}
 
 	public static function load_active_plugins () {
 		$active = self::get_active_plugins();
 
 		foreach ($active as $plugin) {
+			if ( ! self::is_plugin_available( $plugin ) ) {
+				continue;
+			}
+
 			$path = self::plugin_to_path($plugin);
 			if (!file_exists($path)) continue;
 			else @require_once($path);
@@ -31,7 +45,12 @@ class Wdeb_PluginsHandler {
 		$all = $all ? $all : array();
 		$ret = array();
 		foreach ($all as $path) {
-			$ret[] = pathinfo($path, PATHINFO_FILENAME);
+			$plugin = pathinfo($path, PATHINFO_FILENAME);
+			if ( ! self::is_plugin_available( $plugin ) ) {
+				continue;
+			}
+
+			$ret[] = $plugin;
 		}
 		return $ret;
 	}
@@ -54,11 +73,15 @@ class Wdeb_PluginsHandler {
 	}
 
 	public static function activate_plugin ($plugin) {
+		if ( ! self::is_plugin_available( $plugin ) ) {
+			return false;
+		}
+
 		$active = self::get_active_plugins();
 		if (in_array($plugin, $active)) return true; // Already active
 
 		$active[] = $plugin;
-		return update_site_option('wdeb_activated_plugins', $active);
+		return ( new Wdeb_Options )->set_options( $active, 'wdeb_activated_plugins' );
 	}
 
 	public static function deactivate_plugin ($plugin) {
@@ -69,6 +92,6 @@ class Wdeb_PluginsHandler {
 		if ($key === false) return false; // Haven't found it
 
 		unset($active[$key]);
-		return update_site_option('wdeb_activated_plugins', $active);
+		return ( new Wdeb_Options )->set_options( $active, 'wdeb_activated_plugins' );
 	}
 }

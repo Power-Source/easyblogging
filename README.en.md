@@ -4,9 +4,9 @@
 
 [![Version](https://img.shields.io/badge/Version-1.0.5-2271b1?style=flat-square)](readme.txt)
 ![PHP](https://img.shields.io/badge/PHP-8.0%2B-777bb4?style=flat-square&logo=php&logoColor=white)
-![WordPress](https://img.shields.io/badge/WordPress-up%20to%207.1.0-21759b?style=flat-square&logo=wordpress&logoColor=white)
-![ClassicPress](https://img.shields.io/badge/ClassicPress-2.7.4-03768e?style=flat-square)
-[![License](https://img.shields.io/badge/License-GPL--2.0--or--later-2ea44f?style=flat-square)](https://www.gnu.org/licenses/gpl-2.0.html)
+![WordPress](https://img.shields.io/badge/WordPress-bis%207.1.4-21759b?style=flat-square&logo=wordpress&logoColor=white)
+![ClassicPress](https://img.shields.io/badge/ClassicPress-bis%202.7.4-03768e?style=flat-square)
+[![Lizenz](https://img.shields.io/badge/Lizenz-GPL--2.0--or--later-2ea44f?style=flat-square)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 **Changes the ClassicPress administration area to include a beginner-friendly area by default, with the option to switch to the normal advanced area.**
 
@@ -29,3 +29,7 @@ Give your users a one-click simplification of the ClassicPress dashboard. Enable
 ### Earn more
 
 Reduce support requests by enforcing Easy Mode for specific user types. Combine it with Multisite to lower the barrier to entry. Use the included PS MarketPress integration to simplify product creation, or enforce Easy Mode for free users in PS Bloghosting to encourage upgrades. Create an Easy Blogging experience that fits your customer base.
+
+In a multisite network, activate the plugin for an individual site to manage that site's settings in its dashboard, or activate it network-wide to manage shared settings in Network Admin.
+
+Registered plugin menus can be imported from a list. With network activation, global menu items are selected in the Main Site dashboard and saved network-wide. Network admins can also allow subsite admins to add local menu items and adjust visibility and ordering for their own sites.

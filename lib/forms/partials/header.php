@@ -13,7 +13,6 @@ if (!$this->data->get_option('admin_bar')) {
 	$wp_admin_bar = false;
 }
 ?>
-	<link type="text/css" href="<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/style.css' ), WDEB_PLUGIN_THEME_URL . '/style.css' ) ); ?>" rel="stylesheet" /> <!-- the layout css file -->
 	<?php echo $admin_head_html; ?>
 	<script type='text/javascript' src='<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/js/easyTooltip.js' ), WDEB_PLUGIN_THEME_URL . '/js/easyTooltip.js' ) ); ?>'></script> <!-- element tooltips -->
 	<script type='text/javascript' src='<?php echo esc_url( add_query_arg( 'ver', $wdeb_asset_version( 'themes/default/js/visualize.jQuery.js' ), WDEB_PLUGIN_THEME_URL . '/js/visualize.jQuery.js' ) ); ?>'></script> <!-- visualize plugin for graphs / statistics -->

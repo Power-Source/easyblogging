@@ -27,10 +27,13 @@ class Wdeb_Menu_ManageMenuItems {
 
 		// Add page
 		add_action('wdeb_admin-add_pages', array($this, 'register_page'));
+		add_action('admin_menu', array($this, 'register_main_site_network_menu_page'), 99);
+		add_action('admin_menu', array($this, 'register_site_menu_page'), 99);
 
 		// Add settings
 		add_action('wdeb_admin-register_settings-settings', array($this, 'add_settings'));
 		add_filter('wdeb_admin-options_changed', array($this, 'save_settings'));
+		add_action('admin_post_wdeb_save_menu_items', array($this, 'handle_standalone_menu_save'));
 
 		// Actual filtering
 		add_filter('wdeb_menu_items', array($this, 'filter_menu_builtins'), 0);
@@ -66,6 +69,164 @@ class Wdeb_Menu_ManageMenuItems {
 		);
 	}
 
+	private function get_global_menu_options() {
+		$options = $this->_data->get_options( 'wdeb_menu_items' );
+		return is_array( $options ) ? $options : array();
+	}
+
+	private function site_menu_overrides_enabled() {
+		if (
+			! Wdeb_Options::is_network_activated()
+			|| is_network_admin()
+			|| ! is_multisite()
+			|| is_main_site()
+		) {
+			return false;
+		}
+
+		$options = $this->get_global_menu_options();
+		return ! empty( $options['allow_site_overrides'] );
+	}
+
+	private function get_stored_menu_options() {
+		if ( $this->site_menu_overrides_enabled() ) {
+			$options = get_option( 'wdeb_menu_items' );
+			return is_array( $options ) ? $options : array();
+		}
+
+		return $this->get_global_menu_options();
+	}
+
+	private function get_effective_menu_options() {
+		$global_options = $this->get_global_menu_options();
+
+		if ( ! $this->site_menu_overrides_enabled() ) {
+			return $global_options;
+		}
+
+		$local_options = get_option( 'wdeb_menu_items' );
+		if ( ! is_array( $local_options ) ) {
+			return $global_options;
+		}
+
+		$effective_options = $global_options;
+		if ( array_key_exists( 'order', $local_options ) ) {
+			$effective_options['order'] = $local_options['order'];
+		}
+		$effective_options['site_hidden_menu'] = isset( $local_options['hidden_menu'] ) && is_array( $local_options['hidden_menu'] )
+			? $local_options['hidden_menu']
+			: array();
+
+		$global_items = isset( $global_options['new_items'] ) && is_array( $global_options['new_items'] )
+			? $global_options['new_items']
+			: array();
+		$local_items = isset( $local_options['new_items'] ) && is_array( $local_options['new_items'] )
+			? $local_options['new_items']
+			: array();
+		$effective_options['new_items'] = array_merge( $global_items, $local_items );
+
+		return $effective_options;
+	}
+
+	private function save_menu_options( $options, $context = 'current' ) {
+		if ( 'site' === $context || ( 'current' === $context && $this->site_menu_overrides_enabled() ) ) {
+			return update_option( 'wdeb_menu_items', $options );
+		}
+
+		return $this->_data->set_options( $options, 'wdeb_menu_items' );
+	}
+
+	private function can_manage_menu_settings() {
+		if (
+			is_network_admin()
+			|| (
+				Wdeb_Options::is_network_activated()
+				&& is_multisite()
+				&& is_main_site()
+			)
+		) {
+			return current_user_can( 'manage_network_options' );
+		}
+
+		if ( Wdeb_Options::is_network_activated() && ! $this->site_menu_overrides_enabled() ) {
+			return false;
+		}
+
+		return current_user_can( 'manage_options' );
+	}
+
+	function register_main_site_network_menu_page() {
+		if (
+			! Wdeb_Options::is_network_activated()
+			|| ! is_multisite()
+			|| is_network_admin()
+			|| ! is_main_site()
+		) {
+			return;
+		}
+
+		add_options_page(
+			__( 'Easy Blogging Menü', 'wdeb' ),
+			__( 'Easy Blogging Menü', 'wdeb' ),
+			'manage_network_options',
+			'wdeb_network_menu_items',
+			array( $this, 'render_network_menu_page' )
+		);
+	}
+
+	function register_site_menu_page() {
+		if ( ! $this->site_menu_overrides_enabled() ) {
+			return;
+		}
+
+		add_options_page(
+			__( 'Easy Blogging Menü dieser Website', 'wdeb' ),
+			__( 'Easy Blogging Menü', 'wdeb' ),
+			'manage_options',
+			'wdeb_site_menu_items',
+			array( $this, 'render_site_menu_page' )
+		);
+	}
+
+	function render_network_menu_page() {
+		if (
+			! Wdeb_Options::is_network_activated()
+			|| ! is_multisite()
+			|| ! is_main_site()
+			|| ! current_user_can( 'manage_network_options' )
+		) {
+			wp_die( esc_html__( 'Du bist nicht berechtigt, diese Einstellungen zu bearbeiten.', 'wdeb' ), '', array( 'response' => 403 ) );
+		}
+
+		$this->render_standalone_page( 'network' );
+	}
+
+	function render_site_menu_page() {
+		if ( ! $this->site_menu_overrides_enabled() || ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Du bist nicht berechtigt, diese Einstellungen zu bearbeiten.', 'wdeb' ), '', array( 'response' => 403 ) );
+		}
+
+		$this->render_standalone_page( 'site' );
+	}
+
+	private function render_standalone_page( $context ) {
+		echo '<div class="wrap"><h1>' . esc_html__( 'Easy Blogging Menü', 'wdeb' ) . '</h1>';
+		if ( 'site' === $context ) {
+			echo '<p>' . esc_html__( 'Netzwerkvorgaben bleiben erhalten. Änderungen auf dieser Seite gelten nur für diese Subsite.', 'wdeb' ) . '</p>';
+		} else {
+			echo '<p>' . esc_html__( 'Diese Menüpunkte gelten netzwerkweit. Plugin-Menüs werden anhand des Mainblogs ausgewählt.', 'wdeb' ) . '</p>';
+		}
+		echo '<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="action" value="wdeb_save_menu_items">';
+		echo '<input type="hidden" name="wdeb_menu_context" value="' . esc_attr( $context ) . '">';
+		wp_nonce_field( 'wdeb_save_menu_items_' . $context );
+		$this->create_show_hide_box();
+		$this->create_add_item_box();
+		$this->create_resets_box();
+		echo '<p class="submit"><input type="submit" class="button-primary" value="' . esc_attr__( 'Änderungen speichern', 'wdeb' ) . '"></p>';
+		echo '</form></div>';
+	}
+
 /* ---------- Filtering ---------- */
 
 	/**
@@ -83,31 +244,64 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Applies menu ordering, adding, showing and hiding.
 	 */
 	function filter_menu_items ($items) {
-		// Add new items
-		$new_items = $this->_data->get_options('wdeb_menu_items');
-		$new_items = is_array($new_items) && !empty($new_items['new_items']) ? $new_items['new_items'] : array();
-		foreach ($new_items as $item) {
+		$global_options = $this->get_global_menu_options();
+		$local_options = $this->site_menu_overrides_enabled()
+			? $this->get_stored_menu_options()
+			: array();
+		$options = $this->get_effective_menu_options();
+		$global_items = isset( $global_options['new_items'] ) && is_array( $global_options['new_items'] )
+			? $global_options['new_items']
+			: array();
+
+		foreach ($global_items as $item) {
 			$item['check_callback'] = false;
 			$item['_added'] = true;
+			$item['_network_added'] = true;
+			$items[] = $item;
+		}
+
+		$local_items = isset( $local_options['new_items'] ) && is_array( $local_options['new_items'] )
+			? $local_options['new_items']
+			: array();
+		foreach ( $local_items as $item ) {
+			$item['check_callback'] = false;
+			$item['_added'] = true;
+			$item['_site_added'] = true;
 			$items[] = $item;
 		}
 
 		// Reorder items
-		$items = $this->_reorder_items($items);
+		$items = $this->_reorder_items($items, $options);
 
 		// Filter items
 		if (
 			!isset($_GET['page']) ||
-			(isset($_GET['page']) && 'wdeb_menu_items' != $_GET['page']) // but not on settings page
+			!in_array(
+				$_GET['page'],
+				array( 'wdeb_menu_items', 'wdeb_network_menu_items', 'wdeb_site_menu_items' ),
+				true
+			)
 		) {
-			$my_menu = $this->_data->get_options('wdeb_menu_items');
-			$my_menu = is_array($my_menu) && !empty($my_menu['my_menu']) ? $my_menu['my_menu'] : array();
-			if (!$my_menu) return $items;
-
+			$my_menu = isset( $global_options['my_menu'] ) && is_array( $global_options['my_menu'] )
+				? $global_options['my_menu']
+				: null;
+			$site_hidden_menu = isset( $options['site_hidden_menu'] ) && is_array( $options['site_hidden_menu'] )
+				? $options['site_hidden_menu']
+				: array();
 			$filtered = array();
-			foreach ($items as $item) {
-				$url_id = $this->_item_to_id($item);
-				if (!in_array($url_id, array_keys($my_menu))) continue;
+			foreach ( $items as $item ) {
+				$url_id = $this->_item_to_id( $item );
+				$is_site_item = isset( $item['_site_added'] );
+				if (
+					! $is_site_item
+					&& null !== $my_menu
+					&& ! isset( $my_menu[ $url_id ] )
+				) {
+					continue;
+				}
+				if ( isset( $site_hidden_menu[ $url_id ] ) ) {
+					continue;
+				}
 				$filtered[] = $item;
 			}
 			$items = $filtered;
@@ -119,7 +313,7 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Removes a custom menu item.
 	 */
 	function json_remove_my_item() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->can_manage_menu_settings() ) {
 			wp_send_json_error(
 				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
@@ -137,7 +331,7 @@ class Wdeb_Menu_ManageMenuItems {
 			);
 		}
 
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
+		$opts = $this->get_stored_menu_options();
 		$opts = is_array( $opts ) ? $opts : array();
 
 		$new_items = isset( $opts['new_items'] ) && is_array( $opts['new_items'] )
@@ -149,6 +343,7 @@ class Wdeb_Menu_ManageMenuItems {
 				continue;
 			}
 
+			$item['check_callback'] = false;
 			$item['_added'] = true;
 
 			if ( $id === $this->_item_to_id( $item ) ) {
@@ -159,7 +354,7 @@ class Wdeb_Menu_ManageMenuItems {
 
 		$opts['new_items'] = array_values( $new_items );
 
-		$this->_data->set_options( $opts, 'wdeb_menu_items' );
+		$this->save_menu_options( $opts );
 
 		wp_send_json_success(
 			array(
@@ -176,7 +371,7 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Resets custom menu order.
 	 */
 	function json_reset_order() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->can_manage_menu_settings() ) {
 			wp_send_json_error(
 				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
@@ -185,12 +380,16 @@ class Wdeb_Menu_ManageMenuItems {
 
 		check_ajax_referer( 'wdeb_menu_action', 'nonce' );
 
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
+		$opts = $this->get_stored_menu_options();
 		$opts = is_array( $opts ) ? $opts : array();
 
-		$opts['order'] = array();
+		if ( $this->site_menu_overrides_enabled() ) {
+			unset( $opts['order'] );
+		} else {
+			$opts['order'] = array();
+		}
 
-		$this->_data->set_options( $opts, 'wdeb_menu_items' );
+		$this->save_menu_options( $opts );
 
 		wp_send_json_success(
 			array(
@@ -203,7 +402,7 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Removes all custom menu items.
 	 */
 	function json_reset_items() {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( ! $this->can_manage_menu_settings() ) {
 			wp_send_json_error(
 				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
 				403
@@ -212,12 +411,12 @@ class Wdeb_Menu_ManageMenuItems {
 
 		check_ajax_referer( 'wdeb_menu_action', 'nonce' );
 
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
+		$opts = $this->get_stored_menu_options();
 		$opts = is_array( $opts ) ? $opts : array();
 
 		$opts['new_items'] = array();
 
-		$this->_data->set_options( $opts, 'wdeb_menu_items' );
+		$this->save_menu_options( $opts );
 
 		wp_send_json_success(
 			array(
@@ -230,13 +429,17 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Resets everything.
 	 */
 	function json_reset_all () {
-		$this->_data->set_options(array(), 'wdeb_menu_items');
+		if ( ! $this->can_manage_menu_settings() ) {
+			wp_send_json_error(
+				array( 'message' => __( 'Du bist nicht berechtigt, dies zu tun.', 'wdeb' ) ),
+				403
+			);
+		}
 
-		header('Content-type: application/json');
-		echo json_encode(array(
-			'status' => 1,
-		));
-		exit();
+		check_ajax_referer( 'wdeb_menu_action', 'nonce' );
+		$this->save_menu_options( array() );
+
+		wp_send_json_success( array( 'status' => true ) );
 	}
 
 
@@ -249,6 +452,17 @@ class Wdeb_Menu_ManageMenuItems {
 
 	function render_page () {
 		echo '<div class="wrap"><h2>Easy Blogging Menü</h2>';
+		if ( is_network_admin() && Wdeb_Options::is_network_activated() ) {
+			$main_site_menu_url = get_admin_url(
+				get_main_site_id(),
+				'options-general.php?page=wdeb_network_menu_items'
+			);
+			echo '<div class="notice notice-info"><p>';
+			echo esc_html__( 'Plugin-Menüs für das Netzwerk werden im Adminbereich des Mainblogs ausgewählt.', 'wdeb' ) . ' ';
+			echo '<a href="' . esc_url( $main_site_menu_url ) . '">';
+			echo esc_html__( 'Menüeditor im Mainblog öffnen', 'wdeb' );
+			echo '</a></p></div>';
+		}
 		echo (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN
 			? '<form action="settings.php" method="post" enctype="multipart/form-data">'
 			: '<form action="options.php" method="post" enctype="multipart/form-data">'
@@ -285,6 +499,16 @@ class Wdeb_Menu_ManageMenuItems {
 			'wdeb_menu_items'
 		);
 
+		if ( is_network_admin() && Wdeb_Options::is_network_activated() ) {
+			add_settings_field(
+				'wdeb_menu_items_allow_site_overrides',
+				__( 'Menüverwaltung für Subsites', 'wdeb' ),
+				array( $this, 'create_site_override_setting' ),
+				'wdeb_menu_items',
+				'wdeb_menu_items'
+			);
+		}
+
 		add_settings_field(
 			'wdeb_resets',
 			__( 'Zurücksetzen', 'wdeb' ),
@@ -292,6 +516,20 @@ class Wdeb_Menu_ManageMenuItems {
 			'wdeb_menu_items',
 			'wdeb_menu_items'
 		);
+	}
+
+	function create_site_override_setting() {
+		$options = $this->get_global_menu_options();
+		$enabled = ! empty( $options['allow_site_overrides'] );
+
+		echo '<input type="hidden" name="wdeb_menu_items[allow_site_overrides]" value="0">';
+		echo '<label>';
+		echo '<input type="checkbox" name="wdeb_menu_items[allow_site_overrides]" value="1" ' . checked( $enabled, true, false ) . '>';
+		echo ' ' . esc_html__( 'Subsite-Admins dürfen eigene Menüpunkte hinzufügen sowie ihre lokale Sichtbarkeit und Reihenfolge festlegen.', 'wdeb' );
+		echo '</label>';
+		echo '<p class="description">';
+		echo esc_html__( 'Netzwerkvorgaben bleiben unverändert. Lokale Ergänzungen und Anpassungen gelten nur für die jeweilige Subsite.', 'wdeb' );
+		echo '</p>';
 	}
 
 	/**
@@ -312,32 +550,34 @@ class Wdeb_Menu_ManageMenuItems {
 		$new_items = isset( $posted['new_items'] ) && is_array( $posted['new_items'] )
 			? $posted['new_items']
 			: array();
+		$new_item = isset( $new_items['new'] ) && is_array( $new_items['new'] )
+			? $new_items['new']
+			: null;
+		unset( $new_items['new'] );
+		$added_item_id = '';
 
-		// Process a newly added menu item.
-		if ( isset( $new_items['new'] ) && is_array( $new_items['new'] ) ) {
-			$new_item = $new_items['new'];
-			unset( $new_items['new'] );
+		foreach ( $new_items as $index => $item ) {
+			if ( ! is_array( $item ) ) {
+				unset( $new_items[ $index ] );
+				continue;
+			}
 
-			$title = isset( $new_item['title'] ) ? sanitize_text_field( $new_item['title'] ) : '';
-			$url   = isset( $new_item['url'] ) ? esc_url_raw( $new_item['url'] ) : '';
+			$new_items[ $index ] = $this->sanitize_menu_item( $item );
+		}
 
+		if ( is_array( $new_item ) ) {
+			$item = $this->sanitize_menu_item( $new_item );
+			$title = $item['title'];
+			$url = $item['url'];
 			if ( '' !== $title && '' !== $url ) {
-				$item = array(
-					'title'      => $title,
-					'url'        => $url,
-					'help'       => isset( $new_item['help'] )
-						? sanitize_text_field( $new_item['help'] )
-						: '',
-					'icon'       => isset( $new_item['icon'] )
-						? esc_url_raw( $new_item['icon'] )
-						: '',
-					'capability' => isset( $new_item['capability'] )
-						? sanitize_text_field( $new_item['capability'] )
-						: '',
-				);
-
 				if ( $this->_is_unique_item( $item, $new_items ) ) {
 					$new_items[] = $item;
+					if ( ! $this->site_menu_overrides_enabled() ) {
+						$item_for_id = $item;
+						$item_for_id['check_callback'] = false;
+						$item_for_id['_added'] = true;
+						$added_item_id = $this->_item_to_id( $item_for_id );
+					}
 				}
 			}
 		}
@@ -352,9 +592,103 @@ class Wdeb_Menu_ManageMenuItems {
 
 		$posted['new_items'] = $new_items;
 
-		$this->_data->set_options( $posted, 'wdeb_menu_items' );
+		$submitted_menu = isset( $posted['my_menu'] ) && is_array( $posted['my_menu'] )
+			? $posted['my_menu']
+			: array();
+		$posted['my_menu'] = array();
+		foreach ( $submitted_menu as $id => $value ) {
+			if ( is_scalar( $value ) && (string) $value === '1' ) {
+				$posted['my_menu'][ sanitize_key( $id ) ] = '1';
+			}
+		}
+		if ( '' !== $added_item_id ) {
+			$posted['my_menu'][ $added_item_id ] = '1';
+		}
+		$posted['order'] = isset( $posted['order'] ) && is_array( $posted['order'] )
+			? array_values( array_filter( array_map( array( $this, 'sanitize_menu_id' ), $posted['order'] ) ) )
+			: array();
+
+		if ( $this->site_menu_overrides_enabled() ) {
+			$editable_ids = isset( $posted['site_editable_ids'] ) && is_array( $posted['site_editable_ids'] )
+				? array_values( array_filter( array_map( array( $this, 'sanitize_menu_id' ), $posted['site_editable_ids'] ) ) )
+				: array();
+			$selected_ids = array_keys( $posted['my_menu'] );
+			$posted['hidden_menu'] = array_fill_keys(
+				array_diff( array_unique( $editable_ids ), $selected_ids ),
+				1
+			);
+			unset( $posted['my_menu'], $posted['site_editable_ids'], $posted['allow_site_overrides'] );
+		}
+
+		$current_options = $this->get_stored_menu_options();
+		if ( ! array_key_exists( 'allow_site_overrides', $posted ) && isset( $current_options['allow_site_overrides'] ) ) {
+			$posted['allow_site_overrides'] = $current_options['allow_site_overrides'];
+		}
+		if ( isset( $posted['allow_site_overrides'] ) ) {
+			$posted['allow_site_overrides'] = is_scalar( $posted['allow_site_overrides'] )
+				? (int) (bool) $posted['allow_site_overrides']
+				: 0;
+		}
+
+		$this->save_menu_options( $posted );
 
 		return true;
+	}
+
+	private function sanitize_menu_item( $item ) {
+		return array(
+			'title'      => isset( $item['title'] ) && is_scalar( $item['title'] )
+				? sanitize_text_field( (string) $item['title'] )
+				: '',
+			'url'        => isset( $item['url'] ) && is_scalar( $item['url'] )
+				? esc_url_raw( (string) $item['url'] )
+				: '',
+			'help'       => isset( $item['help'] ) && is_scalar( $item['help'] )
+				? sanitize_text_field( (string) $item['help'] )
+				: '',
+			'icon'       => isset( $item['icon'] ) && is_scalar( $item['icon'] )
+				? $this->sanitize_menu_icon( (string) $item['icon'] )
+				: '',
+			'capability' => isset( $item['capability'] ) && is_scalar( $item['capability'] )
+				? sanitize_text_field( (string) $item['capability'] )
+				: '',
+		);
+	}
+
+	private function sanitize_menu_id( $id ) {
+		return is_scalar( $id ) ? sanitize_key( (string) $id ) : '';
+	}
+
+	function handle_standalone_menu_save() {
+		$context = isset( $_POST['wdeb_menu_context'] )
+			? sanitize_key( wp_unslash( $_POST['wdeb_menu_context'] ) )
+			: '';
+
+		if ( ! $this->can_manage_menu_settings() ) {
+			wp_die( esc_html__( 'Du bist nicht berechtigt, diese Einstellungen zu bearbeiten.', 'wdeb' ), '', array( 'response' => 403 ) );
+		}
+
+		if ( 'network' === $context ) {
+			if ( ! Wdeb_Options::is_network_activated() || ! is_multisite() || ! is_main_site() ) {
+				wp_die( esc_html__( 'Ungültiger Menübereich.', 'wdeb' ), '', array( 'response' => 403 ) );
+			}
+			check_admin_referer( 'wdeb_save_menu_items_network' );
+			$redirect_url = get_admin_url( get_main_site_id(), 'options-general.php?page=wdeb_network_menu_items' );
+		} elseif ( 'site' === $context ) {
+			if ( ! $this->site_menu_overrides_enabled() ) {
+				wp_die( esc_html__( 'Die lokale Menüverwaltung ist deaktiviert.', 'wdeb' ), '', array( 'response' => 403 ) );
+			}
+			check_admin_referer( 'wdeb_save_menu_items_site' );
+			$redirect_url = admin_url( 'options-general.php?page=wdeb_site_menu_items' );
+		} else {
+			wp_die( esc_html__( 'Ungültiger Menübereich.', 'wdeb' ), '', array( 'response' => 400 ) );
+		}
+
+		$_POST['option_page'] = 'wdeb_menu_items';
+		$this->save_settings( true );
+
+		wp_safe_redirect( add_query_arg( 'settings-updated', 'true', $redirect_url ) );
+		exit;
 	}
 
 	/**
@@ -371,11 +705,15 @@ class Wdeb_Menu_ManageMenuItems {
 		$menu_items = apply_filters( 'wdeb_initialize_menu', array() );
 		$menu_items = apply_filters( 'wdeb_menu_items', $menu_items );
 
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
-		$opts = is_array( $opts ) ? $opts : array();
+		$opts = $this->get_effective_menu_options();
 
-		$my_menu = isset( $opts['my_menu'] ) && is_array( $opts['my_menu'] )
-			? $opts['my_menu']
+		$local_context = $this->site_menu_overrides_enabled();
+		$global_options = $this->get_global_menu_options();
+		$my_menu = isset( $global_options['my_menu'] ) && is_array( $global_options['my_menu'] )
+			? $global_options['my_menu']
+			: null;
+		$site_hidden_menu = isset( $opts['site_hidden_menu'] ) && is_array( $opts['site_hidden_menu'] )
+			? $opts['site_hidden_menu']
 			: array();
 
 		echo '<p>';
@@ -401,8 +739,11 @@ class Wdeb_Menu_ManageMenuItems {
 
 		foreach ( $menu_items as $item ) {
 			$url_id = $this->_item_to_id( $item );
-
-			$checked = empty( $my_menu ) || array_key_exists( $url_id, $my_menu );
+			$is_site_item = isset( $item['_site_added'] );
+			$global_visible = null === $my_menu || isset( $my_menu[ $url_id ] );
+			$checked = $local_context
+				? ( $is_site_item || $global_visible ) && ! isset( $site_hidden_menu[ $url_id ] )
+				: ( null === $my_menu || isset( $my_menu[ $url_id ] ) );
 
 			$title      = isset( $item['title'] ) ? $item['title'] : '';
 			$help       = isset( $item['help'] ) ? $item['help'] : '';
@@ -419,7 +760,10 @@ class Wdeb_Menu_ManageMenuItems {
 
 			// Visibility.
 			echo '<td>';
-			echo '<input type="checkbox" name="wdeb_menu_items[my_menu][' . esc_attr( $url_id ) . ']" value="1"' . checked( $checked, true, false ) . '>';
+			if ( $local_context && ( $is_site_item || $global_visible ) ) {
+				echo '<input type="hidden" name="wdeb_menu_items[site_editable_ids][]" value="' . esc_attr( $url_id ) . '">';
+			}
+			echo '<input type="checkbox" name="wdeb_menu_items[my_menu][' . esc_attr( $url_id ) . ']" value="1"' . checked( $checked, true, false ) . disabled( $local_context && ! $is_site_item && ! $global_visible, true, false ) . '>';
 			echo '<input type="hidden" class="wdeb_menu_items-url_id" name="wdeb_menu_items[order][]" value="' . esc_attr( $url_id ) . '">';
 			echo '</td>';
 
@@ -427,9 +771,7 @@ class Wdeb_Menu_ManageMenuItems {
 			echo '<td>';
 			echo '<div style="display:flex; align-items:center; gap:10px;">';
 
-			if ( $icon ) {
-				echo '<img src="' . esc_url( $icon ) . '" alt="" style="width:32px;height:32px;">';
-			}
+			$this->render_menu_icon( $icon );
 
 			echo '<div>';
 			echo '<strong>' . esc_html( $title ) . '</strong>';
@@ -468,7 +810,7 @@ class Wdeb_Menu_ManageMenuItems {
 			// Remove.
 			echo '<td>';
 
-			if ( isset( $item['_added'] ) ) {
+			if ( isset( $item['_added'] ) && ( ! $this->site_menu_overrides_enabled() || isset( $item['_site_added'] ) ) ) {
 				echo '<a href="#remove_item" class="wdeb_remove_menu_item">';
 				echo esc_html__( 'Entfernen', 'wdeb' );
 				echo '</a>';
@@ -493,8 +835,7 @@ class Wdeb_Menu_ManageMenuItems {
 	 * Displays the form for adding a custom menu item.
 	 */
 	function create_add_item_box() {
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
-		$opts = is_array( $opts ) ? $opts : array();
+		$opts = $this->get_stored_menu_options();
 
 		$new_items = isset( $opts['new_items'] ) && is_array( $opts['new_items'] )
 			? $opts['new_items']
@@ -515,12 +856,37 @@ class Wdeb_Menu_ManageMenuItems {
 
 		?>
 
+		<?php if ( ! is_network_admin() ) : ?>
+			<p>
+				<label for="wdeb_registered_menu_items">
+					<?php esc_html_e( 'Vorhandenes Admin-Menü übernehmen', 'wdeb' ); ?>
+				</label>
+				<select id="wdeb_registered_menu_items" class="widefat">
+					<option value=""><?php esc_html_e( 'Menüpunkt auswählen …', 'wdeb' ); ?></option>
+					<?php foreach ( $this->get_registered_menu_items() as $registered_item ) : ?>
+						<option
+							value="<?php echo esc_attr( $registered_item['url'] ); ?>"
+							data-title="<?php echo esc_attr( $registered_item['title'] ); ?>"
+							data-help="<?php echo esc_attr( $registered_item['help'] ); ?>"
+							data-icon="<?php echo esc_attr( $registered_item['icon'] ); ?>"
+							data-capability="<?php echo esc_attr( $registered_item['capability'] ); ?>"
+						><?php echo esc_html( $registered_item['label'] ); ?></option>
+					<?php endforeach; ?>
+				</select>
+				<span class="description"><?php esc_html_e( 'Titel, URL, Icon und Berechtigung werden übernommen und können vor dem Hinzufügen angepasst werden.', 'wdeb' ); ?></span>
+			</p>
+		<?php elseif ( Wdeb_Options::is_network_activated() ) : ?>
+			<p class="description">
+				<?php esc_html_e( 'Plugin-Menüs werden im Menüeditor des Mainblogs ausgewählt.', 'wdeb' ); ?>
+			</p>
+		<?php endif; ?>
+
 		<p>
 			<label for="wdeb_menu_items-new-title">
 				<?php esc_html_e( 'Titel', 'wdeb' ); ?>
 			</label>
 			<input
-				type="text"
+					type="text"
 				class="widefat"
 				id="wdeb_menu_items-new-title"
 				name="wdeb_menu_items[new_items][new][title]"
@@ -533,7 +899,7 @@ class Wdeb_Menu_ManageMenuItems {
 				<?php esc_html_e( 'URL', 'wdeb' ); ?>
 			</label>
 			<input
-				type="url"
+			type="text"
 				class="widefat"
 				id="wdeb_menu_items-new-url"
 				name="wdeb_menu_items[new_items][new][url]"
@@ -655,7 +1021,16 @@ class Wdeb_Menu_ManageMenuItems {
 	}
 
 	function js_add_scripts () {
-		if (!isset($_GET['page']) || 'wdeb_menu_items' != $_GET['page']) return false;
+		if (
+			! isset( $_GET['page'] )
+			|| ! in_array(
+				$_GET['page'],
+				array( 'wdeb_menu_items', 'wdeb_network_menu_items', 'wdeb_site_menu_items' ),
+				true
+			)
+		) {
+			return false;
+		}
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script('thickbox');
 		wp_enqueue_script('media-upload');
@@ -670,19 +1045,218 @@ class Wdeb_Menu_ManageMenuItems {
 				var _wdeb_menu_items = {
 					"admin_base": "%s",
 					"ajax_url": "%s",
+					"nonce": "%s",
 				};
 			</script>',
-			admin_url(), admin_url('admin-ajax.php')
+			esc_url( admin_url() ),
+			esc_url( admin_url( 'admin-ajax.php' ) ),
+			esc_js( wp_create_nonce( 'wdeb_menu_action' ) )
 		);
 	}
 
 	function css_add_styles () {
-		if (!isset($_GET['page']) || 'wdeb_menu_items' != $_GET['page']) return false;
+		if (
+			! isset( $_GET['page'] )
+			|| ! in_array(
+				$_GET['page'],
+				array( 'wdeb_menu_items', 'wdeb_network_menu_items', 'wdeb_site_menu_items' ),
+				true
+			)
+		) {
+			return false;
+		}
 		wp_enqueue_style('thickbox');
 	}
 
 
 /* ---------- Private API ---------- */
+
+	private function get_registered_menu_items() {
+		global $menu, $submenu;
+
+		$items = array();
+		$seen = array();
+		$parents = array();
+		$existing_urls = array();
+		$built_in_items = apply_filters( 'wdeb_initialize_menu', array() );
+		foreach ( $built_in_items as $built_in_item ) {
+			if ( isset( $built_in_item['url'] ) ) {
+				$existing_urls[] = $built_in_item['url'];
+			}
+		}
+		$existing_options = $this->get_effective_menu_options();
+		if ( isset( $existing_options['new_items'] ) && is_array( $existing_options['new_items'] ) ) {
+			foreach ( $existing_options['new_items'] as $existing_item ) {
+				if ( isset( $existing_item['url'] ) ) {
+					$existing_urls[] = $existing_item['url'];
+				}
+			}
+		}
+
+		$add_item = function ( $slug, $title, $capability, $icon, $parent_title = '', $help = '' ) use ( &$items, &$seen, $existing_urls ) {
+			if ( ! is_string( $slug ) || '' === $slug || ! is_string( $title ) || '' === $title ) {
+				return;
+			}
+			if (
+				preg_match( '/^[a-z][a-z0-9+.-]*:/i', $slug )
+				|| false !== strpos( $slug, 'separator' )
+				|| 'wdeb' === $slug
+				|| false !== strpos( $slug, 'wdeb_' )
+			) {
+				return;
+			}
+			if ( ! is_string( $capability ) || '' === $capability || ! current_user_can( $capability ) ) {
+				return;
+			}
+
+			$url = $this->registered_menu_item_url( $slug );
+			if ( in_array( $url, $existing_urls, true ) ) {
+				return;
+			}
+			$key = $url . '|' . $capability;
+			if ( isset( $seen[ $key ] ) ) {
+				return;
+			}
+
+			$seen[ $key ] = true;
+			$items[] = array(
+				'label'      => $parent_title ? $parent_title . ' › ' . $title : $title,
+				'title'      => $title,
+				'help'       => $help === $title ? '' : $help,
+				'url'        => $url,
+				'icon'       => $this->normalize_menu_icon( $icon ),
+				'capability' => $capability,
+			);
+		};
+
+		foreach ( (array) $menu as $entry ) {
+			if ( ! isset( $entry[0], $entry[1], $entry[2] ) ) {
+				continue;
+			}
+
+			$title = sanitize_text_field( trim( wp_strip_all_tags( html_entity_decode( (string) $entry[0], ENT_QUOTES, get_bloginfo( 'charset' ) ) ) ) );
+			$slug = (string) $entry[2];
+			$icon = isset( $entry[6] ) ? $entry[6] : '';
+			$help = isset( $entry[3] )
+				? sanitize_text_field( trim( wp_strip_all_tags( html_entity_decode( (string) $entry[3], ENT_QUOTES, get_bloginfo( 'charset' ) ) ) ) )
+				: '';
+			$parents[ $slug ] = array(
+				'title' => $title,
+				'icon'  => $icon,
+			);
+
+			$add_item( $slug, $title, $entry[1], $icon, '', $help );
+		}
+
+		foreach ( (array) $submenu as $parent_slug => $entries ) {
+			$parent = isset( $parents[ $parent_slug ] ) ? $parents[ $parent_slug ] : array( 'title' => '', 'icon' => '' );
+			foreach ( (array) $entries as $entry ) {
+				if ( ! isset( $entry[0], $entry[1], $entry[2] ) ) {
+					continue;
+				}
+
+				$title = sanitize_text_field( trim( wp_strip_all_tags( html_entity_decode( (string) $entry[0], ENT_QUOTES, get_bloginfo( 'charset' ) ) ) ) );
+				$help = isset( $entry[3] )
+					? sanitize_text_field( trim( wp_strip_all_tags( html_entity_decode( (string) $entry[3], ENT_QUOTES, get_bloginfo( 'charset' ) ) ) ) )
+					: '';
+				$icon = isset( $entry[6] ) && $entry[6] ? $entry[6] : $parent['icon'];
+				$add_item( (string) $entry[2], $title, $entry[1], $icon, $parent['title'], $help );
+			}
+		}
+
+		return $items;
+	}
+
+	private function registered_menu_item_url( $slug ) {
+		if ( preg_match( '/\.php(?:\?|$)/', $slug ) ) {
+			return $slug;
+		}
+
+		if ( function_exists( 'menu_page_url' ) ) {
+			$url = menu_page_url( $slug, false );
+			$admin_base = admin_url();
+			if ( is_string( $url ) && 0 === strpos( $url, $admin_base ) ) {
+				return substr( $url, strlen( $admin_base ) );
+			}
+		}
+
+		return 'admin.php?page=' . rawurlencode( $slug );
+	}
+
+	private function normalize_menu_icon( $icon ) {
+		return $this->sanitize_menu_icon( $icon );
+	}
+
+	private function sanitize_menu_icon( $icon ) {
+		if ( is_string( $icon ) && preg_match( '/^dashicons-[a-z0-9-]+$/', $icon ) ) {
+			return $icon;
+		}
+
+		if (
+			is_string( $icon )
+			&& preg_match( '~^data:image/svg\+xml;base64,([A-Za-z0-9+/=]+)$~', $icon, $matches )
+			&& strlen( $matches[1] ) <= 44000
+		) {
+			$svg = base64_decode( $matches[1], true );
+			if ( false !== $svg ) {
+				$allowed_svg = array(
+					'svg' => array(
+						'xmlns' => true, 'width' => true, 'height' => true, 'viewbox' => true,
+						'fill' => true, 'stroke' => true, 'stroke-width' => true, 'opacity' => true,
+					),
+					'g' => array(
+						'fill' => true, 'stroke' => true, 'stroke-width' => true, 'opacity' => true, 'transform' => true,
+					),
+					'path' => array(
+						'd' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true,
+						'fill-rule' => true, 'clip-rule' => true, 'opacity' => true, 'transform' => true,
+					),
+					'circle' => array(
+						'cx' => true, 'cy' => true, 'r' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true,
+					),
+					'rect' => array(
+						'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true,
+						'fill' => true, 'stroke' => true, 'stroke-width' => true,
+					),
+					'line' => array(
+						'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true, 'stroke' => true, 'stroke-width' => true,
+					),
+					'polygon' => array( 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true ),
+					'polyline' => array( 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true ),
+					'ellipse' => array(
+						'cx' => true, 'cy' => true, 'rx' => true, 'ry' => true, 'fill' => true, 'stroke' => true,
+					),
+				);
+				$safe_svg = wp_kses( $svg, $allowed_svg );
+				if ( preg_match( '/<svg\b/i', $safe_svg ) ) {
+					return 'data:image/svg+xml;base64,' . base64_encode( $safe_svg );
+				}
+			}
+		}
+
+		$icon = is_string( $icon ) ? esc_url_raw( $icon ) : '';
+		if (
+			$icon
+			&& (
+				preg_match( '~^https?://~i', $icon )
+				|| ( isset( $icon[0] ) && '/' === $icon[0] )
+			)
+		) {
+			return $icon;
+		}
+
+		return 'dashicons-admin-generic';
+	}
+
+	private function render_menu_icon( $icon ) {
+		if ( is_string( $icon ) && preg_match( '/^dashicons-[a-z0-9-]+$/', $icon ) ) {
+			echo '<span class="dashicons ' . esc_attr( $icon ) . '" aria-hidden="true" style="font-size:30px;width:32px;height:32px;"></span>';
+		} elseif ( is_string( $icon ) && preg_match( '~^data:image/svg\+xml;base64,[A-Za-z0-9+/=]+$~', $icon ) ) {
+			echo '<img src="' . esc_attr( $icon ) . '" alt="" style="width:32px;height:32px;">';
+		} elseif ( $icon ) {
+			echo '<img src="' . esc_url( $icon ) . '" alt="" style="width:32px;height:32px;">';
+		}
+	}
 
 
 	/**
@@ -708,10 +1282,10 @@ class Wdeb_Menu_ManageMenuItems {
 	/**
 	 * Reorders menu items.
 	 */
-	private function _reorder_items( $items ) {
+	private function _reorder_items( $items, $options = null ) {
 		$items = array_values( $items );
 
-		$opts = $this->_data->get_options( 'wdeb_menu_items' );
+		$opts = null === $options ? $this->get_effective_menu_options() : $options;
 		$order = is_array( $opts ) && !empty( $opts['order'] )
 			? $opts['order']
 			: array();

@@ -9,7 +9,7 @@ class Wdeb_Installer {
 	 * @static
 	 */
 	public static function check () {
-		$is_installed = is_multisite() ? get_site_option('wdeb') : get_option('wdeb');
+		$is_installed = ( new Wdeb_Options )->get_options( 'wdeb' );
 		if (!$is_installed) Wdeb_Installer::install();
 	}
 
@@ -26,8 +26,7 @@ class Wdeb_Installer {
 	 * @private
 	 */
 	function create_default_options () {
-		$handler = is_multisite() ? 'update_site_option' : 'update_option';
-		$handler('wdeb', array (
+		( new Wdeb_Options )->set_options( array (
 			'post_boxes' => array (),
 			'page_boxes' => array (),
 			'screen_options' => '0',
@@ -35,6 +34,6 @@ class Wdeb_Installer {
 			'hijack_start_page' => '0',
 			'plugin_theme' => 'default',
 			'dashboard_right_now' => '1',
-		));
+		), 'wdeb' );
 	}
 }

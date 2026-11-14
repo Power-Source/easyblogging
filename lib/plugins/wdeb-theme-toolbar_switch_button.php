@@ -27,14 +27,20 @@ class Wdeb_Theme_ToolbarSwitchButton {
 
 	function add_to_admin_bar () {
 		global $wp_admin_bar;
+		$landing_url = is_network_admin()
+			? network_admin_url( WDEB_LANDING_PAGE . '?wdeb_on' )
+			: admin_url( WDEB_LANDING_PAGE . '?wdeb_on' );
 		if (!(defined('WDEB_IS_IN_EASY_MODE') && WDEB_IS_IN_EASY_MODE)) {
-			$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_on');
+			$href = apply_filters('wdeb_easy_mode_init', $landing_url);
 			$title = __('Easy-Modus aktivieren', 'wdeb');
 		} else {
 			$data = new Wdeb_Options;
 			$auto_enter_roles = $data->get_option('auto_enter_role');
 			if (!$auto_enter_roles || !wdeb_current_user_can($auto_enter_roles)) {
-				$href = apply_filters('wdeb_easy_mode_init', WDEB_LANDING_PAGE . '?wdeb_off');
+				$off_url = is_network_admin()
+					? network_admin_url( WDEB_LANDING_PAGE . '?wdeb_off' )
+					: admin_url( WDEB_LANDING_PAGE . '?wdeb_off' );
+				$href = apply_filters('wdeb_easy_mode_init', $off_url);
 				$title = __('Easy-Modus verlassen', 'wdeb');
 			} else return false; // Not showing exit easy mode link if not applicable
 		}

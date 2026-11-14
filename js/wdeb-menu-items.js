@@ -42,11 +42,11 @@ if (menuTable) {
 
 /* --- (Un)Check all --- */
 $(".wdeb_check_all_items").on('click', function () {
-	$("table#wdeb_show_hide_root tbody input:checkbox").attr("checked", true);
+	$("table#wdeb_show_hide_root tbody input:checkbox:enabled").prop("checked", true);
 	return false;
 });
 $(".wdeb_uncheck_all_items").on('click', function () {
-	$("table#wdeb_show_hide_root tbody input:checkbox").attr("checked", false);
+	$("table#wdeb_show_hide_root tbody input:checkbox:enabled").prop("checked", false);
 	return false;
 });
 
@@ -57,19 +57,65 @@ $("#wdeb_menu_items-new-icon-trigger").on('click', function () {
 	__oldSentToEditor = window.send_to_editor;
 	window.send_to_editor = function (html) {
 		var $el = $(html);
-		$("#wdeb_menu_items-new-icon").val($el.attr("href"));
-		$("#wdeb_menu_items-new-icon-target").html('<img src="' + $el.attr("href") + '" />');
+		var imageUrl = $el.attr("href");
+		$("#wdeb_menu_items-new-icon").val(imageUrl);
+		$("#wdeb_menu_items-new-icon-target").empty().append(
+			$("<img>", { src: imageUrl, alt: "" })
+		);
 		tb_remove();
 		window.send_to_editor = __oldSentToEditor;
 	};
 	return false;
 });
 
+$("#wdeb_registered_menu_items").on("change", function () {
+	var option = this.options[this.selectedIndex];
+	if (!option || !option.value) {
+		return;
+	}
+
+	$("#wdeb_menu_items-new-title").val(option.dataset.title || "");
+	$("#wdeb_menu_items-new-url").val(option.value);
+	$("#wdeb_menu_items-new-help").val(option.dataset.help || "");
+	$("#wdeb_menu_items-new-icon").val(option.dataset.icon || "");
+
+	var $capability = $("#wdeb_menu_items-new-capability");
+	var capability = option.dataset.capability || "";
+	if ($capability.is("select") && !$capability.find("option").filter(function () {
+		return this.value === capability;
+	}).length) {
+		$capability.replaceWith($("<input>", {
+			type: "text",
+			class: "widefat",
+			id: $capability.attr("id"),
+			name: $capability.attr("name"),
+			value: capability
+		}));
+	} else {
+		$capability.val(capability);
+	}
+
+	var $iconTarget = $("#wdeb_menu_items-new-icon-target").empty();
+	if (/^dashicons-[a-z0-9-]+$/.test(option.dataset.icon || "")) {
+		$iconTarget.append(
+			$("<span>", {
+				"class": "dashicons " + option.dataset.icon,
+				"aria-hidden": "true"
+			})
+		);
+	} else if (option.dataset.icon) {
+		$iconTarget.append(
+			$("<img>", { src: option.dataset.icon, alt: "" })
+		);
+	}
+});
+
 /* --- Remove menu item --- */
 $(".wdeb_remove_menu_item").on('click', function () {
 	$.post(_wdeb_menu_items.ajax_url, {
 		"action": "wdeb_menu_items_remove_my_item",
-		"url_id": $(this).closest("tr").find("input.wdeb_menu_items-url_id").val()
+		"url_id": $(this).closest("tr").find("input.wdeb_menu_items-url_id").val(),
+		"nonce": _wdeb_menu_items.nonce
 	}, function (data) {
 		window.location.reload();
 	});
@@ -80,7 +126,8 @@ $(".wdeb_remove_menu_item").on('click', function () {
 $("#wdeb_menu_items-reset_order").on('click', function () {
 	if (!confirm(l10nMenuItems.reset_order_confirmation)) return false;
 	$.post(_wdeb_menu_items.ajax_url, {
-		"action": "wdeb_menu_items_reset_order"
+		"action": "wdeb_menu_items_reset_order",
+		"nonce": _wdeb_menu_items.nonce
 	}, function (data) {
 		window.location.reload();
 	});
@@ -89,7 +136,8 @@ $("#wdeb_menu_items-reset_order").on('click', function () {
 $("#wdeb_menu_items-reset_items").on('click', function () {
 	if (!confirm(l10nMenuItems.reset_items_confirmation)) return false;
 	$.post(_wdeb_menu_items.ajax_url, {
-		"action": "wdeb_menu_items_reset_items"
+		"action": "wdeb_menu_items_reset_items",
+		"nonce": _wdeb_menu_items.nonce
 	}, function (data) {
 		window.location.reload();
 	});
@@ -98,7 +146,8 @@ $("#wdeb_menu_items-reset_items").on('click', function () {
 $("#wdeb_menu_items-reset_all").on('click', function () {
 	if (!confirm(l10nMenuItems.reset_all_confirmation)) return false;
 	$.post(_wdeb_menu_items.ajax_url, {
-		"action": "wdeb_menu_items_reset_all"
+		"action": "wdeb_menu_items_reset_all",
+		"nonce": _wdeb_menu_items.nonce
 	}, function (data) {
 		window.location.reload();
 	});

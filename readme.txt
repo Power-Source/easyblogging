@@ -2,8 +2,8 @@
 Contributors: DerNerd (PSOURCE)
 Tags: ecommerce, onlineshop, multisite
 Requires at least: 4.9
-WordPress: 7.1.0
-ClassicPress: 2.7.1
+WordPress: 7.1.4
+ClassicPress: 2.7.4
 Stable tag: 1.0.5
 Requires PHP: 8.0
 License: GPLv2 or later
@@ -25,11 +25,24 @@ Aktiviere den einfachen Modus, um auf die Assistentenanleitung, ein vereinfachte
 
 Mehr Geld verdienen
 Kürze Supportanfragen mit dem erzwungenen einfachen Modus für bestimmte Nutzertypen. 
-Kombiniere mit Mulitsite und schaffe  eine niedrigere Eintrittsbarriere. 
+Kombiniere mit Multisite und schaffe eine niedrigere Eintrittsbarriere.
 Verwende die integrierte MarketPress-Integration, um die Produkterstellung zu vereinfachen, oder erzwinge den einfachen Modus für kostenlose Nutzer in PS Bloghosting, um Upgrades zu fördern. 
 Schaffe mit Easy Blogging eine Benutzererfahrung, die zu Deinem Kundenstamm passt.
 
+In einem Multisite-Netzwerk kannst Du das Plugin für eine einzelne Website aktivieren und deren Einstellungen im Website-Admin verwalten oder es netzwerkweit aktivieren und gemeinsame Einstellungen in der Netzwerkverwaltung verwalten.
+Registrierte Plugin-Menüs können aus einer Liste übernommen werden. Bei Netzwerkaktivierung werden globale Menüpunkte im Mainblog ausgewählt. Netzwerkadmins können außerdem lokale Menüanpassungen durch Subsite-Admins erlauben.
+
 == ChangeLog ==
+
+= 1.0.6 =
+* Easy-Modus-Umschalter führt zuverlässig zum Dashboard der jeweiligen Website oder Netzwerkverwaltung.
+* Easy-Modus-Stylesheet wird über die WordPress-Stylesheet-Queue geladen und bei Änderungen neu versioniert.
+* Multisite-Aktivierung korrigiert: Website-Aktivierung zeigt Einstellungen nur im Website-Admin; Netzwerkaktivierung zeigt sie in der Netzwerkverwaltung.
+* Optionen, Erweiterungsaktivierungen und Standardwerte werden passend zum Aktivierungsumfang gespeichert.
+* PS-Bloghosting-Erweiterung wird nur bei netzwerkaktivem Easy Blogging und aktiviertem PS Bloghosting angeboten.
+* Bloghosting-Menüeintrag erhält einen passenden Hinweistext und das Paket-Icon von PS Bloghosting.
+* Registrierte Plugin-Menüs können mit Titel, URL, Icon und Berechtigung übernommen werden; Netzwerkvorgaben lassen sich optional pro Subsite ergänzen und lokal ausblenden.
+* Plugin-Ladereihenfolge korrigiert, um einen kritischen PHP-Fehler zu vermeiden.
 
 = 1.0.5 =
 * Übersetzungsvorlage und vollständige englische Sprachdateien ergänzt.

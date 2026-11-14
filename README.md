@@ -4,8 +4,8 @@
 
 [![Version](https://img.shields.io/badge/Version-1.0.5-2271b1?style=flat-square)](readme.txt)
 ![PHP](https://img.shields.io/badge/PHP-8.0%2B-777bb4?style=flat-square&logo=php&logoColor=white)
-![WordPress](https://img.shields.io/badge/WordPress-bis%207.1.0-21759b?style=flat-square&logo=wordpress&logoColor=white)
-![ClassicPress](https://img.shields.io/badge/ClassicPress-2.7.4-03768e?style=flat-square)
+![WordPress](https://img.shields.io/badge/WordPress-bis%207.1.4-21759b?style=flat-square&logo=wordpress&logoColor=white)
+![ClassicPress](https://img.shields.io/badge/ClassicPress-bis%202.7.4-03768e?style=flat-square)
 [![Lizenz](https://img.shields.io/badge/Lizenz-GPL--2.0--or--later-2ea44f?style=flat-square)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 
@@ -27,4 +27,8 @@ Biete Deinen Benutzern eine Vereinfachung des ClassicPress-Dashboards mit einem 
 
 ### Mehr Geld verdienen
 
-Reduziere Supportanfragen mit dem erzwungenen einfachen Modus für bestimmte Benutzertypen. Kombiniere es mit Mulitsite und schaffe eine niedrigere Eintrittsbarriere. Nutze die mitgelieferte PS MarketPress-Integration, um die Produkterstellung zu vereinfachen, oder erzwinge den einfachen Modus für kostenlose Benutzer in PS Bloghosting, um Upgrades zu fördern. Schaffe mit Easy Blogging ein Benutzererlebnis, das zu Deinem Kundenstamm passt.
+Reduziere Supportanfragen mit dem erzwungenen einfachen Modus für bestimmte Benutzertypen. Kombiniere es mit Multisite und schaffe eine niedrigere Eintrittsbarriere. Nutze die mitgelieferte PS MarketPress-Integration, um die Produkterstellung zu vereinfachen, oder erzwinge den einfachen Modus für kostenlose Benutzer in PS Bloghosting, um Upgrades zu fördern. Schaffe mit Easy Blogging ein Benutzererlebnis, das zu Deinem Kundenstamm passt.
+
+In einem Multisite-Netzwerk kannst Du das Plugin für eine einzelne Website aktivieren und deren Einstellungen im Website-Admin verwalten oder es netzwerkweit aktivieren und gemeinsame Einstellungen in der Netzwerkverwaltung verwalten.
+
+Menüpunkte registrierter Plugins können aus einer Liste übernommen werden. Bei Netzwerkaktivierung werden die globalen Menüpunkte im Mainblog ausgewählt und netzwerkweit gespeichert. Netzwerkadmins können zusätzlich erlauben, dass Subsite-Admins lokale Menüpunkte hinzufügen sowie Sichtbarkeit und Reihenfolge ihrer eigenen Menüs anpassen.

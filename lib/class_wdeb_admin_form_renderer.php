@@ -2,9 +2,9 @@
 class Wdeb_AdminFormRenderer {
 
 	function _get_option ($key = false, $pfx = 'wdeb') {
-		$opt = defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN ? get_site_option($pfx) : get_option($pfx);
+		$opt = ( new Wdeb_Options )->get_options( $pfx );
 		if (!$key) return $opt;
-		return is_array($opt) ? $opt[$key] : null;
+		return is_array($opt) ? ( $opt[$key] ?? null ) : null;
 	}
 
 	function _create_checkbox ($name, $pfx = 'wdeb') {

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: PS Easy Blogging
-Plugin URI: https://psource.eimen.net/wiki/ps-easy-blogging/
+Plugin URI: https://psource.eimen.net/psource/ps-easy-blogging/
 Description: Ändert den ClassicPress-Verwaltungsbereich so, dass er standardmäßig einen "Anfänger" -Bereich enthält, mit der Option, zum normalen "Erweitert" -Bereich zu wechseln.
 Version: 1.0.5
 Text Domain: wdeb
@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 define( 'WDEB_PLUGIN_SELF_DIRNAME', basename( __DIR__ ) );
 define( 'WDEB_VERSION', '1.0.5' );
+define( 'WDEB_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
 /*
  * Determine plugin location and set paths/URLs.
@@ -90,11 +91,11 @@ $textdomain_handler(
 define( 'WDEB_LOGO_URL', WDEB_PLUGIN_URL . '/img/logo.png' );
 define( 'WDEB_LANDING_PAGE', 'index.php' );
 
+require_once WDEB_PLUGIN_BASE_DIR . '/lib/class_wdeb_options.php';
 require_once WDEB_PLUGIN_BASE_DIR . '/lib/class_wdeb_installer.php';
 Wdeb_Installer::check();
 
 require_once WDEB_PLUGIN_BASE_DIR . '/lib/wdeb_callbacks.php';
-require_once WDEB_PLUGIN_BASE_DIR . '/lib/class_wdeb_options.php';
 //Wdeb_Options::populate(); // Deprecated
 
 require_once WDEB_PLUGIN_BASE_DIR . '/lib/class_wdeb_plugins_handler.php';

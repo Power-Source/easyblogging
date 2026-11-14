@@ -413,6 +413,74 @@ msgstr ""
 msgid "Unterstütze uns!"
 msgstr ""
 
+#: lib/class_wdeb_admin_pages.php
+msgid "Entdecke Pakete und Upgrade-Möglichkeiten für %s"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Easy Blogging Menü"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Easy Blogging Menü dieser Website"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Du bist nicht berechtigt, diese Einstellungen zu bearbeiten."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Ungültiger Menübereich."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Die lokale Menüverwaltung ist deaktiviert."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Netzwerkvorgaben bleiben erhalten. Änderungen auf dieser Seite gelten nur für diese Subsite."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Diese Menüpunkte gelten netzwerkweit. Plugin-Menüs werden anhand des Mainblogs ausgewählt."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Plugin-Menüs für das Netzwerk werden im Adminbereich des Mainblogs ausgewählt."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüeditor im Mainblog öffnen"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüverwaltung für Subsites"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Subsite-Admins dürfen eigene Menüpunkte hinzufügen sowie ihre lokale Sichtbarkeit und Reihenfolge festlegen."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Netzwerkvorgaben bleiben unverändert. Lokale Ergänzungen und Anpassungen gelten nur für die jeweilige Subsite."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Vorhandenes Admin-Menü übernehmen"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Menüpunkt auswählen …"
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Titel, URL, Icon und Berechtigung werden übernommen und können vor dem Hinzufügen angepasst werden."
+msgstr ""
+
+#: lib/plugins/wdeb-menu-manage_items.php
+msgid "Plugin-Menüs werden im Menüeditor des Mainblogs ausgewählt."
+msgstr ""
+
 #: lib/class_wdeb_admin_pages.php:715
 msgid "Profile"
 msgstr ""
